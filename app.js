@@ -173,7 +173,8 @@ function goTo(n, anim = true) {
   n = Math.max(0, Math.min(N - 1, n)); const changed = n !== cur; cur = n;
   setY(-n * H(), anim);
   if (changed || !anim) {
-    setCount(); if (prev !== cur) { resetClips(prev); setCap(prev, -1); prev = cur; }
+    // the page we just left keeps its frozen last frame while it slides away, and is reset once it is off screen
+    setCount(); if (prev !== cur) { const was = prev; setCap(was, -1); prev = cur; setTimeout(() => { if (cur !== was) resetClips(was); }, anim ? 650 : 0); }
     preload();
     if (reading) speak();
   }
@@ -207,6 +208,8 @@ addEventListener('keydown', e => {
 });
 function preload() {
   [cur + 1, cur + 2].forEach(i => secs[i] && secs[i].querySelectorAll('img[loading=lazy]').forEach(im => { im.loading = 'eager'; }));
+  // decode the next page's pictures now, so the slide to it never waits on them
+  secs[cur + 1] && secs[cur + 1].querySelectorAll('img').forEach(im => { if (im.decode) im.decode().catch(() => {}); });
   [cur, cur + 1].forEach(i => secs[i] && secs[i].querySelectorAll('video').forEach(v => { if (!v.src) { v.preload = 'auto'; v.src = v.dataset.src; } }));
   [cur, cur + 1].forEach(i => secs[i] && (S.pages[i].clips || []).forEach(c => { if (c.end && !NOCLIPS) new Image().src = url(`art/${c.end}-soft.webp`); }));
 }
@@ -340,7 +343,8 @@ function stopSfx() { if (sfxNow) { try { sfxNow.stop(); } catch (e) {} sfxNow = 
 function setSoft(sec, name) {
   sec.querySelectorAll('.soft img, img.bg').forEach(im => {
     if (!im.dataset.orig) im.dataset.orig = im.src;
-    im.src = name ? url(`art/${name}-soft.webp`) : im.dataset.orig;
+    const to = name ? url(`art/${name}-soft.webp`) : im.dataset.orig;
+    if (im.src !== to) im.src = to;  // setting the same picture again would make it flicker
   });
 }
 function resetClips(i) {
