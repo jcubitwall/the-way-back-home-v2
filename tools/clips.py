@@ -73,7 +73,7 @@ def main():
 
     # the clip, small enough for a slow phone connection; "faststart" lets it begin before it has all arrived
     run('-i', src, '-map', '0:v:0', '-an', '-vf', f'scale={WIDTH}:-2:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-profile:v', 'high',
-        '-preset', 'slow', '-crf', '28', '-movflags', '+faststart', path('scenes', name + '.mp4'))
+        '-preset', 'slow', '-crf', str(arg('--crf', 28, int)), '-movflags', '+faststart', path('scenes', name + '.mp4'))
     # first and last frames as stills
     scale = f'scale={min(STILL, w)}:-2:flags=lanczos'
     if n == 1:
