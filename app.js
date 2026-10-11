@@ -14,6 +14,8 @@ const DEMO = Q.has('demo') || !!CFG.demo;      // try the captions with no recor
 const TRACK = /(^|\.)thewaybackhome\.net$|\.github\.io$/.test(location.hostname) && !RENDER;
 const CJK = new Set(['zh', 'ja']);
 // data saver or a very slow connection: show the still pictures only, never download the animated scenes
+// iPads and computers show the book about 560 px wide or more: they get the sharper copy of a scene when there is one
+const BIG = Math.min(innerWidth, innerHeight * 942 / 1670) >= 560;
 const NOCLIPS = Q.has('noclips') || (() => { const c = navigator.connection; return !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''))); })();
 // fonts for scripts that Andika/Grandstander don't cover: [Google Fonts family, line height]
 const SCRIPT = {
@@ -136,7 +138,7 @@ function build() {
       const v = document.createElement('video');
       v.muted = true; v.defaultMuted = true; v.playsInline = true; v.preload = 'none';
       v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      v.dataset.src = url(c.src); v.dataset.j = j;
+      v.dataset.src = url(BIG && c.hd ? c.hd : c.src); v.dataset.j = j;
       sec.querySelector('.art').appendChild(v);
     });
     measure.observe(sec.querySelector('.txt'));

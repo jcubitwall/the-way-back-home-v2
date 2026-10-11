@@ -21,7 +21,7 @@ button{font:inherit}
 
 .pg{position:relative;height:100%;overflow:hidden;background:var(--tint)}
 .pg>.bg{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:brightness(.72) saturate(1.1)}
-.stage{position:relative;height:100%;margin:0 auto;width:min(100%,calc(100vh * var(--artw) / var(--arth)));overflow:hidden}
+.stage{position:relative;height:100%;margin:0 auto;container-type:inline-size;width:min(100%,calc(100vh * var(--artw) / var(--arth)));overflow:hidden}
 @supports (height:100dvh){.stage{width:min(100%,calc(100dvh * var(--artw) / var(--arth)))}}
 /* wider screens (tablets, computers): the book becomes a tall column with soft edges */
 @media (min-aspect-ratio:10/16){.stage{box-shadow:0 0 80px rgba(0,0,0,.45)}}
@@ -51,6 +51,7 @@ button{font:inherit}
 .txt{position:absolute;left:0;right:0;bottom:0;z-index:3;margin:0 auto;max-width:680px;
   padding:0 calc(24px + env(safe-area-inset-right,0px)) calc(30px + env(safe-area-inset-bottom,0px)) calc(24px + env(safe-area-inset-left,0px));
   text-shadow:0 1px 3px rgba(0,0,0,.55),0 0 18px rgba(0,0,0,.25);font-size:calc(var(--k) * clamp(16px,4.3vw,21px));line-height:1.42}
+
 [dir=rtl] .txt{text-align:right}
 .num{font-family:var(--display);font-weight:800;color:var(--gold);font-size:.86em;margin:0 0 .2em}
 .para{margin:0 0 .5em}
@@ -115,3 +116,6 @@ button{font:inherit}
 .render .track{transition:none}
 
 @media (prefers-reduced-motion:reduce){.track.anim{transition-duration:.01s}.caps .cap{transition:opacity .2s}.cta svg,.rb[aria-pressed=true]{animation:none}}
+
+/* text grows with the page itself, so an iPad's wider page gets bigger words, not just more empty space */
+@supports (width:1cqw){.txt{font-size:calc(var(--k) * clamp(16px,4.3cqw,30px))}.pg.prayer .txt,.pg.grownups .txt{font-size:calc(var(--k) * clamp(15px,4cqw,28px))}.cover h1{font-size:calc(var(--k) * clamp(48px,14cqw,110px))}}

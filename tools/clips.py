@@ -24,7 +24,7 @@ import json, os, subprocess, sys
 from common import path, save, story
 
 WIDTH = 720      # video width on phones
-STILL = 942      # the still pictures are this wide
+STILL = 1080     # the still pictures are at most this wide
 
 
 def run(*a):
@@ -74,6 +74,13 @@ def main():
     # the clip, small enough for a slow phone connection; "faststart" lets it begin before it has all arrived
     run('-i', src, '-map', '0:v:0', '-an', '-vf', f'scale={WIDTH}:-2:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-profile:v', 'high',
         '-preset', 'slow', '-crf', str(arg('--crf', 28, int)), '-movflags', '+faststart', path('scenes', name + '.mp4'))
+    # a sharper copy for iPads and computers, when the clip itself is sharper than the phone copy
+    hd = path('scenes', name + '-hd.mp4')
+    if w >= 1000:
+        run('-i', src, '-map', '0:v:0', '-an', '-vf', f'scale={min(1080, w)}:-2:flags=lanczos,format=yuv420p', '-c:v', 'libx264',
+            '-profile:v', 'high', '-preset', 'slow', '-crf', str(arg('--crf', 28, int)), '-movflags', '+faststart', hd)
+    elif os.path.exists(hd):
+        os.remove(hd)
     # first and last frames as stills
     scale = f'scale={min(STILL, w)}:-2:flags=lanczos'
     if n == 1:
@@ -81,6 +88,8 @@ def main():
     run('-sseof', '-0.6', '-i', src, '-map', '0:v:0', '-vf', scale, '-q:v', '2', '-update', '1', path('art', 'src', f'{name}-end.jpg'))
 
     clip = {'src': f'scenes/{name}.mp4', 'sentence': arg('--sentence', 0, int), 'offset': arg('--offset', 0.0, float), 'end': f'{name}-end'}
+    if os.path.exists(hd):
+        clip['hd'] = f'scenes/{name}-hd.mp4'
     snd = path('scenes', name + '.mp3')
     if '--sound' in sys.argv:
         if not has_audio:
