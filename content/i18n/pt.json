@@ -80,7 +80,7 @@
           "Depois, deu um pedaço para Adão, e ele comeu também."
         ],
         [
-          "Ih, não!",
+          "Poxa!",
           "Pela primeira vez, as pessoas tinham desobedecido a Deus.",
           "A Bíblia chama isso de pecado."
         ],
@@ -101,7 +101,7 @@
         ],
         [
           "Mas Deus também fez uma promessa a eles.",
-          "Um dia, Alguém viria para esmagar a serpente e abrir o caminho de volta para casa."
+          "Um dia, Alguém viria para esmagar a cabeça da serpente e abrir o caminho de volta para casa."
         ],
         [
           "Então Deus os mandou para fora do jardim, e um anjo passou a guardar a entrada."
@@ -193,7 +193,7 @@
     "cross": {
       "text": [
         [
-          "Jesus nunca pecou, nem uma vezinha.",
+          "Jesus nunca pecou, nenhuma vez.",
           "Mas Ele morreu numa cruz no nosso lugar, como os animais que morreram por Adão e Eva."
         ],
         [
@@ -323,19 +323,19 @@
     ],
     "fruit": [
       0.0,
-      4.68,
-      9.56,
-      11.01,
-      15.01,
-      17.32
+      5.33,
+      10.09,
+      11.14,
+      15.02,
+      17.19
     ],
     "exile": [
       0.0,
-      5.41,
-      8.62,
-      13.36,
-      16.23,
-      22.02
+      5.87,
+      8.81,
+      13.39,
+      16.02,
+      22.21
     ],
     "road": [
       0.0,
@@ -377,9 +377,9 @@
     ],
     "cross": [
       0.0,
-      3.34,
-      8.47,
-      14.4
+      3.03,
+      8.08,
+      14.0
     ],
     "choice": [
       0.0,
