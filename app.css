@@ -33,7 +33,7 @@ button{font:inherit}
 @media (min-aspect-ratio:10/16){.stage{box-shadow:0 0 80px rgba(0,0,0,.45)}}
 
 .art{position:absolute;left:0;top:0;width:100%;aspect-ratio:var(--artw)/var(--arth);
-  -webkit-mask-image:linear-gradient(#000 84%,transparent);mask-image:linear-gradient(#000 84%,transparent)}
+  -webkit-mask-image:linear-gradient(#000 93%,transparent);mask-image:linear-gradient(#000 93%,transparent)}
 .art img,.art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .art video{opacity:0;transition:opacity .4s}
 .art video.on{opacity:1}
@@ -51,7 +51,7 @@ button{font:inherit}
 .soft img{position:absolute;left:0;width:100%;display:block}
 .soft .ext{top:0;height:100%;object-fit:cover}
 .soft .top{top:0;aspect-ratio:var(--artw)/var(--arth);height:auto;object-fit:cover;
-  -webkit-mask-image:linear-gradient(#000 84%,transparent);mask-image:linear-gradient(#000 84%,transparent)}
+  -webkit-mask-image:linear-gradient(#000 93%,transparent);mask-image:linear-gradient(#000 93%,transparent)}
 /* chapter colour, deepening toward the bottom */
 .shade{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to bottom,rgba(0,0,0,0) calc(100% - var(--th,40%) - 80px),var(--shade-mid) calc(100% - var(--th,40%) + 10px),var(--shade) 100%)}
