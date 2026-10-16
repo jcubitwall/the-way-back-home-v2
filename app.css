@@ -15,7 +15,9 @@ body{font-family:var(--body);color:#fff;-webkit-font-smoothing:antialiased;-webk
 button{font:inherit}
 [hidden]{display:none!important}
 
-.book{position:fixed;inset:0;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+/* the book is ordinary page content, not a fixed layer: Safari on iOS 26 paints a solid bar over the bottom of the
+   screen in the colour of any fixed layer that touches the bottom edge, which hid the bottom of every picture */
+.book{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
 /* the pages run all the way to the bottom of the screen, under the phone's toolbar or home bar; the words
    are lifted by exactly the part of the screen the phone covers (--gap), so nothing important hides there */
 :root{--gap:0px}
