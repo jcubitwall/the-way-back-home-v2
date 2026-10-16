@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Way Back Home · Picture tract</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="art/favicon-48.png" sizes="48x48">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="qr.js"></script>
+<style>
+/* The wordless fold-out tract: the same sheet and fold as tract.html (one tabloid sheet, 8 panels of 4.25 × 5.5 in
+   per side, 1/8 in bleed, double-sided, flip on short edge), but pictures only: all 15 scenes, uncropped, numbered,
+   and one QR code (on the cover) to the book. Arrows instead of "unfold" / "turn over".
+     Side 1:  [15 new earth | 13 tomb | 14 gates | cover + QR]
+              [4 | 3 | 2 | 1]  (upside down)
+     Side 2:  [5 | 6 | 7 | 8]
+              [9 | 10 | 11 | 12]
+   Fold in half along the long middle (5–12 inside), then zig-zag into four with the cover on top.
+   tract-pictures.html?lang=xx  (the QR code goes to that language's book; default English) */
+:root{
+  --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
+  --body:'Andika','Verdana',system-ui,sans-serif;
+  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --gold2:#C99A1E;
+  --green:#2f8a4e; --purple:#6b3fa0; --night:#26213f; --orange:#d9772a; --sky:#2f7fd9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
+.top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
+.top div{flex:1 1 300px;font-size:14.5px;line-height:1.45;color:var(--muted)}
+.top ol{margin:4px 0 0;padding-left:20px}
+.top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
+.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
+.wrap{padding:20px 16px 40px;overflow:hidden}
+.sheets{transform-origin:top left;width:17.25in;margin:0 auto}
+.label{font:800 15px var(--display);color:var(--muted);margin:0 0 8px}
+.sheet{width:17.25in;height:11.25in;display:grid;grid-template-columns:4.375in 4.25in 4.25in 4.375in;grid-template-rows:5.625in 5.625in;
+  background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.35in;overflow:hidden}
+.cell{position:relative;overflow:hidden;
+  background-image:radial-gradient(rgba(255,255,255,.13) 1.1px,transparent 1.3px);background-size:.16in .16in}
+.cell .pn{position:absolute;width:4.25in;height:5.5in;left:0}
+.c0 .pn{left:.125in}
+.r0 .pn{top:.125in}.r1 .pn{top:0}
+.flip .pn{transform:rotate(180deg)}
+.green{background-color:var(--green)}.purple{background-color:var(--purple)}.night{background-color:var(--night)}
+.orange{background-color:var(--orange)}.sky{background-color:var(--sky)}
+
+/* a whole picture, as big as the panel allows, with its number below */
+.ph{position:absolute;top:.2in;left:50%;transform:translateX(-50%);height:4.72in;aspect-ratio:9/16;border-radius:.16in;overflow:hidden;
+  background:#000;box-shadow:0 0 0 .05in #fff,0 3pt 10pt rgba(0,0,0,.35)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.num{position:absolute;left:50%;bottom:.14in;transform:translateX(-50%);width:.4in;height:.4in;border-radius:50%;
+  background:#fff;font:900 13.5pt/.4in var(--display);text-align:center;box-shadow:0 1.5pt 4pt rgba(0,0,0,.25)}
+.green .num{color:var(--green)}.purple .num{color:var(--purple)}.night .num{color:var(--night)}.orange .num{color:var(--orange)}.sky .num{color:var(--sky)}
+/* arrows: unfold (panel 4) and turn over (panel 12) */
+.arrow{position:absolute;bottom:.13in;width:.42in;height:.42in;border-radius:50%;background:var(--gold);box-shadow:0 1.5pt 0 var(--gold2);display:grid;place-items:center}
+.arrow.r{right:.28in}
+.arrow svg{width:.26in;height:.26in}
+
+/* cover: the cover picture filling the panel, with the QR code on the white robes */
+.cover{background:#7fb3e6}
+.cover .art{position:absolute;inset:-.125in;background:url(art/src/cover.jpg) center 6%/cover no-repeat}
+.qrtile{position:absolute;right:.2in;bottom:.2in;padding:.08in;background:#fff;border-radius:.14in;
+  box-shadow:0 3pt 10pt rgba(0,0,0,.3);display:flex;flex-direction:column;align-items:center;gap:.04in}
+.qrtile .qr{width:1.2in;height:1.2in}
+.qrtile .qr svg{display:block;width:100%;height:100%}
+.qrtile .icons{display:flex;gap:.1in;color:var(--blue)}
+.qrtile .icons svg{width:.22in;height:.22in}
+
+.err{padding:24px;font-size:16px}
+@page{size:17.25in 11.25in;margin:0}
+@media print{
+  html,body{background:#fff}
+  .top,.label{display:none}
+  .wrap{padding:0;overflow:visible}
+  .sheets{transform:none!important;margin:0}
+  .sheet{box-shadow:none;margin:0;break-after:page}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <a id="back" href="./">‹ The Way Back Home</a>
+  <div>A wordless fold-out tract from one 11 × 17 sheet (with 1/8 in bleed for a print shop).
+    <ol><li>Print double-sided, “flip on short edge”.</li>
+    <li>Fold in half along the long middle, with pictures 5–12 inside.</li>
+    <li>Zig-zag fold the strip into four, with the cover on top.</li></ol></div>
+  <button class="btn" id="print" type="button">Print</button>
+</div>
+<div class="wrap" id="wrap"><div class="sheets" id="sheets"></div></div>
+<script>
+(async () => {
+  const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
+  // the 15 scenes in story order: picture, panel colour
+  const ART = [['garden-clip', 'green'], ['rule-clip', 'green'], ['serpent-end', 'purple'], ['fruit-end', 'purple'],
+    ['exile-end', 'purple'], ['road-end', 'night'], ['test-2-end', 'night'], ['locked-2-end', 'night'], ['scrub-clip', 'purple'],
+    ['door-end', 'orange'], ['cross-end', 'orange'], ['choice-end', 'orange'], ['tomb-end', 'sky'], ['gates-clip', 'sky'],
+    ['new-earth-end', 'sky']];
+  const DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="#2B2233" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg>';
+  const TURN = '<svg viewBox="0 0 24 24" fill="none" stroke="#2B2233" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>';
+  const BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>';
+  const EAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg>';
+  const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>';
+  try {
+    const langs = await get('content/languages.json');
+    const q = new URLSearchParams(location.search).get('lang');
+    const L = langs.langs[q] && langs.langs[q].ready ? q : 'en';
+    const T = await get(`content/i18n/${L}.json`);
+    document.title = `${T.pages.cover.title} · Picture tract`;
+    const back = document.getElementById('back'); back.href = `${L}/`; back.textContent = `‹ ${T.pages.cover.title}`;
+
+    const link = `https://thewaybackhome.net/${L}/`;
+    const qr = qrcode(0, 'M'); qr.addData(link); qr.make();
+    const n = qr.getModuleCount(), m = 1; let d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
+    const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
+
+    const story = i => {
+      const [img, col] = ART[i];
+      const arrow = i === 3 ? `<div class="arrow r">${DOWN}</div>` : i === 11 ? `<div class="arrow r">${TURN}</div>` : '';
+      return [col, `<div class="ph"><img src="art/src/${img}.jpg" alt=""></div><div class="num">${i + 1}</div>${arrow}`];
+    };
+    const coverP = ['cover', `<div class="art"></div><div class="qrtile"><div class="qr">${svg}</div><div class="icons">${BOOK}${EAR}${GLOBE}</div></div>`];
+    const side = rows => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
+      const [[cls, html], flip] = p;
+      return `<div class="cell ${cls} c${c} r${r}${flip ? ' flip' : ''}"><div class="pn">${html}</div></div>`;
+    }).join('')).join('')}</div>`;
+    const S = i => [story(i), false], U = i => [story(i), true];
+    const side1 = side([[S(14), S(12), S(13), [coverP, false]], [U(3), U(2), U(1), U(0)]]);
+    const side2 = side([[S(4), S(5), S(6), S(7)], [S(8), S(9), S(10), S(11)]]);
+    const sheets = document.getElementById('sheets');
+    sheets.innerHTML = `<p class="label">Side 1 (cover side)</p>${side1}<p class="label">Side 2 (inside)</p>${side2}`;
+    const fit = () => {
+      const avail = document.getElementById('wrap').clientWidth - 32, w = 17.25 * 96, k = Math.min(1, avail / w);
+      sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
+      document.getElementById('wrap').style.height = k < 1 ? (sheets.offsetHeight * k + 60) + 'px' : '';
+    };
+    fit(); addEventListener('resize', fit);
+    document.getElementById('print').onclick = () => window.print();
+  } catch (e) {
+    document.getElementById('wrap').innerHTML = '<p class="err">The tract could not load. Please check your connection and try again.</p>';
+  }
+})();
+</script>
+</body>
+</html>
