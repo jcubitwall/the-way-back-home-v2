@@ -164,6 +164,10 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   language link and its QR code (same link as the cover QR; `?preview=1` for unlisted languages). On-screen help `ui.cardshelp`
   and button `ui.print`. Strings written for all 17 live languages (ki/pdt fall back to English). Long titles shrink to fit.
   Checked: one page on both Letter and A4 in en/de/ar(rtl)/ja; all 10 printed codes decode to the right link.
+  Redesigned 16 Oct 2026 (Johnny chose design B of three mock-ups, "but keep the page white"): the cover picture (art/cover-720.webp)
+  fills the left 2 in of each card and fades into white; QR (0.86 in, white tile), title (13 pt, shrinks to fit), subtitle,
+  scan line and link on the right. RTL languages mirror it. Checked all 17 languages fit (de/sw titles shrink to ~10 pt);
+  10/10 codes decode at 300 dpi.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)

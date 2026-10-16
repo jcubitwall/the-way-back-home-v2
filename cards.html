@@ -10,7 +10,7 @@
 <script src="qr.js"></script>
 <style>
 /* A sheet of 10 business cards (3.5 × 2 in, 2 across × 5 down) for the language chosen in the book:
-   title, subtitle, a QR code for that language's link and "scan to read and listen". Fits US Letter and A4.
+   the cover picture fading into white, title, subtitle, a QR code for that language's link and "scan to read and listen". Fits US Letter and A4.
    Dashed lines show where to cut. Opened from the book's ⋯ menu: cards.html?lang=xx */
 :root{
   --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
@@ -30,16 +30,21 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .sheet{width:7in;margin:0 auto;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);transform-origin:top left;
   display:grid;grid-template-columns:repeat(2,3.5in);grid-auto-rows:2in;
   border-top:1px dashed var(--cut);border-left:1px dashed var(--cut)}
-.card{position:relative;overflow:hidden;border-right:1px dashed var(--cut);border-bottom:1px dashed var(--cut);
-  display:grid;grid-template-columns:1.52in 1fr;align-items:center;gap:.14in;padding:.17in .2in .17in .17in}
-.card::before{content:"";position:absolute;inset:0 0 auto 0;height:.07in;background:linear-gradient(90deg,var(--blue),#5fb0ff)}
-.qr svg{display:block;width:1.52in;height:1.52in}
-.words{min-width:0;display:flex;flex-direction:column;gap:.045in}
-.title{font:900 17pt/1.02 var(--display);color:var(--ink);overflow-wrap:anywhere}
-.sub{font:400 8pt/1.25 var(--body);color:var(--muted)}
-.scan{margin-top:.03in;font:700 8.6pt/1.25 var(--body);color:var(--blue)}
-.url{font:700 7pt/1.2 var(--body);color:var(--muted);overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .card{padding:.17in .17in .17in .2in}
+.card{position:relative;overflow:hidden;border-right:1px dashed var(--cut);border-bottom:1px dashed var(--cut);background:#fff}
+/* the cover picture (Jesus hugging the children) fills the left of the card and fades into white */
+.card .pic{position:absolute;inset:0 auto 0 0;width:2.05in;background:url(art/cover-720.webp) left 16%/2.05in auto no-repeat}
+.card .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0) 52%,#fff 92%)}
+.card .words{position:absolute;inset:0 .12in 0 auto;width:1.46in;display:flex;flex-direction:column;justify-content:center;gap:.03in;min-width:0}
+.qr{width:.86in;height:.86in;margin-bottom:.02in;padding:.03in;background:#fff;border-radius:.06in;box-shadow:0 0 0 .5pt #e3e1ea}
+.qr svg{display:block;width:100%;height:100%}
+.title{font:900 13pt/1.0 var(--display);color:var(--ink);overflow-wrap:anywhere}
+.sub{font:400 7.2pt/1.2 var(--body);color:var(--muted)}
+.scan{font:700 7.6pt/1.2 var(--body);color:var(--blue)}
+.url{font:700 6.3pt/1.2 var(--body);color:var(--muted);overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+/* right-to-left languages: the picture moves to the right and the words to the left */
+[dir=rtl] .card .pic{inset:0 0 0 auto;background-position:right 16%}
+[dir=rtl] .card .pic::after{background:linear-gradient(270deg,rgba(255,255,255,0) 52%,#fff 92%)}
+[dir=rtl] .card .words{inset:0 auto 0 .13in}
 .err{padding:24px;font-size:16px}
 @page{size:auto;margin:.4in}
 @media print{
@@ -93,13 +98,17 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
     const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges" role="img" aria-label="QR"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
     const shown = link.replace(/^https:\/\//, '').replace(/\/$/, '').replace(/\/\?preview=1$/, '');
-    const card = `<div class="card"><div class="qr">${svg}</div><div class="words"><div class="title">${esc(title)}</div>` +
+    const card = `<div class="card"><div class="pic"></div><div class="words"><div class="qr">${svg}</div><div class="title">${esc(title)}</div>` +
       `<div class="sub">${esc(sub)}</div><div class="scan">${esc(ui.cardsscan)}</div><div class="url">${esc(shown)}</div></div></div>`;
     const sheet = document.getElementById('sheet');
     sheet.innerHTML = card.repeat(10);
     // long titles shrink until they fit their card
     if (document.fonts) await document.fonts.ready;
-    sheet.querySelectorAll('.title').forEach(t => { let s = 17; while (t.scrollHeight > 0.62 * 96 && s > 10) { s -= 1; t.style.fontSize = s + 'pt'; } });
+    sheet.querySelectorAll('.words').forEach(w => {
+      const t = w.querySelector('.title'); let s = 13;
+      const used = () => [...w.children].reduce((a, c) => a + c.offsetHeight, 0) + 0.03 * 96 * (w.children.length - 1);
+      while ((used() > 1.86 * 96 || t.offsetHeight > 0.46 * 96) && s > 8) { s -= 0.5; t.style.fontSize = s + 'pt'; }
+    });
     // on a phone, show the whole sheet scaled down (printing always uses the real size)
     const fit = () => {
       const avail = document.getElementById('wrap').clientWidth - 32, w = 7 * 96, k = Math.min(1, avail / w);
