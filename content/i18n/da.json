@@ -7,8 +7,8 @@
     "more": "Mere",
     "home": "Tilbage til starten",
     "app": "Hent appen",
-    "apptip": "Tryk på Del (eller browserens menu ⋮), og vælg så “Føj til hjemmeskærm”.",
-    "apptip26": "Tryk på ••• nedenfor, derefter på Del, og vælg så “Føj til hjemmeskærm”.",
+    "apptip": "Tryk på Del (eller browserens menu ⋮), og vælg så »Føj til hjemmeskærm«.",
+    "apptip26": "Tryk på ••• nedenfor, derefter på Del, og vælg så »Føj til hjemmeskærm«.",
     "video": "Hent video",
     "share": "Del",
     "langs": "Sprog",
@@ -22,11 +22,11 @@
         "Bed om forbøn",
         "Ønsk et nyt sprog",
         "Sig tak",
-        "Fortæl, hvordan bogen hjalp"
+        "Fortæl, hvordan bogen har hjulpet"
       ],
       "note": "Forældre eller værger: skriv venligst på jeres barns vegne."
     },
-    "videotip": "Videoen åbner. Tryk på Del og derefter “Gem video” (eller “Gem i Arkiver”)."
+    "videotip": "Videoen åbnes. Tryk på Del og derefter på »Gem video« (eller »Gem i Arkiver«)."
   },
   "pages": {
     "cover": {
@@ -52,12 +52,12 @@
     "rule": {
       "text": [
         [
-          "Gud gav Adam og Eva lov til at nyde alle træerne i haven – undtagen ét."
+          "Gud gav Adam og Eva lov til at spise af alle træerne i haven – undtagen ét."
         ],
         [
-          "»Spis ikke af det træ,« sagde Gud. »Gør I det, skal I dø.«",
+          "»Spis ikke af det træ«, sagde Gud. »Gør I det, skal I dø.«",
           "Adam pegede på træet, så Eva ville huske det.",
-          "Det var én enkel regel fra en Far, der elskede dem."
+          "Det var én enkel regel fra en far, der elskede dem."
         ]
       ],
       "ref": "1. Mosebog 2,16–17"
@@ -79,7 +79,7 @@
     "fruit": {
       "text": [
         [
-          "Eva kiggede på frugten. Den så så lækker ud, at hun tog en bid.",
+          "Eva kiggede på frugten. Den så virkelig lækker ud, så hun tog en bid.",
           "Så gav hun også lidt til Adam, og han spiste det."
         ],
         [
@@ -104,10 +104,10 @@
         ],
         [
           "Men Gud gav dem også et løfte.",
-          "En dag skulle der komme en, som ville knuse slangen og åbne vejen hjem igen."
+          "En dag skulle der komme én, som ville knuse slangen og åbne vejen hjem igen."
         ],
         [
-          "Så sendte Gud dem ud af haven, og en engel vogtede vejen tilbage."
+          "Så sendte Gud dem ud af haven, og en engel vogtede vejen ind i haven."
         ]
       ],
       "ref": "1. Mosebog 3,15.21–24"
@@ -130,7 +130,7 @@
     "test": {
       "text": [
         [
-          "Gud gav os ti gode regler, som kaldes De Ti Bud."
+          "Gud gav os ti gode regler, som kaldes de ti bud."
         ],
         [
           "Har du nogensinde løjet? Bare én gang?",
@@ -148,7 +148,7 @@
     "locked": {
       "text": [
         [
-          "Guds lov er som et spejl. Den viser os vores synd, men den kan ikke vaske den væk.",
+          "Guds lov er som et spejl. Den viser os vores synd, men kan ikke vaske den væk.",
           "Synden lukker os ude af Guds hjem, ligesom Adam og Eva blev lukket ude af haven."
         ],
         [
@@ -180,7 +180,7 @@
     "door": {
       "text": [
         [
-          "Her er den gode nyhed! Det er Jesus, Guds egen Søn.",
+          "Her er den gode nyhed! Den, der tager vores plads, er Jesus, Guds egen Søn.",
           "Han var med i haven sammen med Adam og Eva, og han er den, Gud havde lovet."
         ],
         [
@@ -210,14 +210,14 @@
       "text": [
         [
           "Nu skal hver enkelt af os træffe et valg.",
-          "Nogle siger: »Nej tak,« og går deres vej."
+          "Nogle siger: »Nej tak«, og går deres vej."
         ],
         [
           "Andre siger til Gud: »Jeg er ked af min synd. Jeg tror på, at Jesus døde i mit sted. Tilgiv mig, og frels mig!«",
           "Det betyder at vende sig bort fra synden og stole på Jesus."
         ],
         [
-          "Når vi gør det, tager Gud vores synd væk og klæder os i Jesu fuldkomne godhed.",
+          "Når vi gør det, tager Gud vores synd væk og klæder os i alt det gode, Jesus har gjort.",
           "Jesus elsker dig, og han lader dig selv vælge."
         ]
       ],
@@ -227,7 +227,7 @@
       "text": [
         [
           "Tre dage efter at Jesus var død, fandt hans venner graven tom.",
-          "Jesus var levende igen! Han havde besejret synden og døden!"
+          "Jesus levede igen! Han havde besejret synden og døden!"
         ],
         [
           "Alle, der stoler på ham, er rene og hvide som sne.",
@@ -273,7 +273,7 @@
         {
           "key": "2",
           "word": "Tro",
-          "rest": "på, at Jesus er Guds Søn, at han døde for dig, og at han opstod igen."
+          "rest": "på, at Jesus er Guds Søn, at han døde for dig, og at han opstod fra de døde."
         },
         {
           "key": "3",
@@ -281,7 +281,7 @@
           "rest": "at stole på Jesus og følge ham hver dag."
         }
       ],
-      "prayer": "»Kære Gud, jeg ved, at jeg har syndet, og jeg er ked af det. Tak, fordi du sendte Jesus for at dø for mig og opstå igen. Tilgiv mig, og gør mig ren. Jeg vil gerne følge dig. I Jesu navn. Amen.«",
+      "prayer": "»Kære Gud, jeg ved, at jeg har syndet, og jeg er ked af det. Tak, fordi du sendte Jesus for at dø for mig og opstå fra de døde. Tilgiv mig, og gør mig ren. Jeg vil gerne følge dig. I Jesu navn. Amen.«",
       "note": "Fortæl en forælder, en præst eller en anden voksen, du stoler på, om din bøn.",
       "ref": "Romerbrevet 10,9–10"
     },
