@@ -148,6 +148,8 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
     keeps a book near 55–75 MB (GitHub refuses files over 100 MB). Johnny wants the other languages **later**, after he
     finishes a few updates: run `python3 tools/video.py <code>`, then set `"video": true` for it in languages.json and build.
     If a page's text, timing or clip changes, that language's video must be rebuilt.
+    Space: GitHub Pages sites should stay under 1 GB; 16 videos at ~60 MB would be ~1 GB, so before making them all,
+    move the videos to other hosting (e.g. Cloudflare R2, the domain is already on Cloudflare) and point mVideo's link there.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)
