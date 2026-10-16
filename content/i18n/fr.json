@@ -19,7 +19,11 @@
         "Raconter comment ce livre a aidé"
       ],
       "note": "Parents ou tuteurs : merci d’écrire au nom de votre enfant."
-    }
+    },
+    "cards": "Imprimer des cartes QR",
+    "cardsscan": "Scannez pour lire et écouter gratuitement",
+    "cardshelp": "Imprimez cette page, découpez le long des pointillés et distribuez les cartes.",
+    "print": "Imprimer"
   },
   "pages": {
     "cover": {

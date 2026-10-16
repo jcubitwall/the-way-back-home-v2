@@ -19,7 +19,11 @@
         "Contar cómo ayudó este libro"
       ],
       "note": "Padres o tutores: por favor escriban en nombre de su hijo."
-    }
+    },
+    "cards": "Imprimir tarjetas QR",
+    "cardsscan": "Escanea para leer y escuchar gratis",
+    "cardshelp": "Imprime esta página, recorta por las líneas punteadas y reparte las tarjetas.",
+    "print": "Imprimir"
   },
   "pages": {
     "cover": {

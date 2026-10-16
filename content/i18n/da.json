@@ -26,7 +26,11 @@
       ],
       "note": "Forældre eller værger: skriv venligst på jeres barns vegne."
     },
-    "videotip": "Videoen åbnes. Tryk på Del og derefter på »Gem video« (eller »Gem i Arkiver«)."
+    "videotip": "Videoen åbnes. Tryk på Del og derefter på »Gem video« (eller »Gem i Arkiver«).",
+    "cards": "Udskriv QR-kort",
+    "cardsscan": "Scan koden – læs og lyt gratis",
+    "cardshelp": "Udskriv siden, klip langs de stiplede linjer, og del kortene ud.",
+    "print": "Udskriv"
   },
   "pages": {
     "cover": {

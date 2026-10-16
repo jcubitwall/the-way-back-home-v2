@@ -19,7 +19,11 @@
         "Erzählen, wie das Buch geholfen hat"
       ],
       "note": "Eltern oder Erziehungsberechtigte, bitte schreiben Sie im Namen Ihres Kindes."
-    }
+    },
+    "cards": "QR-Kärtchen drucken",
+    "cardsscan": "Scannen und kostenlos lesen und anhören",
+    "cardshelp": "Drucke diese Seite aus, schneide entlang der gestrichelten Linien und verteile die Kärtchen.",
+    "print": "Drucken"
   },
   "pages": {
     "cover": {

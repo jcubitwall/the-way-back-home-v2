@@ -158,6 +158,11 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
     device emulation. Add `videotip` to each language's ui when its video is made.
     Space: GitHub Pages sites should stay under 1 GB; 16 videos at ~60 MB would be ~1 GB, so before making them all,
     move the videos to other hosting (e.g. Cloudflare R2, the domain is already on Cloudflare) and point mVideo's link there.
+- **Printable QR cards (16 Oct 2026).** ⋯ menu → "Print QR cards" (`ui.cards`) opens `cards.html?lang=xx`: one sheet of 10 business cards
+  (3.5 × 2 in, 2 × 5, dashed cut lines) with the book title, subtitle, `ui.cardsscan` ("Scan to read and listen for free"), the
+  language link and its QR code (same link as the cover QR; `?preview=1` for unlisted languages). On-screen help `ui.cardshelp`
+  and button `ui.print`. Strings written for all 17 live languages (ki/pdt fall back to English). Long titles shrink to fit.
+  Checked: one page on both Letter and A4 in en/de/ar(rtl)/ja; all 10 printed codes decode to the right link.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)

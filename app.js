@@ -656,6 +656,10 @@ function setupControls() {
     clearTimeout(t._h); t._h = setTimeout(() => t.hidden = true, 9000);
   });
 
+  // a printable sheet of 10 QR business cards for this language (cards.html)
+  const mc = $('#mCards'); mc.href = ROOT + `cards.html?lang=${L}`;
+  mc.addEventListener('click', () => { count('cards'); closeMenus(); });
+
   $('#mShare').onclick = async () => {
     closeMenus(); count('share');
     const link = `https://thewaybackhome.net/${L}/`, title = T.title;

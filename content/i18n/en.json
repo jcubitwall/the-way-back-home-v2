@@ -26,7 +26,11 @@
       ],
       "note": "Parents or guardians, please write on behalf of your child."
     },
-    "videotip": "The video opens. Tap Share, then “Save Video” (or “Save to Files”)."
+    "videotip": "The video opens. Tap Share, then “Save Video” (or “Save to Files”).",
+    "cards": "Print QR cards",
+    "cardsscan": "Scan to read and listen for free",
+    "cardshelp": "Print this page, cut along the dotted lines, and hand the cards out.",
+    "print": "Print"
   },
   "pages": {
     "cover": {

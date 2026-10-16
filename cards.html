@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Way Back Home · QR cards</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="art/favicon-48.png" sizes="48x48">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="qr.js"></script>
+<style>
+/* A sheet of 10 business cards (3.5 × 2 in, 2 across × 5 down) for the language chosen in the book:
+   title, subtitle, a QR code for that language's link and "scan to read and listen". Fits US Letter and A4.
+   Dashed lines show where to cut. Opened from the book's ⋯ menu: cards.html?lang=xx */
+:root{
+  --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
+  --body:'Andika','Verdana',system-ui,sans-serif;
+  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --cut:#9a96a3;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
+.top{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
+.top p{margin:0;flex:1 1 260px;font-size:15px;line-height:1.4;color:var(--muted)}
+.top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
+.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;
+  box-shadow:0 3px 0 #C99A1E;display:inline-flex;align-items:center;gap:8px}
+.wrap{padding:20px 16px 40px;overflow:hidden}
+/* the paper, shown at its real size and scaled down to fit a phone */
+.sheet{width:7in;margin:0 auto;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);transform-origin:top left;
+  display:grid;grid-template-columns:repeat(2,3.5in);grid-auto-rows:2in;
+  border-top:1px dashed var(--cut);border-left:1px dashed var(--cut)}
+.card{position:relative;overflow:hidden;border-right:1px dashed var(--cut);border-bottom:1px dashed var(--cut);
+  display:grid;grid-template-columns:1.52in 1fr;align-items:center;gap:.14in;padding:.17in .2in .17in .17in}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:.07in;background:linear-gradient(90deg,var(--blue),#5fb0ff)}
+.qr svg{display:block;width:1.52in;height:1.52in}
+.words{min-width:0;display:flex;flex-direction:column;gap:.045in}
+.title{font:900 17pt/1.02 var(--display);color:var(--ink);overflow-wrap:anywhere}
+.sub{font:400 8pt/1.25 var(--body);color:var(--muted)}
+.scan{margin-top:.03in;font:700 8.6pt/1.25 var(--body);color:var(--blue)}
+.url{font:700 7pt/1.2 var(--body);color:var(--muted);overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .card{padding:.17in .17in .17in .2in}
+.err{padding:24px;font-size:16px}
+@page{size:auto;margin:.4in}
+@media print{
+  html,body{background:#fff}
+  .top{display:none}
+  .wrap{padding:0;overflow:visible}
+  .sheet{box-shadow:none;transform:none!important;margin:0 auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <a id="back" href="./">‹ The Way Back Home</a>
+  <p id="help">Print this page, cut along the dotted lines, and hand the cards out.</p>
+  <button class="btn" id="print" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg><span id="ptext">Print</span></button>
+</div>
+<div class="wrap" id="wrap"><div class="sheet" id="sheet"></div></div>
+<script>
+(async () => {
+  // fonts for scripts that Andika/Grandstander don't cover (the same list as app.js)
+  const SCRIPT = { ar: 'Noto Naskh Arabic', ur: 'Noto Nastaliq Urdu', he: 'Noto Sans Hebrew', hi: 'Noto Sans Devanagari',
+    bn: 'Noto Sans Bengali', pa: 'Noto Sans Gurmukhi', zh: 'Noto Sans SC', ja: 'Noto Sans JP', ko: 'Noto Sans KR' };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
+  try {
+    const langs = await get('content/languages.json');
+    const q = new URLSearchParams(location.search).get('lang');
+    const L = langs.langs[q] ? q : 'en', meta = langs.langs[L];
+    const [T, EN] = await Promise.all([get(`content/i18n/${L}.json`), L === 'en' ? null : get('content/i18n/en.json')]);
+    const ui = Object.assign({}, (EN || T).ui, T.ui);
+    const h = document.documentElement; h.lang = L; h.dir = meta.dir || 'ltr';
+    const f = SCRIPT[L];
+    if (f) {
+      const l = document.createElement('link'); l.rel = 'stylesheet';
+      l.href = `https://fonts.googleapis.com/css2?family=${f.replace(/ /g, '+')}:wght@400;700;900&display=swap`;
+      document.head.appendChild(l);
+      h.style.setProperty('--body', `'Andika','${f}',system-ui,sans-serif`);
+      h.style.setProperty('--display', `'Grandstander','${f}',system-ui,sans-serif`);
+    }
+    const cover = (T.pages && T.pages.cover) || {};
+    const title = cover.title || T.title, sub = cover.subtitle || '';
+    document.title = `${title} · QR`;
+    document.getElementById('help').textContent = ui.cardshelp;
+    document.getElementById('ptext').textContent = ui.print;
+    const back = document.getElementById('back'); back.href = `${L}/` + (meta.ready ? '' : '?preview=1'); back.textContent = `‹ ${title}`;
+    // the same link as the cover's QR code
+    const link = `https://thewaybackhome.net/${L}/` + (meta.ready ? '' : '?preview=1');
+    const qr = qrcode(0, 'M'); qr.addData(link); qr.make();
+    const n = qr.getModuleCount(), m = 1; let d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
+    const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges" role="img" aria-label="QR"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
+    const shown = link.replace(/^https:\/\//, '').replace(/\/$/, '').replace(/\/\?preview=1$/, '');
+    const card = `<div class="card"><div class="qr">${svg}</div><div class="words"><div class="title">${esc(title)}</div>` +
+      `<div class="sub">${esc(sub)}</div><div class="scan">${esc(ui.cardsscan)}</div><div class="url">${esc(shown)}</div></div></div>`;
+    const sheet = document.getElementById('sheet');
+    sheet.innerHTML = card.repeat(10);
+    // long titles shrink until they fit their card
+    if (document.fonts) await document.fonts.ready;
+    sheet.querySelectorAll('.title').forEach(t => { let s = 17; while (t.scrollHeight > 0.62 * 96 && s > 10) { s -= 1; t.style.fontSize = s + 'pt'; } });
+    // on a phone, show the whole sheet scaled down (printing always uses the real size)
+    const fit = () => {
+      const avail = document.getElementById('wrap').clientWidth - 32, w = 7 * 96, k = Math.min(1, avail / w);
+      sheet.style.transform = k < 1 ? `scale(${k})` : ''; sheet.style.marginLeft = k < 1 ? '0' : '';
+      document.getElementById('wrap').style.height = k < 1 ? (10 * 96 * k + 60) + 'px' : '';
+    };
+    fit(); addEventListener('resize', fit);
+    document.getElementById('print').onclick = () => window.print();
+  } catch (e) {
+    document.getElementById('wrap').innerHTML = '<p class="err">The cards could not load. Please check your connection and try again.</p>';
+  }
+})();
+</script>
+</body>
+</html>

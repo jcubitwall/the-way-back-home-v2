@@ -19,7 +19,11 @@
         "Shiriki jinsi kitabu hiki kilivyosaidia"
       ],
       "note": "Wazazi au walezi, tafadhali andikeni kwa niaba ya mtoto wenu."
-    }
+    },
+    "cards": "Chapisha kadi za QR",
+    "cardsscan": "Changanua usome na usikilize bure",
+    "cardshelp": "Chapisha ukurasa huu, kata kwenye mistari ya vitone, kisha wagawie wengine kadi hizi.",
+    "print": "Chapisha"
   },
   "pages": {
     "cover": {

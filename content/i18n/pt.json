@@ -19,7 +19,11 @@
         "Contar como este livro ajudou"
       ],
       "note": "Pais ou responsáveis, por favor escrevam em nome da criança."
-    }
+    },
+    "cards": "Imprimir cartões QR",
+    "cardsscan": "Escaneie para ler e ouvir de graça",
+    "cardshelp": "Imprima esta página, recorte nas linhas pontilhadas e distribua os cartões.",
+    "print": "Imprimir"
   },
   "pages": {
     "cover": {
