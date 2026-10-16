@@ -148,6 +148,10 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
     keeps a book near 55–75 MB (GitHub refuses files over 100 MB). Johnny wants the other languages **later**, after he
     finishes a few updates: run `python3 tools/video.py <code>`, then set `"video": true` for it in languages.json and build.
     If a page's text, timing or clip changes, that language's video must be rebuilt.
+    Download fix (16 Oct 2026, Johnny's tap did nothing on his iPhone): sw.js no longer touches `/video/` (it tried to cache the
+    65 MB file, and iOS downloads through a service worker fail), and on iPhone/iPad the button opens the video in a new tab with
+    a tip (`ui.videotip`, English only so far: "Tap Share, then Save Video"); Android/desktop download directly. Tested both in
+    device emulation. Add `videotip` to each language's ui when its video is made.
     Space: GitHub Pages sites should stay under 1 GB; 16 videos at ~60 MB would be ~1 GB, so before making them all,
     move the videos to other hosting (e.g. Cloudflare R2, the domain is already on Cloudflare) and point mVideo's link there.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).

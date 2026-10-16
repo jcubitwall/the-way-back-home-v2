@@ -12,6 +12,7 @@ self.addEventListener('fetch', e => {
   const r = e.request, u = new URL(r.url);
   if (r.method !== 'GET' || u.origin !== location.origin) return;
   if (r.destination === 'audio' || r.destination === 'video' || r.headers.has('range')) return; // streamed media
+  if (u.pathname.includes('/video/')) return;  // the downloadable book videos (60+ MB) go straight to the network, never into the cache
   if (r.mode === 'navigate' || u.pathname.endsWith('.json') && !u.search.includes('v=')) {
     e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(C).then(c => c.put(r, cp)); return res; })
       .catch(() => caches.match(r, { ignoreSearch: r.mode === 'navigate' }).then(m => m || caches.match(new URL('./', self.registration.scope).href))));

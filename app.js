@@ -635,7 +635,17 @@ function setupControls() {
   const U = L.toUpperCase(), mv = $('#mVideo');
   if (META.video) { mv.href = ROOT + `video/The-Way-Back-Home_${U}.mp4`; mv.setAttribute('download', `The-Way-Back-Home_${U}.mp4`); }
   else mv.hidden = true;
-  mv.addEventListener('click', () => { count('video'); toast(UI.downloading || '…'); });
+  // iPhones and iPads ignore "download" (and an installed home-screen app can't download at all): open the video
+  // instead, with a tip to save it from the Share button
+  mv.addEventListener('click', e => {
+    count('video');
+    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!ios) { toast(UI.downloading || '…'); return; }
+    e.preventDefault(); closeMenus();
+    window.open(mv.href, '_blank');
+    const t = $('#tip'); t.dir = META.dir; t.classList.remove('bottom'); t.textContent = UI.videotip || EN.ui.videotip; t.hidden = false;
+    clearTimeout(t._h); t._h = setTimeout(() => t.hidden = true, 9000);
+  });
 
   $('#mShare').onclick = async () => {
     closeMenus(); count('share');
