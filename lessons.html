@@ -318,7 +318,7 @@ const W = [
    home: { kind: 'wash', ask: 'Why couldn’t the children scrub their marks off?' } },
 
  { n: 5, col: 'orange', title: 'The door', pages: ['The door', 'The cross'],
-   thumbs: [['door-end', 50], ['cross-clip', 50], ['cross-end', 50]], pic: ['cross-end', 44],
+   thumbs: [['door-clip', 50], ['door-end', 50], ['clean', 50]], pic: ['door-end', 40],
    bible: 'John 10:9; John 3:16; John 14:6; Isaiah 53:6',
    idea: 'Jesus is the door! He took my place.',
    moves: 'Swing both arms open like a door on “Jesus is the door”, then put a hand on your heart on “He took my place”.',
@@ -565,7 +565,7 @@ const invitePage = () => {
 };
 
 // extras: 12 story cards on two sheets of 6, shuffled, lettered A–L
-const CARDS = [['garden-clip', 40], ['rule-end', 40], ['serpent-end', 40], ['fruit-end', 30], ['exile-end', 45], ['road-end', 50], ['test-clip', 40], ['locked-end', 45], ['scrub-clip', 40], ['cross-end', 50], ['tomb-end', 45], ['gates-clip', 50]];
+const CARDS = [['garden-clip', 40], ['rule-end', 40], ['serpent-end', 40], ['fruit-end', 30], ['exile-end', 45], ['road-end', 50], ['test-clip', 40], ['locked-end', 45], ['scrub-clip', 40], ['door-end', 45], ['tomb-end', 45], ['gates-clip', 50]];
 const cardsPages = () => {
   const R = rng(12), idx = CARDS.map((_, i) => i);
   for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
@@ -584,7 +584,7 @@ const doorSvg = `<svg viewBox="0 0 100 104"><rect width="100" height="104" fill=
   <circle cx="71" cy="70" r="2.4" fill="#1d1a24"/>
   <text x="50" y="100" font-size="4.2" text-anchor="middle" fill="#5a5566" font-family="Andika">Cut the dashed line. Fold back on the solid line.</text></svg>`;
 const craftPage = () => {
-  const set = `<div class="craft"><div><p class="lab">1 · The cross (glue this behind)</p><div class="p">${img('cross-end', 45)}<p class="cap">Jesus died in my place.<small>1 Peter 2:24</small></p></div></div>
+  const set = `<div class="craft"><div><p class="lab">1 · The cross (glue this behind)</p><div class="p">${img('clean', 50, 25)}<p class="cap">Jesus died in my place.<small>1 Peter 2:24</small></p></div></div>
     <div><p class="lab">2 · The door (colour, cut, fold)</p><div class="p door">${doorSvg}</div></div></div>`;
   return `<div class="page ex orange" data-w="x" data-p="teacher"><h1>Door craft</h1><p class="how">For week 5. Two crafts per sheet. Colour the door. Cut out both pieces. Cut the door on its dashed line and fold it open. Glue the cross picture behind it, so opening the door shows the cross.</p>
     ${set}${set}${foot('The Way Back Home · Extras', '')}</div>`;
