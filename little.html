@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Way Back Home · Little ones</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="art/favicon-48.png" sizes="48x48">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="qr.js"></script>
+<style>
+/* Little ones (ages 3–5): the same 7-week story as lessons.html, for preschoolers. Each week has a teacher page and a take-home
+   sheet; then extras (story order cards, door craft, certificate). Every page is 7.4 × 10 in, which fits inside
+   Letter and A4 with the browser's default margins. lessons.html?week=3 shows one week; ?part=teacher|home.
+   Memory verses: CSB. */
+:root{
+  --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
+  --body:'Andika','Verdana',system-ui,sans-serif;
+  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --gold2:#C99A1E; --cream:#fffaf0; --line:#d9d4e2;
+  --green:#2f8a4e; --purple:#6b3fa0; --night:#3a3263; --red:#b8433a; --orange:#d9772a; --sky:#2f7fd9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
+.top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
+.top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
+.top .ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.top select{font:600 15px var(--body);padding:7px 10px;border-radius:10px;border:1px solid #cfcadb;background:#fff;color:var(--ink)}
+.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
+.wrap{padding:20px 16px 40px;overflow:hidden}
+.pages{transform-origin:top left;width:7.4in;margin:0 auto}
+
+/* one printed page; --c is the chapter colour, --t a light tint of it */
+.page{position:relative;width:7.4in;height:10in;background:#fff;overflow:hidden;margin:0 0 .3in;box-shadow:0 6px 24px rgba(0,0,0,.16);
+  font-size:10.8pt;line-height:1.38;--c:var(--blue);--t:#e8f1fc}
+.page.green{--c:var(--green);--t:#e6f4ea}.page.purple{--c:var(--purple);--t:#f0e9f8}.page.night{--c:var(--night);--t:#ebe9f5}
+.page.red{--c:var(--red);--t:#fbebe9}.page.orange{--c:var(--orange);--t:#fdf0e4}.page.sky{--c:var(--sky);--t:#e8f1fc}
+h1,h2,h3{font-family:var(--display);font-weight:900;margin:0;line-height:1.1}
+p{margin:0}
+.foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:12pt;font-size:7pt;color:#8a8496;border-top:1px solid var(--line);padding-top:4pt}
+
+/* ---------- teacher page ---------- */
+.page.tp{font-size:11.5pt;line-height:1.38}
+.page.tp .need,.page.tp .tip p{font-size:10.4pt}
+.page.tp .side .verse{font-size:12pt}
+.t-head{display:flex;gap:.16in;align-items:stretch}
+.t-head .tt{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6pt}
+.pill{display:inline-block;align-self:flex-start;background:var(--c);color:#fff;font:900 9.5pt var(--display);letter-spacing:.06em;
+  text-transform:uppercase;padding:3pt 9pt;border-radius:99px}
+.t-head h1{font-size:30pt;color:var(--c)}
+.t-head .pg{font-size:9.5pt;color:var(--muted)}
+.thumbs{display:flex;gap:5pt}
+.thumbs img{width:1.3in;height:2.35in;object-fit:cover;border-radius:9pt;display:block}
+.idea{margin:.14in 0 .06in;background:var(--t);border-radius:12pt;padding:8pt 12pt;font:900 14pt/1.25 var(--display);color:var(--c)}
+.idea small{display:block;font:700 7.5pt var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2pt}
+.two{display:grid;grid-template-columns:1fr 2.3in;gap:.18in}
+.sec{margin-top:10pt}
+.sec h3{font-size:13pt;color:var(--c);margin-bottom:2pt;display:flex;align-items:baseline;gap:6pt}
+.sec h3 .min{font:700 8pt var(--body);color:var(--muted)}
+.sec ol{margin:0;padding-left:15pt}
+.sec li{margin:0 0 2.5pt}
+.ans{color:var(--muted);font-style:italic}
+.side .box{border:1.2pt solid var(--line);border-radius:10pt;padding:7pt 9pt;margin-top:8pt}
+.side .box:first-child{margin-top:8pt;background:var(--t);border-color:var(--t)}
+.side h3{font-size:10pt;color:var(--c);margin-bottom:3pt}
+.verse{font:800 11pt/1.3 var(--display)}
+.verse .ref{display:block;font:700 9pt var(--body);color:var(--muted);margin-top:3pt}
+.need{font-size:9.4pt}
+.need ul{margin:0;padding-left:13pt}
+.tip{background:#fff7e3;border-color:#f0d9a3 !important}
+.tip p{font-size:9.4pt}
+
+/* ---------- take-home sheet ---------- */
+.h-pic{position:relative;height:3.35in;border-radius:16pt;overflow:hidden}
+.h-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.h-pic .lab{position:absolute;left:0;right:0;bottom:0;padding:30pt 16pt 11pt;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.h-pic h1{font-size:32pt;color:#fff;text-shadow:0 2pt 0 var(--c),0 3pt 8pt rgba(0,0,0,.45)}
+.sticker{position:absolute;left:12pt;top:12pt;width:.78in;height:.78in;border-radius:50%;background:#fff;color:var(--c);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 3pt var(--c),0 3pt 8pt rgba(0,0,0,.35);transform:rotate(-8deg)}
+.sticker small{font:900 8pt/1 var(--display);letter-spacing:.08em}
+.sticker b{font:900 26pt/1 var(--display)}
+.bubble{position:relative;margin:.16in .1in .1in;background:var(--t);border-radius:16pt;padding:8pt 14pt;text-align:center;
+  font:900 15.5pt/1.25 var(--display);color:var(--c)}
+.bubble::before{content:'';position:absolute;left:50%;top:-9pt;margin-left:-9pt;border:9pt solid transparent;border-top:0;border-bottom-color:var(--t)}
+.mv{display:flex;gap:10pt;align-items:center;background:var(--c);color:#fff;border-radius:14pt;padding:8pt 13pt}
+.mv .star{flex:none;width:.5in;height:.5in}
+.mv .tag{display:block;font:900 8pt var(--display);text-transform:uppercase;letter-spacing:.1em;opacity:.85;margin-bottom:1pt}
+.mv .verse{font-size:11.5pt}
+.mv .verse .ref{display:inline;color:#fff;opacity:.85;margin-left:4pt}
+.act{margin-top:.14in}
+.act h2{font-size:17pt;color:var(--c)}
+.act .how{font-size:11.2pt;margin:2pt 0 8pt}
+.home{position:absolute;left:0;right:0;bottom:.24in;display:flex;gap:12pt;align-items:center;border:1.2pt solid var(--line);border-radius:12pt;padding:7pt 11pt}
+.home .qr{width:.78in;height:.78in;flex:none}
+.home .qr svg{width:100%;height:100%;display:block}
+.home b{font-family:var(--display);color:var(--c)}
+.home p{font-size:9.2pt}
+.home p+p{margin-top:3pt}
+
+/* activities */
+.trees{display:grid;grid-template-columns:repeat(9,1fr);gap:2pt 6pt}
+.trees svg{width:100%;height:auto;display:block}
+.draw{margin-top:8pt;border:1.6pt dashed var(--line);border-radius:12pt;position:relative}
+.draw span{position:absolute;left:10pt;top:7pt;font:800 10pt var(--display);color:var(--muted)}
+.tt-row{display:flex;align-items:center;gap:9pt;border-bottom:1pt solid var(--line);padding:5pt 0}
+.tt-row .q{flex:1;font-size:12pt}
+.chip{font:900 10pt var(--display);border:1.6pt solid var(--ink);border-radius:99px;padding:2.5pt 10pt;letter-spacing:.04em}
+.ws{display:grid;grid-template-columns:3.05in 1fr;gap:.2in;align-items:start}
+.grid{display:grid;border:1.6pt solid var(--ink);border-radius:8pt;overflow:hidden}
+.grid div{display:flex;align-items:center;justify-content:center;font:800 12pt var(--display);aspect-ratio:1}
+.words{columns:2;column-gap:10pt;font:800 10.5pt var(--display);margin:0;padding:0;list-style:none}
+.words li{margin-bottom:3pt}
+.words li::before{content:'☐ ';font-family:var(--body);font-weight:400}
+.ten{font-size:9.8pt;padding-left:15pt;margin:2pt 0 0;columns:2;column-gap:16pt}
+.ten li{break-inside:avoid;margin-bottom:2pt}
+.wash .row{display:flex;align-items:center;gap:10pt;border-bottom:1pt solid var(--line);padding:4pt 0}
+.wash .row span{flex:1;font-size:12pt}
+.wash .yn{display:flex;gap:6pt;font:900 10pt var(--display)}
+.wash .yn i{font-style:normal;border:1.6pt solid var(--ink);border-radius:6pt;padding:1.5pt 8pt}
+.maze svg{display:block;margin:0 auto}
+.code .key{display:flex;flex-wrap:wrap;gap:6pt 9pt;justify-content:center;margin-bottom:12pt}
+.code .k{display:flex;align-items:center;gap:4pt;border:1.2pt solid var(--line);border-radius:8pt;padding:3pt 8pt 3pt 5pt;font:900 13pt var(--display)}
+.code .msg{display:flex;flex-wrap:wrap;gap:6pt 5pt;justify-content:center}
+.code .c{display:flex;flex-direction:column;align-items:center;gap:4pt;width:.44in}
+.code .c svg{width:24px;height:24px}
+.code .c .bl{width:.4in;border-bottom:1.8pt solid var(--ink);height:.34in}
+.code .gap{width:.28in}
+.abc .st{display:flex;gap:10pt;align-items:center;margin-bottom:6pt}
+.abc .st b.k{flex:none;width:.42in;height:.42in;border-radius:50%;background:var(--c);color:#fff;font:900 16pt/.42in var(--display);text-align:center}
+.abc .st span{font-size:12pt}
+.abc .pr{margin-top:6pt;background:var(--t);border-radius:12pt;padding:8pt 12pt;font-size:10.8pt;font-style:italic}
+.lines{margin-top:9pt;font:800 11pt var(--display)}
+.lines .l{border-bottom:1.4pt solid var(--ink);height:.34in}
+
+/* ---------- overview ---------- */
+.ov h1{font-size:30pt;color:var(--blue)}
+.ov .sub{font:800 13pt var(--display);color:var(--muted);margin-top:3pt}
+.ov .lead{display:flex;gap:.2in;margin-top:.16in;align-items:center}
+.ov .lead img{width:1.9in;height:2.6in;object-fit:cover;border-radius:12pt;flex:none}
+.ov table{width:100%;border-collapse:collapse;margin-top:.14in;font-size:9.6pt}
+.ov th{font:900 8.5pt var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:3pt 5pt;border-bottom:1.5pt solid var(--ink)}
+.ov td{padding:5pt;border-bottom:1pt solid var(--line);vertical-align:middle}
+.ov td.w{font:900 13pt var(--display);color:#fff;text-align:center;width:.34in}
+.ov td b{font-family:var(--display)}
+.ov .how{display:grid;grid-template-columns:1fr 1fr;gap:.16in;margin-top:.14in;font-size:9.6pt}
+.ov .how h3{font-size:11pt;color:var(--blue);margin-bottom:3pt}
+.ov .how ul{margin:0;padding-left:14pt}
+
+/* ---------- extras ---------- */
+.ex h1{font-size:22pt;color:var(--c)}
+.ex .how{font-size:10pt;margin:3pt 0 8pt;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,4.15in);border-top:1pt dashed #999;border-left:1pt dashed #999}
+.cards div{position:relative;border-right:1pt dashed #999;border-bottom:1pt dashed #999;padding:7pt}
+.cards img{width:100%;height:100%;object-fit:cover;border-radius:9pt;display:block}
+.cards b{position:absolute;left:12pt;top:12pt;background:#fff;color:var(--ink);font:900 13pt/1 var(--display);padding:4pt 8pt;border-radius:7pt}
+.key-ans{margin-top:7pt;font-size:8.5pt;color:var(--muted)}
+.craft{display:grid;grid-template-columns:1fr 1fr;gap:.22in;margin-bottom:.2in}
+.craft .p{height:3.75in;border:1pt dashed #999;border-radius:4pt;position:relative;overflow:hidden}
+.craft .p img{width:100%;height:100%;object-fit:cover;display:block}
+.craft .p .cap{position:absolute;left:8pt;right:8pt;bottom:8pt;background:rgba(255,255,255,.92);border-radius:7pt;padding:5pt 7pt;text-align:center;font:800 10.5pt/1.25 var(--display)}
+.craft .p .cap small{display:block;font:700 8pt var(--body);color:var(--muted)}
+.craft .p.door svg{position:absolute;inset:0;width:100%;height:100%}
+.craft .lab{font:900 8.5pt var(--display);color:var(--muted);margin-bottom:3pt;text-transform:uppercase;letter-spacing:.05em}
+.cert{border:4pt double var(--gold2);border-radius:14pt;height:calc(100% - .25in);padding:.3in;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cert img{width:2.6in;height:2.9in;object-fit:cover;border-radius:14pt;margin:.12in 0}
+.cert h1{font-size:28pt;color:var(--blue)}
+.cert .name{width:4.6in;border-bottom:1.5pt solid var(--ink);height:.45in;margin:.06in auto 3pt}
+.cert .vs{text-align:left;width:5.4in;margin-top:.1in;font-size:9.5pt}
+.cert .vs div{display:flex;gap:7pt;border-bottom:1pt solid var(--line);padding:2.5pt 0}
+.cert .vs div b{font-family:var(--display);min-width:1.1in}
+.cert .sig{display:flex;gap:.4in;margin-top:auto;font-size:9pt;color:var(--muted)}
+.cert .sig div{width:2.3in;border-top:1.2pt solid var(--ink);padding-top:3pt}
+
+.idea .moves{display:block;font:700 9.6pt/1.35 var(--body);color:var(--ink);margin-top:3pt}
+.map .road{position:absolute;inset:0;width:100%;height:100%}
+.map .stop{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4pt #fff,0 0 0 6pt var(--green),0 4pt 10pt rgba(0,0,0,.25)}
+.map .stop img{width:100%;height:100%;object-fit:cover;display:block}
+.map .stop .sn{position:absolute;left:50%;bottom:4pt;transform:translateX(-50%);background:#fff;color:var(--green);font:900 12pt/1 var(--display);padding:3pt 8pt;border-radius:99px}
+.map .slab{position:absolute;width:2in;display:flex;align-items:center;justify-content:center;gap:4pt;font:900 11.5pt var(--display);text-align:center}
+.map .slab span{background:#fff;border-radius:99px;padding:2pt 7pt;box-shadow:0 1pt 3pt rgba(0,0,0,.15)}
+.map .flag{position:absolute;font:900 12pt var(--display);color:#fff;background:var(--green);padding:3pt 10pt;border-radius:99px;transform:rotate(-6deg)}
+.map .mname{position:absolute;left:0;right:0;bottom:.3in;font:900 13pt var(--display)}
+.map .mname span{display:inline-block;width:4.5in;border-bottom:1.5pt solid var(--ink);margin-left:6pt}
+.snakes{display:flex;flex-direction:column;align-items:center;gap:.15in}
+.snake{width:4.05in;height:4.05in;display:block}
+.invs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:4.35in 4.35in;border-top:1pt dashed #999;border-left:1pt dashed #999}
+.inv{border-right:1pt dashed #999;border-bottom:1pt dashed #999;padding:8pt;display:flex;flex-direction:column}
+.inv img{width:100%;height:1.75in;object-fit:cover;border-radius:10pt;display:block}
+.inv .iw{padding:6pt 4pt 0;display:flex;flex-direction:column;flex:1}
+.inv h2{font-size:19pt;color:var(--sky)}
+.inv p{font-size:10pt;margin-top:3pt}
+.inv .ib{display:flex;align-items:flex-end;gap:8pt;margin-top:auto}
+.inv .qr{width:.95in;height:.95in;flex:none}.inv .qr svg{width:100%;height:100%;display:block}
+.inv .from{flex:1;font:900 10pt var(--display);padding-bottom:4pt}.inv .from span{display:block;border-bottom:1.3pt solid var(--ink);height:.3in}
+
+.colour{display:block;width:100%;height:5.25in;margin-top:.06in}
+.lt .l-top{display:flex;gap:.18in;align-items:center}
+.lt .l-pic{width:2.2in;height:2.2in;border-radius:50%;overflow:hidden;flex:none;box-shadow:0 0 0 5pt #fff,0 0 0 8pt var(--c)}
+.lt .l-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.lt .l-tt h1{font-size:34pt;color:var(--c);margin-top:4pt}
+.sticker2{display:inline-block;background:var(--c);color:#fff;font:900 11pt var(--display);padding:4pt 12pt;border-radius:99px;transform:rotate(-4deg)}
+.l-say{font:900 18pt/1.2 var(--display);margin-top:6pt;background:var(--t);border-radius:14pt;padding:6pt 12pt;display:inline-block}
+.l-task{margin-top:.16in;font:800 14pt/1.3 var(--display);text-align:center}
+.side .song{background:#fff}
+.side .song h3 small{font:700 8pt var(--body);color:var(--muted);margin-left:4pt}
+.side .song p{font-size:10.4pt;line-height:1.4;font-style:italic}
+.map .stk{display:inline-block;width:.42in;height:.42in;border-radius:50%;border:2pt dashed #1d1a24;background:#fff}
+
+@media print{
+  @page{margin:.4in}
+  html,body{background:#fff}
+  .top{display:none}
+  .wrap{padding:0;height:auto !important}
+  .pages{transform:none !important;margin:0 auto}
+  .page{box-shadow:none;margin:0 auto;break-after:page;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page:last-child{break-after:auto}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="en/">‹ The Way Back Home</a>
+  <div class="ctl">
+    <select id="week" aria-label="Which pages">
+      <option value="">All 7 weeks + extras</option>
+      <option value="0">Overview</option>
+      <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option>
+      <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
+      <option value="7">Week 7</option><option value="x">Chart + certificate</option>
+    </select>
+    <select id="part" aria-label="Which sheets">
+      <option value="">Teacher + colouring sheets</option>
+      <option value="teacher">Teacher pages only</option>
+      <option value="home">Colouring sheets only</option>
+    </select>
+  </div>
+  <button class="btn" id="print" type="button">Print</button>
+</div>
+<div class="wrap" id="wrap"><div class="pages" id="pages"></div></div>
+<script>
+(() => {
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const img = (n, y = 50, x = 50) => `<img src="art/src/${n}.jpg" alt="" style="object-position:${x}% ${y}%">`;
+const SITE = 'thewaybackhome.net', LINK = `https://${SITE}/en/`;
+const CSB = 'Scripture quotations are from the Christian Standard Bible®, © 2017 by Holman Bible Publishers. Used by permission.';
+const qrSvg = (() => {
+  const qr = qrcode(0, 'M'); qr.addData(LINK); qr.make();
+  const n = qr.getModuleCount(), m = 1; let d = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${n + 2} ${n + 2}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
+})();
+
+// ---------- colouring pictures (thick outlines, white inside) ----------
+const K = 'fill="#fff" stroke="#1d1a24" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"';
+const flower = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0v42" ${K}/>` +
+  [0, 72, 144, 216, 288].map(a => `<circle cx="${(16 * Math.cos(a * Math.PI / 180)).toFixed(1)}" cy="${(16 * Math.sin(a * Math.PI / 180)).toFixed(1)}" r="12" ${K}/>`).join('') + `<circle r="9" ${K}/></g>`;
+const sun = (x, y, r, dashed) => `<g>${Array.from({ length: 10 }, (_, i) => { const a = i * 36 * Math.PI / 180;
+  return `<path d="M${(x + Math.cos(a) * (r + 12)).toFixed(1)} ${(y + Math.sin(a) * (r + 12)).toFixed(1)}L${(x + Math.cos(a) * (r + 40)).toFixed(1)} ${(y + Math.sin(a) * (r + 40)).toFixed(1)}" ${K} ${dashed ? 'stroke-dasharray="1 11"' : ''}/>`; }).join('')}<circle cx="${x}" cy="${y}" r="${r}" ${K}/></g>`;
+const crown = 'M300 40c40 0 62 22 66 44 34-4 64 20 62 54 22 14 26 48 6 68-14 16-40 20-58 12-14 24-52 32-76 16-24 16-62 8-74-16-22 8-50 0-60-22-14-24-2-54 22-62-4-34 26-58 58-54 6-24 28-40 54-40z';
+const tree = (fruit) => `<rect x="272" y="236" width="56" height="168" rx="10" ${K}/><path d="${crown}" ${K}/>${fruit}`;
+const ground = `<path d="M10 404c80-14 160 10 290 0s200-12 290 2" ${K} fill="none"/>`;
+const ART = {
+  garden: () => `${sun(80, 78, 38)}${tree([[250, 120], [330, 100], [380, 160], [290, 180], [220, 190], [350, 215]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="17" ${K}/>`).join(''))}` +
+    `${ground}${flower(90, 340)}${flower(160, 356, .8)}${flower(470, 340)}${flower(540, 356, .8)}` +
+    `<path d="M470 70q15-18 30 0q15-18 30 0M520 110q12-14 24 0q12-14 24 0" fill="none" stroke="#1d1a24" stroke-width="5" stroke-linecap="round"/>`,
+  snake: () => `${tree(`<circle cx="235" cy="175" r="18" ${K}/><circle cx="360" cy="120" r="17" ${K}/>`)}${ground}` +
+    `<path d="M196 392c40-6 70-20 82-44s70-30 70-60-60-30-60-60 50-40 96-38" fill="none" stroke="#1d1a24" stroke-width="38" stroke-linecap="round"/>` +
+    `<path d="M196 392c40-6 70-20 82-44s70-30 70-60-60-30-60-60 50-40 96-38" fill="none" stroke="#fff" stroke-width="27" stroke-linecap="round"/>` +
+    `<ellipse cx="400" cy="190" rx="34" ry="24" ${K}/><circle cx="410" cy="182" r="5" fill="#1d1a24"/><path d="M432 196l22 4m0 0l10-8m-10 8l10 8" fill="none" stroke="#1d1a24" stroke-width="4" stroke-linecap="round"/>` +
+    `${flower(500, 340)}${flower(90, 340)}`,
+  mirror: () => `<rect x="280" y="380" width="40" height="56" rx="12" ${K}/><ellipse cx="300" cy="200" rx="170" ry="190" ${K}/><ellipse cx="300" cy="200" rx="140" ry="160" fill="#fff" stroke="#1d1a24" stroke-width="3" stroke-dasharray="4 10"/>` +
+    `<path d="M70 70l0 34M53 87h34M520 300v30M505 315h30M535 80v24M523 92h24" stroke="#1d1a24" stroke-width="5" stroke-linecap="round"/>`,
+  hands: () => `<rect x="26" y="20" width="350" height="400" rx="26" fill="#fff" stroke="#1d1a24" stroke-width="4" stroke-dasharray="14 10"/>` +
+    `<text x="201" y="225" text-anchor="middle" font-family="Grandstander" font-weight="900" font-size="26" fill="#b5afc0">Trace your hand here</text>` +
+    `<rect x="420" y="300" width="150" height="90" rx="26" ${K}/><text x="495" y="356" text-anchor="middle" font-family="Grandstander" font-weight="900" font-size="28" fill="#1d1a24">SOAP</text>` +
+    [[450, 250, 26], [520, 220, 34], [470, 160, 20], [545, 130, 24], [490, 80, 16]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" ${K}/>`).join(''),
+  door: () => { let b = ''; for (let y = 40; y < 400; y += 40) b += `<path d="M20 ${y}h560" stroke="#1d1a24" stroke-width="3"/>` + Array.from({ length: 8 }, (_, i) => `<path d="M${30 + i * 75 + (y / 40 % 2) * 37} ${y}v40" stroke="#1d1a24" stroke-width="3"/>`).join('');
+    return `${b}<path d="M210 404V170a90 90 0 0 1 180 0v234z" ${K}/><path d="M270 404V140M330 404V140" stroke="#1d1a24" stroke-width="3"/>` +
+      `<path d="M292 175h16v30h30v16h-30v58h-16v-58h-30v-16h30z" ${K} stroke-width="4"/><circle cx="364" cy="300" r="9" fill="#1d1a24"/>` +
+      `<path d="M30 430C120 430 160 360 300 404" fill="none" stroke="#1d1a24" stroke-width="6" stroke-dasharray="1 14" stroke-linecap="round"/>` +
+      `<g transform="translate(20 400)"><ellipse cx="0" cy="0" rx="9" ry="14" ${K} stroke-width="4"/><ellipse cx="20" cy="10" rx="9" ry="14" ${K} stroke-width="4"/></g>`; },
+  tomb: () => `${sun(300, 110, 46, true)}<path d="M20 404C80 230 200 190 300 190s230 50 270 214z" ${K}/>` +
+    `<path d="M220 404v-90a70 70 0 0 1 140 0v90z" ${K}/><circle cx="440" cy="340" r="64" ${K}/><path d="M410 320q20-10 40 4" fill="none" stroke="#1d1a24" stroke-width="4" stroke-linecap="round"/>` +
+    `${ground}${flower(110, 360, .8)}${flower(530, 362, .7)}`,
+  gates: () => { const gate = x0 => `<path d="M${x0} 390V215q65-55 130 0v175z" ${K}/>` + [32, 65, 98].map(dx => `<path d="M${x0 + dx} 390V${dx === 65 ? 182 : 196}" stroke="#1d1a24" stroke-width="5"/>`).join('') + `<path d="M${x0} 300h130" stroke="#1d1a24" stroke-width="5"/>`;
+    const cloud = (x, y) => `<path d="M${x} ${y}c0-26 34-34 46-14 10-26 54-26 62 2 26-6 42 18 28 36H${x + 4}c-18 0-18-24-4-24z" ${K}/>`;
+    return `${sun(300, 70, 30)}<path d="M300 210c-14-28-62-28-62 6 0 28 40 48 62 66 22-18 62-38 62-66 0-34-48-34-62-6z" ${K}/>${gate(40)}${gate(430)}` +
+      `<path d="M230 440L282 300M370 440L318 300" fill="none" stroke="#1d1a24" stroke-width="4" stroke-dasharray="10 9"/>${cloud(20, 400)}${cloud(440, 400)}`; }
+};
+const pic = k => `<svg viewBox="0 0 600 440" class="colour">${ART[k]()}</svg>`;
+
+// ---------- the 7 weeks (same story as the 6–10 series, so families stay in step) ----------
+const W = [
+ { n: 1, col: 'green', title: 'God made it good!', pages: ['The garden', 'The one rule'], thumbs: [['garden-clip', 40], ['rule-end', 40]], top: ['garden-clip', 36],
+   say: 'God made it all good!', moves: 'Throw your arms wide open on “all”, then give a big thumbs up on “good!”',
+   verse: ['“…and it was very good indeed.”', 'Genesis 1:31'],
+   hook: ['Feely box', 'Put a leaf, a flower, a stone and a feather in a box. Children reach in and feel. “What is it? Who made it?” Everyone shouts: “God did!”'], hookNeed: ['A box with a leaf, flower, stone, feather'],
+   talk: ['Who made the trees? The birds? You?', 'God made Adam and Eve a garden home. Was it a happy place?'],
+   play: ['Stick-a-garden', ['Green tissue paper or leaves', 'Glue sticks'], 'Children colour the take-home tree and stick on scrunched tissue paper “leaves”. Talk as you go: God made the trees, the flowers, and you!'],
+   song: ['Frère Jacques', ['God made flowers, God made flowers,', 'and the trees, and the trees.', 'God made all the animals, God made all the animals,', 'and made me! And made me!']],
+   tip: 'Short and happy! Three- and four-year-olds learn by doing. Let them touch, stick, sing and shout.',
+   art: 'garden', task: 'Colour God’s good garden. Count the fruit on the tree!', ask: 'Who made the trees and the flowers? Who made you?' },
+
+ { n: 2, col: 'purple', title: 'Listen to God!', pages: ['The serpent', 'The fruit', 'Out of the garden'], thumbs: [['serpent-end', 40], ['fruit-end', 35]], top: ['serpent-end', 30],
+   say: 'Listen to God!', moves: 'Cup a hand behind your ear on “Listen”, then point up high on “God!”',
+   verse: ['“Every word of God is pure…”', 'Proverbs 30:5'],
+   hook: ['Sneaky sock snake', 'Put a sock snake on your hand. It whispers silly wrong things: “Don’t share your toys!” “Eat ALL the cookies!” Children shout back: “No! Listen to God!”'], hookNeed: ['A sock with two button eyes (a snake puppet)'],
+   talk: ['What did the sneaky snake say to Eve?', 'Did Adam and Eve listen to God? How did they feel after?'],
+   play: ['God says, snake says', ['The sock snake'], 'Like Simon Says. When you say “God says jump!”, everyone jumps. When the sock snake says “Jump!”, nobody moves. Anyone who moves just shouts “Listen to God!” and keeps playing.'],
+   song: ['London Bridge', ['Listen, listen, to God’s word,', 'to God’s word, to God’s word.', 'Listen, listen, to God’s word.', 'God’s word is true!']],
+   tip: 'Keep the snake silly, not scary. The big idea is simple: God tells the truth, so we listen to Him.',
+   art: 'snake', task: 'Colour the tree. Can you find the sneaky snake?', ask: 'What did the snake say? Who do we listen to?' },
+
+ { n: 3, col: 'night', title: 'Me too', pages: ['The long road', 'God’s law'], thumbs: [['road-end', 50], ['test-2-end', 40]], top: ['test-2-end', 52],
+   say: 'We all do wrong. Me too.', moves: 'Point all around on “We all”, then point to yourself on “Me too.”',
+   verse: ['“…all have sinned…”', 'Romans 3:23'],
+   hook: ['Look in the mirror', 'Pass a hand mirror around. Each child looks and makes a funny face. Say: “God sees inside us too, our hearts.”'], hookNeed: ['A hand mirror'],
+   talk: ['Have you ever been grumpy? Not shared? Said something unkind?', 'Does everybody do wrong things? Even grown-ups? Yes, me too.'],
+   play: ['A spot for everyone', ['Small round stickers (dots)'], 'Give every child one dot sticker on the back of their hand: a “wrong spot”. Give one to every leader too. Look around: “Does anyone not have a spot?” Everybody has one. Keep the spots on for next week’s story.'],
+   song: ['Mary Had a Little Lamb', ['Everybody does wrong things,', 'wrong things, wrong things.', 'Everybody does wrong things.', 'Me too, yes, me too.']],
+   tip: 'Use words little ones know: grumpy, not sharing, hitting, telling fibs. Say “me too” about yourself, cheerfully and honestly.',
+   art: 'mirror', task: 'Draw your face in the mirror. God loves you and sees your heart!', ask: 'Does everybody do wrong things? Do you? Do I?' },
+
+ { n: 4, col: 'red', title: 'It won’t wash off', pages: ['Locked out', 'Can we scrub it off?'], thumbs: [['locked-end', 45], ['scrub-end', 20]], top: ['scrub-end', 12],
+   say: 'I can’t wash it off!', moves: 'Pretend to scrub your hands hard, then stop and shake your head on “can’t”.',
+   verse: ['“…it is God’s gift.”', 'Ephesians 2:8'],
+   hook: ['The plate that stays dirty', 'Draw a small spot on a white plastic plate with a permanent marker. Let each child scrub it with a wet sponge. It won’t come off! Keep the plate for week 6.'], hookNeed: ['A white plastic plate', 'A permanent marker', 'A bowl of water and a sponge'],
+   talk: ['The children in the book tried to wash their spots off. Did it work?', 'Sin keeps us away from God’s home. Who can help us?'],
+   play: ['Washing game', ['A tub of soapy water, toy dishes, towels'], 'Let children “wash” toy dishes in soapy water (messy fun!). Then hold up the marked plate again: “Some spots we can wash. But we can’t wash away the wrong things in our hearts. Next week we meet Someone who can help!”'],
+   song: ['Here We Go Round the Mulberry Bush', ['This is the way we scrub our hands,', 'scrub our hands, scrub our hands.', 'This is the way we scrub our hands,', 'but sin will not wash away!']],
+   tip: 'The book says sin locks us out of God’s home. Say it gently and simply, and end hopeful: “But God has a plan!”',
+   art: 'hands', task: 'Trace your hand. Draw spots on it. Can soap wash away sin? No! Only Jesus can.', ask: 'Can we wash the wrong things in our hearts away by ourselves?' },
+
+ { n: 5, col: 'orange', title: 'Jesus is the door', pages: ['The door', 'The cross'], thumbs: [['door-end', 50], ['cross-end', 50]], top: ['door-end', 40],
+   say: 'Jesus is the door!', moves: 'Make a door with your arms, then swing them wide open on “door!”',
+   verse: ['“God loved the world…”', 'John 3:16'],
+   hook: ['Knock knock!', 'Stand behind a closed door (or a blanket held up). Children knock: “Knock, knock!” Open it wide with a big smile and welcome each child through. “Jesus said, ‘I am the door.’ He opens the way to God!”'], hookNeed: ['A door or a blanket to hold up'],
+   talk: ['Who is the door to God’s home?', 'Jesus died on the cross because He loves us. How much does Jesus love you? (Arms out wide: THIS much!)'],
+   play: ['Through the door', ['Two leaders, or a big cardboard box with a door cut in it'], 'Two leaders hold hands up high to make a doorway. Children walk or crawl through to a “home” blanket where a leader gives them a high five. Each time, shout: “Jesus is the door!” Then peel off last week’s dot stickers: “Jesus takes our wrong things away!”'],
+   song: ['Twinkle, Twinkle, Little Star', ['Jesus is the door for me,', 'on the cross He died for me.', 'In my place He took my sin,', 'now the door says, “Come on in!”']],
+   tip: 'Keep the cross simple and full of love: “Jesus died for me because He loves me.” Little ones understand love before they understand ideas.',
+   art: 'door', task: 'Colour the door with the cross. Follow the dotted footsteps to the door!', ask: 'Who is the door? How much does Jesus love you?' },
+
+ { n: 6, col: 'orange', title: 'Jesus is alive!', pages: ['The choice', 'The empty tomb'], thumbs: [['choice-end', 45], ['tomb-end', 45]], top: ['tomb-end', 36],
+   say: 'Jesus is alive!', moves: 'Crouch down low, then jump up high with your arms in the air on “alive!”',
+   verse: ['“He is not here, but he has risen!”', 'Luke 24:6'],
+   hook: ['The empty box', 'Show a box with a paper-plate “stone” on it. “Jesus’ friends came to His tomb…” Roll the stone away slowly. Empty! “He is not here! He is alive!”'], hookNeed: ['A box with a paper-plate “stone”'],
+   talk: ['Was Jesus still in the tomb? Where was He?', 'Bring out the spotty plate, wipe it with cleaner, and the spot is gone! “Jesus makes us clean!”'],
+   play: ['Sleepy, sleepy… ALIVE!', ['The marked plate and rubbing alcohol (try it at home first)'], 'Everyone lies down very still and sleepy. Whisper: “Shhh…” Then shout “Jesus is ALIVE!” and everyone jumps up cheering. Play it again and again. They will want to!'],
+   song: ['Row, Row, Row Your Boat', ['Up, up, up He rose,', 'Jesus is alive!', 'Happily, happily, happily, happily,', 'Jesus is alive!']],
+   tip: 'This is a party week! Big voices, big jumps, big smiles.',
+   art: 'tomb', task: 'Colour the empty tomb and the stone. Trace the sun’s dotted rays!', ask: 'Where is Jesus now? Is He alive?' },
+
+ { n: 7, col: 'sky', title: 'Welcome home!', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'], thumbs: [['gates-clip', 50], ['gates-end', 35]], top: ['gates-end', 28],
+   say: 'Jesus welcomes me home!', moves: 'Open your arms wide, then give yourself a big hug on “home!”',
+   verse: ['“We love because he first loved us.”', '1 John 4:19'],
+   hook: ['Welcome-home party', 'Leaders make a high-five tunnel at the door and cheer each child in by name: “Welcome home!” Add bubbles if you can!'], hookNeed: ['Bubbles or streamers'],
+   talk: ['Who is waiting at heaven’s gates with open arms?', 'Jesus loves you so much! Would you like to tell Him so in a little prayer?'],
+   play: ['Hug-and-pray', ['Stickers for the Road Home charts'], 'Sit close. Pray a line at a time; children who want to can say it after you: “Dear Jesus, I’m sorry for the wrong things I do. Thank You for loving me. Please be my friend forever. Amen.” Then add the last sticker to the chart!'],
+   song: ['If You’re Happy and You Know It', ['Jesus loves me and He wants me, clap your hands! (sing it twice)', 'He will welcome me back home, I’m His child, I’m His own.', 'Jesus loves me and He wants me, clap your hands!']],
+   tip: 'Never pressure a little one to pray. Just invite, and tell parents what was prayed.',
+   art: 'gates', task: 'Colour heaven’s open gates. Draw yourself running home to Jesus!', ask: 'Who welcomes us home? Who loves you more than anyone?' }
+];
+
+const foot = (l, r) => `<div class="foot"><span>${esc(l)}</span><span>${esc(r)}</span></div>`;
+const songBox = w => `<div class="box song"><h3>Song <small>tune: ${esc(w.song[0])}</small></h3><p>${w.song[1].map(esc).join('<br>')}</p></div>`;
+
+const teacher = w => `<div class="page tp ${w.col}" data-w="${w.n}" data-p="teacher">
+  <div class="t-head"><div class="tt"><span class="pill">Week ${w.n} of 7 · Little ones (3–5)</span><h1>${esc(w.title)}</h1>
+    <p class="pg">Book pages: <b>${w.pages.map(esc).join(' · ')}</b></p></div>
+    <div class="thumbs">${w.thumbs.map(([n, y]) => img(n, y)).join('')}</div></div>
+  <div class="idea"><small>Say it! (with the moves)</small>${esc(w.say)}<span class="moves">${esc(w.moves)}</span></div>
+  <div class="two"><div>
+    <div class="sec"><h3>1 · ${esc(w.hook[0])} <span class="min">5 min</span></h3><p>${esc(w.hook[1])}</p></div>
+    <div class="sec"><h3>2 · Story time <span class="min">5 min</span></h3><p>Sit close. Play this week’s pages at <b>${SITE}</b> (tap <b>Listen</b>). Pause on each picture: “What do you see?”</p></div>
+    <div class="sec"><h3>3 · Talk <span class="min">5 min</span></h3><ul>${w.talk.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+    <div class="sec"><h3>4 · ${esc(w.play[0])} <span class="min">10 min</span></h3><p>${esc(w.play[2])}</p></div>
+    <div class="sec"><h3>5 · Sing, sticker, pray <span class="min">5 min</span></h3><p>Sing the song, do the “Say it!” moves, and put a sticker on this week’s stop on the Road Home chart. Pray a short thank-you prayer together.</p></div>
+  </div><div class="side">
+    <div class="box"><h3>Bible words</h3><p class="verse">${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])} (CSB)</span></p></div>
+    ${songBox(w)}
+    <div class="box need"><h3>You need</h3><ul><li>A screen or phone</li>${[...w.hookNeed, ...w.play[1]].map(t => `<li>${esc(t)}</li>`).join('')}<li>Crayons, colouring sheets</li></ul></div>
+    <div class="box tip"><h3>Teacher tip</h3><p>${esc(w.tip)}</p></div>
+  </div></div>
+  ${foot('The Way Back Home · Little ones', CSB)}
+</div>`;
+
+const takehome = w => `<div class="page lt ${w.col}" data-w="${w.n}" data-p="home">
+  <div class="l-top"><div class="l-pic">${img(w.top[0], w.top[1])}</div><div class="l-tt"><span class="sticker2">Week ${w.n}</span><h1>${esc(w.title)}</h1><p class="l-say">“${esc(w.say)}”</p></div></div>
+  <p class="l-task">${esc(w.task)}</p>
+  ${pic(w.art)}
+  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> listen to <i>The Way Back Home</i> together at <b>${SITE}</b>. <b>Ask:</b> ${esc(w.ask)}</p>
+    <p><b>Sing it</b> (tune: ${esc(w.song[0])}): ${w.song[1].map(esc).join(' ')}</p></div></div>
+  ${foot('The Way Back Home · Little ones', CSB)}
+</div>`;
+
+const overview = () => `<div class="page ov" data-w="0" data-p="teacher">
+  <h1>The Way Back Home</h1><p class="sub">Little ones: a 7-week series for ages 3–5</p>
+  <div class="lead">${img('cover', 30)}<div style="font-size:10.6pt;line-height:1.45"><p>The same story as the 6–10 series, week by week, so brothers and sisters learn the same thing on the same Sunday. Each session is about <b>30 minutes</b>, full of moving, touching, singing and colouring.</p>
+    <ul style="margin:6pt 0 0;padding-left:14pt"><li><b>Say it!</b> One tiny truth a week, with moves.</li><li><b>A song</b> to a tune everyone knows.</li><li><b>A colouring sheet</b> to take home, with the song for parents.</li><li><b>The Road Home chart:</b> a sticker on each stop, every week.</li><li><b>The spotty plate</b> (weeks 4 and 6) and <b>dot stickers</b> (weeks 3 and 5).</li></ul></div></div>
+  <table><tr><th></th><th>Theme</th><th>Say it!</th><th>Song tune</th><th>Bible words</th></tr>
+  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(w.title)}</b></td><td>${esc(w.say)}</td><td>${esc(w.song[0])}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
+  <div class="how"><div><h3>Each session (about 30 minutes)</h3><ul><li>Hook · 5 min</li><li>Story time with the book · 5 min</li><li>Talk · 5 min</li><li>Play or craft · 10 min</li><li>Sing, sticker, pray · 5 min</li></ul></div>
+    <div><h3>Tips for little ones</h3><ul><li>Keep each part short. Move on before they get wiggly.</li><li>Repeat, repeat, repeat. They love it.</li><li>Use their words: sharing, grumpy, fibs, hugs.</li><li>Speak of sin and of Jesus simply and truly.</li></ul></div></div>
+  ${foot('The Way Back Home · Little ones', CSB)}
+</div>`;
+
+const STOPS = [['garden-clip', 30, 'God made it good!'], ['serpent-end', 30, 'Listen to God!'], ['test-2-end', 40, 'Me too'], ['scrub-end', 20, 'It won’t wash off'],
+  ['door-end', 45, 'Jesus is the door'], ['tomb-end', 40, 'Jesus is alive!'], ['gates-end', 25, 'Welcome home!']];
+const mapPage = () => {
+  const P = [[1.3, 2.35], [3.75, 1.9], [6.1, 2.75], [5.5, 5.05], [2.95, 5.0], [1.3, 7.25], [4.8, 7.75]], r = .66, D = 96;
+  const pts = P.map(([x, y]) => [x * D, y * D]);
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; d += ` Q${(x0 + x1) / 2} ${(y0 + y1) / 2 + (i % 2 ? -30 : 30)} ${x1} ${y1}`; }
+  const dot = '<span class="stk"></span>';
+  const stops = STOPS.map(([n, y, lab], i) => { const [x, yy] = P[i], big = i === 6 ? 1.25 : 1;
+    return `<div class="stop" style="left:${x - r * big}in;top:${yy - r * big}in;width:${2 * r * big}in;height:${2 * r * big}in">${img(n, y)}<b class="sn">${i + 1}</b></div>` +
+      `<div class="slab" style="left:${x - 1}in;top:${yy + r * big + .04}in"><span>${esc(lab)}</span>${dot}</div>`; }).join('');
+  return `<div class="page ex green map" data-w="x" data-p="home"><h1>My Road Home</h1><p class="how">Each week, put a sticker in the circle by that week’s picture!</p>
+    <svg class="road" viewBox="0 0 ${7.4 * D} ${10 * D}"><path d="${d}" fill="none" stroke="#e8dcc0" stroke-width="44" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#1d1a24" stroke-width="2.2" stroke-dasharray="10 9" stroke-linecap="round"/></svg>
+    ${stops}<span class="flag" style="left:.15in;top:1.25in">START</span><span class="flag" style="left:5.95in;top:6.55in;background:var(--gold2)">HOME!</span><div class="mname">My name: <span></span></div>${foot('The Way Back Home · Little ones', '')}</div>`;
+};
+const certPage = () => `<div class="page ex sky" data-w="x" data-p="teacher"><div class="cert">
+  <p style="font:900 10pt var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)">Well done!</p>
+  <h1>I heard<br>The Way Back Home!</h1>${img('gates-end', 25)}
+  <p style="font-size:12pt;font-family:var(--display);font-weight:900">Jesus loves</p><div class="name"></div>
+  <p style="font-size:10pt;color:var(--muted);margin-top:4pt">“We love because he first loved us.” 1 John 4:19</p>
+  <div class="sig"><div>Teacher</div><div>Date</div></div></div>${foot('The Way Back Home · Little ones', CSB)}</div>`;
+
+const sp = new URLSearchParams(location.search);
+const selW = document.getElementById('week'), selP = document.getElementById('part');
+selW.value = sp.get('week') || ''; selP.value = sp.get('part') || '';
+const root = document.getElementById('pages');
+root.innerHTML = overview() + mapPage() + W.map(w => teacher(w) + takehome(w)).join('') + certPage();
+const fit = () => { const wrap = document.getElementById('wrap'), k = Math.min(1, (wrap.clientWidth - 32) / (7.4 * 96));
+  root.style.transform = k < 1 ? `scale(${k})` : ''; root.style.marginLeft = k < 1 ? '0' : ''; wrap.style.height = k < 1 ? (root.offsetHeight * k + 60) + 'px' : ''; };
+const apply = () => { const wk = selW.value, pt = selP.value;
+  root.querySelectorAll('.page').forEach(p => { p.style.display = (!wk || p.dataset.w === wk) && (!pt || p.dataset.p === pt) ? '' : 'none'; });
+  const q = new URLSearchParams(); if (wk) q.set('week', wk); if (pt) q.set('part', pt);
+  history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '')); fit(); };
+selW.onchange = selP.onchange = apply; addEventListener('resize', fit);
+document.getElementById('print').onclick = () => window.print();
+apply(); if (document.fonts) document.fonts.ready.then(fit);
+})();
+</script>
+</body>
+</html>
