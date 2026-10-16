@@ -12,6 +12,7 @@
     "ru",
     "ur",
     "de",
+    "da",
     "he",
     "sw",
     "pa",
@@ -108,6 +109,12 @@
       "ready": true,
       "narration": true,
       "video": false
+    },
+    "da": {
+      "name": "Dansk",
+      "english": "Danish",
+      "dir": "ltr",
+      "ready": false
     },
     "he": {
       "name": "עברית",
