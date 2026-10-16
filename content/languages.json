@@ -114,7 +114,9 @@
       "name": "Dansk",
       "english": "Danish",
       "dir": "ltr",
-      "ready": false
+      "ready": true,
+      "narration": true,
+      "video": false
     },
     "he": {
       "name": "עברית",
