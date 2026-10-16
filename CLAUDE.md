@@ -141,7 +141,13 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
 - **Smaller items:**
   - Page numbers don't match.
   - iPhone bottom edge (16 Oct 2026): Johnny saw a coloured strip under the page (iPhone reports a 100lvh about one status-bar height short, seen as a home-screen app or with Safari's bar tucked away). `fitBook()` in app.js now stretches the book to the real bottom (largest of 100lvh, innerHeight, and the screen height when installed as an app). Confirm on his phone.
-  - Rebuild the downloadable videos once languages are recorded (`video.py`).
+  - Downloadable videos: **English done 16 Oct 2026** (`video/The-Way-Back-Home_EN.mp4`, 6:32, 65 MB, menu ⋯ → Download video).
+    video.py now includes the animated scenes (three layers per scene page: picture, clip in the picture's frame then its sharp
+    end still, see-through top layer with blur/shade/caption), the scene sounds (0.75) and the music hush/rise; checked the crack
+    (2:24.5) and the boom (2:38) land in silence before their lines. Takes ~25 min per language here. Final encode CRF 28 'slow'
+    keeps a book near 55–75 MB (GitHub refuses files over 100 MB). Johnny wants the other languages **later**, after he
+    finishes a few updates: run `python3 tools/video.py <code>`, then set `"video": true` for it in languages.json and build.
+    If a page's text, timing or clip changes, that language's video must be rebuilt.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)

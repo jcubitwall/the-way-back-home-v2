@@ -180,8 +180,10 @@ def join(videos, lens, out):
         fc.append(f'{prev}[p{k}]xfade=transition=fade:duration={TURN}:offset={t:.3f}[j{k}]'); prev = f'[j{k}]'
     fc.append(f'{prev}trim=duration={sum(lens):.3f}[v]')
     script = out + '.filter'; open(script, 'w').write(';\n'.join(fc))
-    run(cmd + ['-filter_complex_script', script, '-map', '[v]', '-c:v', 'libx264', '-preset', 'medium', '-tune', 'stillimage',
-               '-crf', '21', '-pix_fmt', 'yuv420p', '-r', str(FPS), out])
+    # CRF 28 'slow': the scenes move, so this keeps a whole book near 55–75 MB (GitHub's limit is 100 MB per file)
+    # with no visible loss on a phone (checked 16 Oct 2026 against CRF 21, which made 161 MB)
+    run(cmd + ['-filter_complex_script', script, '-map', '[v]', '-c:v', 'libx264', '-preset', 'slow',
+               '-crf', '28', '-pix_fmt', 'yuv420p', '-r', str(FPS), out])
 
 
 def envelope(events):
