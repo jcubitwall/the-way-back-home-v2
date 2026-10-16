@@ -3,19 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Way Back Home · Tract</title>
+<title>The Way Back Home · Booklet</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="art/favicon-48.png" sizes="48x48">
 <link rel="stylesheet" href="fonts/fonts.css">
 <script src="qr.js"></script>
 <style>
-/* A foldable gospel tract: one tabloid sheet (17 × 11 in), printed on both sides (flip on short edge),
-   folded in half ONCE to letter size (8.5 × 11 in).
-     Outside: [back: QR + "given to you by" | front cover]
-     Inside:  the whole story as one open spread, 1 → 15 and the prayer, left page then right page.
-   So you never have to turn it over while reading: closed you see the cover, open it and the story
-   runs straight through. Words come from "tract" in content/i18n/<code>.json (others fall back to English).
-   tract.html?lang=xx */
+/* A 16-page pocket booklet (4.25 × 5.5 in) from ONE tabloid sheet (17 × 11 in), printed on both sides.
+   Each side holds 8 pages (4 across × 2 down); the bottom row is printed upside down. Fold three times
+   (right over left, bottom up over top, right over left), turn over, staple the spine, cut the bottom
+   and right folded edges. The page order below was worked out by simulating the folds:
+     sheet side 1 (outside):  4 13 16 1  /  5 12 9 8 (upside down)
+     sheet side 2:            2 15 14 3  /  7 10 11 6 (upside down)
+   Pages: 1 cover, 2–14 the story (15 pictures; 2 and 14 hold two each), 15 the prayer, 16 QR + "given to you by".
+   Words come from "tract" in content/i18n/<code>.json (others fall back to English).
+   tract.html?lang=xx            the print sheet (2 PDF pages, 17 × 11 in)
+   tract.html?lang=xx&view=pages the 16 pages in reading order (to check) */
 :root{
   --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
   --body:'Andika','Verdana',system-ui,sans-serif;
@@ -25,58 +28,68 @@
 html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
   padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
-.top p{margin:0;flex:1 1 260px;font-size:15px;line-height:1.4;color:var(--muted)}
+.top div{flex:1 1 300px;font-size:14.5px;line-height:1.45;color:var(--muted)}
+.top ol{margin:4px 0 0;padding-left:20px}
 .top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
-.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;
-  box-shadow:0 3px 0 var(--gold2)}
+.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
 .wrap{padding:20px 16px 40px;overflow:hidden}
 .sheets{transform-origin:top left;width:17in;margin:0 auto}
 .label{font:800 15px var(--display);color:var(--muted);margin:0 0 8px}
-.sheet{width:17in;height:11in;display:flex;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.35in;position:relative}
-.sheet::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(0,0,0,.15)}
-.pg{width:8.5in;height:11in;position:relative;overflow:hidden;background:#fff}
+.sheet{width:17in;height:11in;display:grid;grid-template-columns:repeat(4,4.25in);grid-template-rows:repeat(2,5.5in);
+  background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.35in}
+.cell{position:relative;outline:1px dashed rgba(0,0,0,.12);outline-offset:-.5px}
+.cell.flip .pg{transform:rotate(180deg)}
+.pages{display:flex;flex-wrap:wrap;gap:.25in;width:17in}
+.pages .pg{box-shadow:0 3px 12px rgba(0,0,0,.15)}
 
-/* ---- outside right: cover ---- */
-.cover{background:linear-gradient(180deg,#7fb3e6 0%,#bcd8f0 22%,#f6e2bd 48%,#fbf3e6 62%,#fff 76%)}
-.cover .blur{position:absolute;inset:-.6in;background:url(art/src/cover.jpg) center top/100% auto no-repeat;filter:blur(40px);opacity:.55}
-.cover .art{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);height:11in;width:auto;
-  -webkit-mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
-.cover .fade{position:absolute;left:0;right:0;bottom:0;height:3.6in;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.88) 45%,#fff 80%)}
-.cover .words{position:absolute;left:.6in;right:.6in;bottom:.55in;text-align:center}
-.cover h1{margin:0;font:900 58pt/1 var(--display);color:var(--ink);letter-spacing:-.5pt}
-.cover .tag{margin:.12in 0 0;font:700 17pt/1.25 var(--body);color:var(--blue)}
+.pg{width:4.25in;height:5.5in;position:relative;overflow:hidden;background:#fff}
+.in{position:absolute;inset:.32in .3in .38in;display:flex;flex-direction:column;align-items:center}
+.folio{position:absolute;bottom:.17in;left:0;right:0;text-align:center;font:700 6.5pt var(--body);color:#aaa5b3}
 
-/* ---- outside left: back ---- */
-.back{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.8in .9in}
-.back .qr{width:2.6in;height:2.6in}
-.back .qr svg{display:block;width:100%;height:100%}
-.back .t{margin-top:.3in;font:900 22pt/1.15 var(--display)}
-.back .u{margin-top:.1in;font:700 19pt/1.2 var(--body);color:var(--blue)}
-.back .s{margin-top:.08in;font:400 13pt/1.35 var(--body);color:var(--muted)}
-.back .given{margin-top:1.1in;width:4.6in;text-align:left;font:700 12pt var(--body);color:var(--muted)}
-.back .given i{display:block;height:.45in;border-bottom:1.2pt solid #cfcad6}
-
-/* ---- inside: the story spread ---- */
-.inner{position:absolute;inset:.4in .4in .4in .4in;display:flex;flex-direction:column}
-.l .inner{right:.32in} .r .inner{left:.32in}
-.inner h2{margin:0 0 .06in;font:900 23pt/1.1 var(--display);color:var(--ink)}
-.inner h2 span{color:var(--blue)}
-.grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);column-gap:.18in;row-gap:.2in;grid-template-rows:1fr 1fr;padding-top:.12in}
-.panel{display:flex;flex-direction:column;min-width:0}
-.ph{position:relative;aspect-ratio:9/16;border-radius:.1in;overflow:hidden;background:#ddd}
+/* one picture */
+.one .ph{height:3.7in}
+.ph{position:relative;aspect-ratio:9/16;border-radius:.09in;overflow:hidden;background:#ddd;flex:none}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.num{position:absolute;left:.06in;top:.06in;width:.28in;height:.28in;border-radius:50%;background:var(--gold);color:#2B2233;
-  font:900 10.5pt/.28in var(--display);text-align:center;box-shadow:0 1.5pt 0 var(--gold2)}
-.cap{margin:.07in .01in 0;font:400 9.4pt/1.3 var(--body)}
-.ref{margin:.03in .01in 0;font:700 7pt/1.2 var(--body);color:var(--muted)}
-/* the prayer fills the last slot */
-.pray{align-self:start;background:var(--soft);border-radius:.1in;padding:.13in .12in;display:flex;flex-direction:column;gap:.06in}
-.pray h3{margin:0;font:900 12.5pt/1.1 var(--display)}
-.step{display:flex;gap:.06in;align-items:flex-start;font:400 8.3pt/1.25 var(--body)}
-.step b.k{flex:none;width:.2in;height:.2in;border-radius:50%;background:var(--blue);color:#fff;font:900 8.5pt/.2in var(--display);text-align:center}
+.num{position:absolute;left:.06in;top:.06in;width:.26in;height:.26in;border-radius:50%;background:var(--gold);color:#2B2233;
+  font:900 9.5pt/.26in var(--display);text-align:center;box-shadow:0 1.2pt 0 var(--gold2)}
+.cap{margin:.09in 0 0;width:100%;font:400 9.6pt/1.3 var(--body);text-align:center}
+.ref{margin:.03in 0 0;font:700 6.5pt/1.2 var(--body);color:var(--muted);text-align:center}
+/* two pictures side by side */
+.two .in{flex-direction:row;align-items:flex-start;gap:.17in}
+.two .col{flex:1;min-width:0;display:flex;flex-direction:column}
+.two .ph{width:100%}
+.two .cap{font-size:8.2pt;line-height:1.27;text-align:left}
+.two .ref{text-align:left}
+
+/* cover */
+.cover{background:linear-gradient(180deg,#7fb3e6 0%,#bcd8f0 22%,#f6e2bd 48%,#fbf3e6 62%,#fff 76%)}
+.cover .blur{position:absolute;inset:-.4in;background:url(art/src/cover.jpg) center top/100% auto no-repeat;filter:blur(22px);opacity:.55}
+.cover .art{position:absolute;top:0;left:50%;transform:translateX(-50%);height:5.5in;width:auto;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.cover .fade{position:absolute;left:0;right:0;bottom:0;height:1.9in;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.9) 45%,#fff 80%)}
+.cover .words{position:absolute;left:.3in;right:.3in;bottom:.36in;text-align:center}
+.cover h1{margin:0;font:900 29pt/1 var(--display);letter-spacing:-.3pt}
+.cover .tag{margin:.07in 0 0;font:700 9.5pt/1.25 var(--body);color:var(--blue)}
+
+/* prayer */
+.pray .in{align-items:stretch;justify-content:center;gap:.08in}
+.pray h2{margin:0 0 .02in;font:900 15pt/1.1 var(--display)}
+.pray .intro{margin:0;font:400 8.8pt/1.3 var(--body);color:var(--muted)}
+.step{display:flex;gap:.08in;align-items:flex-start;font:400 8.8pt/1.3 var(--body)}
+.step b.k{flex:none;width:.22in;height:.22in;border-radius:50%;background:var(--blue);color:#fff;font:900 9pt/.22in var(--display);text-align:center}
 .step b.w{font-weight:700}
-.prayer{margin:.02in 0 0;padding-left:.08in;border-left:2.5pt solid var(--gold);font:italic 400 8.3pt/1.3 var(--body)}
-.pray .note{margin:0;font:400 7.2pt/1.25 var(--body);color:var(--muted)}
+.prayer{margin:.04in 0 0;padding:.09in .1in;background:var(--soft);border-left:2.5pt solid var(--gold);border-radius:0 .07in .07in 0;font:italic 400 8.8pt/1.38 var(--body)}
+.pray .note{margin:0;font:400 7.4pt/1.3 var(--body);color:var(--muted)}
+
+/* back */
+.back .in{justify-content:center;text-align:center}
+.back .qr{width:1.75in;height:1.75in}
+.back .qr svg{display:block;width:100%;height:100%}
+.back .t{margin-top:.16in;font:900 12pt/1.15 var(--display)}
+.back .u{margin-top:.06in;font:700 10.5pt/1.2 var(--body);color:var(--blue)}
+.back .s{margin-top:.05in;font:400 8pt/1.35 var(--body);color:var(--muted)}
+.back .given{margin-top:.38in;width:100%;text-align:left;font:700 8pt var(--body);color:var(--muted)}
+.back .given i{display:block;height:.32in;border-bottom:1pt solid #cfcad6}
 
 .err{padding:24px;font-size:16px}
 @page{size:17in 11in;margin:0}
@@ -86,7 +99,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   .wrap{padding:0;overflow:visible}
   .sheets{transform:none!important;margin:0}
   .sheet{box-shadow:none;margin:0;break-after:page}
-  .sheet::after{display:none}
+  .cell{outline:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -94,7 +107,11 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 <body>
 <div class="top" id="top">
   <a id="back" href="./">‹ The Way Back Home</a>
-  <p>Print on tabloid paper (11 × 17 in), double-sided, flip on short edge. Fold in half once with the cover outside. Open it and the whole story reads straight through.</p>
+  <div>Makes a 16-page pocket booklet (4¼ × 5½ in) from one 11 × 17 sheet.
+    <ol><li>Print double-sided, “flip on short edge”.</li>
+    <li>Lay it with pages 2 and 3 facing up (right-way-up pictures along the top).</li>
+    <li>Fold the right half over the left. Fold the bottom half up. Fold the right half over the left again.</li>
+    <li>Turn it over so the cover faces you. Staple the left fold, then cut along the bottom and right folded edges.</li></ol></div>
   <button class="btn" id="print" type="button">Print</button>
 </div>
 <div class="wrap" id="wrap"><div class="sheets" id="sheets"></div></div>
@@ -102,46 +119,60 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 (async () => {
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
-  // the picture used for each page (the clearest frame of each scene)
+  // the picture used for each story page (the clearest frame of each scene)
   const ART = { garden: 'garden-clip', rule: 'rule-clip', serpent: 'serpent-end', fruit: 'fruit-end', exile: 'exile-clip',
     road: 'road-end', test: 'test-2-end', locked: 'locked-end', scrub: 'scrub-clip', door: 'door-end', cross: 'cross-end',
     choice: 'choice-end', tomb: 'tomb-end', gates: 'gates-clip', 'new-earth': 'new-earth-end' };
   const ORDER = Object.keys(ART);
+  // booklet pages 2–14: the story (two pictures on 2 and 14)
+  const STORY = [['garden', 'rule'], ['serpent'], ['fruit'], ['exile'], ['road'], ['test'], ['locked'], ['scrub'],
+    ['door'], ['cross'], ['choice'], ['tomb'], ['gates', 'new-earth']];
+  // where each booklet page sits on the sheet (row by row, 4 across); negative = printed upside down
+  const SIDES = [[4, 13, 16, 1, -5, -12, -9, -8], [2, 15, 14, 3, -7, -10, -11, -6]];
   try {
     const langs = await get('content/languages.json');
-    const q = new URLSearchParams(location.search).get('lang');
+    const sp = new URLSearchParams(location.search), q = sp.get('lang');
     let L = langs.langs[q] ? q : 'en';
     let T = await get(`content/i18n/${L}.json`);
     if (!T.tract) { L = 'en'; T = await get('content/i18n/en.json'); }
     const meta = langs.langs[L], h = document.documentElement; h.lang = L; h.dir = meta.dir || 'ltr';
     const tr = T.tract, cover = T.pages.cover, P = T.pages.prayer;
-    document.title = `${cover.title} · Tract`;
+    document.title = `${cover.title} · Booklet`;
     const back = document.getElementById('back'); back.href = `${L}/`; back.textContent = `‹ ${cover.title}`;
 
-    const panel = id => {
-      const n = ORDER.indexOf(id) + 1, [cap, ref] = tr.panels[id];
-      return `<div class="panel"><div class="ph"><img src="art/src/${ART[id]}.jpg" alt=""><div class="num">${n}</div></div>` +
-        `<p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p></div>`;
-    };
+    const pic = id => `<div class="ph"><img src="art/src/${ART[id]}.jpg" alt=""><div class="num">${ORDER.indexOf(id) + 1}</div></div>` +
+      `<p class="cap">${esc(tr.panels[id][0])}</p><p class="ref">${esc(tr.panels[id][1])}</p>`;
     const link = `https://thewaybackhome.net/${L}/`;
     const qr = qrcode(0, 'M'); qr.addData(link); qr.make();
     const n = qr.getModuleCount(), m = 1; let d = '';
     for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
     const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
+    const folio = k => `<div class="folio">${k}</div>`;
 
-    const front = `<div class="pg cover"><div class="blur"></div><img class="art" src="art/src/cover.jpg" alt="">` +
-      `<div class="fade"></div><div class="words"><h1>${esc(cover.title)}</h1><p class="tag">${esc(tr.tag)}</p></div></div>`;
-    const backPg = `<div class="pg back"><div class="qr">${svg}</div><div class="t">${esc(tr.free)}</div>` +
-      `<div class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</div><div class="s">${esc(tr.langs)} · ${esc(tr.scan)}</div>` +
-      `<div class="given">${esc(tr.given)}<i></i><i></i></div></div>`;
-    const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
-    const pray = `<div class="pray"><h3>${esc(P.title)}</h3>${steps}<p class="prayer">${esc(P.prayer)}</p><p class="note">${esc(P.note)}</p></div>`;
-    const left = `<div class="pg l"><div class="inner"><h2>${esc(tr.left)}</h2><div class="grid">${ORDER.slice(0, 8).map(panel).join('')}</div></div></div>`;
-    const right = `<div class="pg r"><div class="inner"><h2><span>${esc(tr.right)}</span></h2><div class="grid">${ORDER.slice(8).map(panel).join('')}${pray}</div></div></div>`;
-    // outside = [back | cover] (folded, the cover is on top); inside = [left | right], one open spread
+    const page = k => {
+      if (k === 1) return `<div class="pg cover"><div class="blur"></div><img class="art" src="art/src/cover.jpg" alt="">` +
+        `<div class="fade"></div><div class="words"><h1>${esc(cover.title)}</h1><p class="tag">${esc(tr.tag)}</p></div></div>`;
+      if (k === 15) {
+        const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
+        return `<div class="pg pray"><div class="in"><h2>${esc(P.title)}</h2><p class="intro">${esc(P.intro)}</p>${steps}` +
+          `<p class="prayer">${esc(P.prayer)}</p><p class="note">${esc(P.note)}</p></div>${folio(k)}</div>`;
+      }
+      if (k === 16) return `<div class="pg back"><div class="in"><div class="qr">${svg}</div><div class="t">${esc(tr.free)}</div>` +
+        `<div class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</div><div class="s">${esc(tr.langs)}<br>${esc(tr.scan)}</div>` +
+        `<div class="given">${esc(tr.given)}<i></i><i></i></div></div></div>`;
+      const ids = STORY[k - 2];
+      return ids.length === 1
+        ? `<div class="pg one"><div class="in">${pic(ids[0])}</div>${folio(k)}</div>`
+        : `<div class="pg two"><div class="in">${ids.map(id => `<div class="col">${pic(id)}</div>`).join('')}</div>${folio(k)}</div>`;
+    };
+
     const sheets = document.getElementById('sheets');
-    sheets.innerHTML = `<p class="label">Side 1: outside</p><div class="sheet">${backPg}${front}</div>` +
-      `<p class="label">Side 2: inside</p><div class="sheet">${left}${right}</div>`;
+    if (sp.get('view') === 'pages') {
+      sheets.innerHTML = `<div class="pages">${Array.from({ length: 16 }, (_, i) => page(i + 1)).join('')}</div>`;
+    } else {
+      const side = s => `<div class="sheet">${s.map(k => `<div class="cell${k < 0 ? ' flip' : ''}">${page(Math.abs(k))}</div>`).join('')}</div>`;
+      sheets.innerHTML = `<p class="label">Side 1 (cover side)</p>${side(SIDES[0])}<p class="label">Side 2</p>${side(SIDES[1])}`;
+    }
     const fit = () => {
       const avail = document.getElementById('wrap').clientWidth - 32, w = 17 * 96, k = Math.min(1, avail / w);
       sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
@@ -150,7 +181,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     fit(); addEventListener('resize', fit);
     document.getElementById('print').onclick = () => window.print();
   } catch (e) {
-    document.getElementById('wrap').innerHTML = '<p class="err">The tract could not load. Please check your connection and try again.</p>';
+    document.getElementById('wrap').innerHTML = '<p class="err">The booklet could not load. Please check your connection and try again.</p>';
   }
 })();
 </script>
