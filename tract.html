@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Way Back Home · Tract</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="art/favicon-48.png" sizes="48x48">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="qr.js"></script>
+<style>
+/* A foldable gospel tract: one tabloid sheet (11 × 17 in), printed on both sides (flip on short edge)
+   and folded once into a 4-page letter-size leaflet.
+     outside: [page 4 | page 1 cover]     inside: [page 2 | page 3]
+   Page 1: the cover picture and title. Pages 2–3: the story in 12 pictures. Page 4: the ending,
+   the A-B-C prayer, and a QR code for the book. Words come from "tract" in content/i18n/<code>.json.
+   tract.html?lang=xx   (only languages with a "tract" section; others fall back to English) */
+:root{
+  --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
+  --body:'Andika','Verdana',system-ui,sans-serif;
+  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --gold2:#C99A1E; --cut:#9a96a3; --soft:#f6f3ec;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
+.top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
+.top p{margin:0;flex:1 1 260px;font-size:15px;line-height:1.4;color:var(--muted)}
+.top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
+.btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;
+  box-shadow:0 3px 0 var(--gold2);display:inline-flex;align-items:center;gap:8px}
+.wrap{padding:20px 16px 40px;overflow:hidden}
+.sheets{transform-origin:top left;width:17in;margin:0 auto}
+.sheet{width:17in;height:11in;display:flex;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.4in;position:relative}
+.sheet::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(0,0,0,.12)}
+.pg{width:8.5in;height:11in;position:relative;overflow:hidden;background:#fff}
+
+/* ---- page 1: cover ---- */
+.cover{background:linear-gradient(180deg,#7fb3e6 0%,#bcd8f0 22%,#f6e2bd 48%,#fbf3e6 62%,#fff 76%)}
+.cover .blur{position:absolute;inset:-.6in;background:url(art/src/cover.jpg) center top/100% auto no-repeat;filter:blur(40px);opacity:.55}
+.cover .art{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);height:11in;width:auto;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
+.cover .fade{position:absolute;left:0;right:0;bottom:0;height:3.6in;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.88) 45%,#fff 80%)}
+.cover .words{position:absolute;left:.6in;right:.6in;bottom:.55in;text-align:center}
+.cover h1{margin:0;font:900 58pt/1 var(--display);color:var(--ink);letter-spacing:-.5pt}
+.cover .tag{margin:.12in 0 0;font:700 17pt/1.25 var(--body);color:var(--blue)}
+
+/* ---- story pages ---- */
+.inner{padding:.36in .5in .3in}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:.3in;row-gap:.16in}
+.panel{display:flex;flex-direction:column;min-width:0}
+.ph{position:relative;aspect-ratio:9/16;border-radius:.12in;overflow:hidden;background:#ddd}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.num{position:absolute;left:.08in;top:.08in;width:.32in;height:.32in;border-radius:50%;background:var(--gold);color:#2B2233;
+  font:900 12pt/.32in var(--display);text-align:center;box-shadow:0 1.5pt 0 var(--gold2)}
+.cap{margin:.06in .02in 0;font:400 9.4pt/1.28 var(--body)}
+.ref{margin:.03in .02in 0;font:700 7pt/1.2 var(--body);color:var(--muted)}
+
+/* ---- page 4: ending, prayer, QR ---- */
+.pray{margin-top:.22in;padding:.24in .3in .22in;background:var(--soft);border-radius:.16in}
+.pray h2{margin:0 0 .06in;font:900 23pt/1.1 var(--display);color:var(--ink)}
+.pray .intro{margin:0 0 .12in;font:400 11.5pt/1.3 var(--body);color:var(--muted)}
+.steps{display:grid;gap:.09in;margin:0 0 .16in}
+.step{display:flex;gap:.1in;align-items:baseline;font:400 11.5pt/1.3 var(--body)}
+.step b.k{flex:none;width:.3in;height:.3in;border-radius:50%;background:var(--blue);color:#fff;font:900 12pt/.3in var(--display);text-align:center;transform:translateY(.05in)}
+.step b.w{font-weight:700}
+.prayer{margin:0;padding-left:.12in;border-left:3pt solid var(--gold);font:400 11.5pt/1.4 var(--body);font-style:italic}
+.pray .note{margin:.12in 0 0;font:400 9.2pt/1.3 var(--body);color:var(--muted)}
+.foot{display:flex;align-items:center;gap:.22in;margin-top:.24in}
+.foot .qr{flex:none;width:1.45in;height:1.45in}
+.foot .qr svg{display:block;width:100%;height:100%}
+.foot .t{font:900 18pt/1.15 var(--display)}
+.foot .s{margin-top:.04in;font:400 11.5pt/1.3 var(--body);color:var(--muted)}
+.foot .u{margin-top:.05in;font:700 15pt/1.2 var(--body);color:var(--blue)}
+
+.err{padding:24px;font-size:16px}
+@page{size:17in 11in;margin:0}
+@media print{
+  html,body{background:#fff}
+  .top{display:none}
+  .wrap{padding:0;overflow:visible}
+  .sheets{transform:none!important;margin:0}
+  .sheet{box-shadow:none;margin:0;break-after:page}
+  .sheet::after{display:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <a id="back" href="./">‹ The Way Back Home</a>
+  <p>Print on tabloid paper (11 × 17 in), double-sided, flip on short edge. Fold in half with the cover outside.</p>
+  <button class="btn" id="print" type="button">Print</button>
+</div>
+<div class="wrap" id="wrap"><div class="sheets" id="sheets"></div></div>
+<script>
+(async () => {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
+  // the picture used for each page (the clearest frame of each scene)
+  const ART = { garden: 'garden-clip', rule: 'rule-clip', serpent: 'serpent-end', fruit: 'fruit-end', exile: 'exile-clip',
+    road: 'road-end', test: 'test-2-end', locked: 'locked-end', scrub: 'scrub-clip', door: 'door-end', cross: 'cross-end',
+    choice: 'choice-end', tomb: 'tomb-end', gates: 'gates-clip', 'new-earth': 'new-earth-end' };
+  const ORDER = Object.keys(ART);
+  try {
+    const langs = await get('content/languages.json');
+    const q = new URLSearchParams(location.search).get('lang');
+    let L = langs.langs[q] ? q : 'en';
+    let T = await get(`content/i18n/${L}.json`);
+    if (!T.tract) { L = 'en'; T = await get('content/i18n/en.json'); }
+    const meta = langs.langs[L], h = document.documentElement; h.lang = L; h.dir = meta.dir || 'ltr';
+    const tr = T.tract, cover = T.pages.cover, P = T.pages.prayer;
+    document.title = `${cover.title} · Tract`;
+    const back = document.getElementById('back'); back.href = `${L}/`; back.textContent = `‹ ${cover.title}`;
+
+    const panel = id => {
+      const n = ORDER.indexOf(id) + 1, [cap, ref] = tr.panels[id];
+      return `<div class="panel"><div class="ph"><img src="art/src/${ART[id]}.jpg" alt=""><div class="num">${n}</div></div>` +
+        `<p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p></div>`;
+    };
+    const link = `https://thewaybackhome.net/${L}/`;
+    const qr = qrcode(0, 'M'); qr.addData(link); qr.make();
+    const n = qr.getModuleCount(), m = 1; let d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
+    const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
+
+    const p1 = `<div class="pg cover"><div class="blur"></div><img class="art" src="art/src/cover.jpg" alt="">` +
+      `<div class="fade"></div><div class="words"><h1>${esc(cover.title)}</h1><p class="tag">${esc(tr.tag)}</p></div></div>`;
+    const p2 = `<div class="pg"><div class="inner"><div class="grid">${ORDER.slice(0, 6).map(panel).join('')}</div></div></div>`;
+    const p3 = `<div class="pg"><div class="inner"><div class="grid">${ORDER.slice(6, 12).map(panel).join('')}</div></div></div>`;
+    const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
+    const p4 = `<div class="pg end"><div class="inner"><div class="grid">${ORDER.slice(12).map(panel).join('')}</div>` +
+      `<div class="pray"><h2>${esc(P.title)}</h2><p class="intro">${esc(P.intro)}</p><div class="steps">${steps}</div>` +
+      `<p class="prayer">${esc(P.prayer)}</p><p class="note">${esc(P.note)}</p></div>` +
+      `<div class="foot"><div class="qr">${svg}</div><div><div class="t">${esc(tr.free)}</div>` +
+      `<div class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</div><div class="s">${esc(tr.langs)}</div></div></div></div></div>`;
+    // folded order: outside = [4 | 1], inside = [2 | 3]
+    const sheets = document.getElementById('sheets');
+    sheets.innerHTML = `<div class="sheet">${p4}${p1}</div><div class="sheet">${p2}${p3}</div>`;
+    const fit = () => {
+      const avail = document.getElementById('wrap').clientWidth - 32, w = 17 * 96, k = Math.min(1, avail / w);
+      sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
+      document.getElementById('wrap').style.height = k < 1 ? (2 * 11.4 * 96 * k + 60) + 'px' : '';
+    };
+    fit(); addEventListener('resize', fit);
+    document.getElementById('print').onclick = () => window.print();
+  } catch (e) {
+    document.getElementById('wrap').innerHTML = '<p class="err">The tract could not load. Please check your connection and try again.</p>';
+  }
+})();
+</script>
+</body>
+</html>

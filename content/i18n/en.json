@@ -433,5 +433,72 @@
       23.69,
       27.2
     ]
+  },
+  "tract": {
+    "tag": "A true story from the Bible",
+    "panels": {
+      "garden": [
+        "In the beginning, God made everything. He made Adam and Eve and was with them in their garden home. Everything was perfect.",
+        "Genesis 1–2"
+      ],
+      "rule": [
+        "God gave them one simple rule: “Do not eat from that tree. If you do, you will die.”",
+        "Genesis 2:16–17"
+      ],
+      "serpent": [
+        "A sneaky serpent hissed, “You won’t die!” But he was lying. He wanted Eve to stop trusting God.",
+        "Genesis 3:1–5"
+      ],
+      "fruit": [
+        "Eve ate the fruit, and Adam ate it too. For the very first time, people disobeyed God. The Bible calls this sin.",
+        "Genesis 3:6"
+      ],
+      "exile": [
+        "Sin changed everything. Animals had to die to cover Adam and Eve. But God promised Someone would come to open the way back home.",
+        "Genesis 3:15, 21–24"
+      ],
+      "road": [
+        "We are all Adam and Eve’s children. The Bible says we have all sinned, and our sin keeps us far from God.",
+        "Romans 3:23; Isaiah 59:2"
+      ],
+      "test": [
+        "Have you ever told a lie? Taken something that wasn’t yours? Like Adam and Eve, we have all broken God’s law.",
+        "Exodus 20; Romans 3:19"
+      ],
+      "locked": [
+        "God is good and fair. He can’t pretend our sin never happened. If we die with our sin, we will be punished in hell, far from God forever.",
+        "Romans 6:23; Hebrews 9:27"
+      ],
+      "scrub": [
+        "Being good, saying sorry or going to church can’t scrub our sin away. Someone has to take our place. But who?",
+        "Isaiah 64:6; Ephesians 2:8–9"
+      ],
+      "door": [
+        "Here is the good news! God loved the world so much that He sent His Son, Jesus. Jesus said, “I am the door.”",
+        "John 3:16; John 10:9"
+      ],
+      "cross": [
+        "Jesus never sinned, not even once. But He died on a cross in our place and took the punishment we deserved.",
+        "2 Corinthians 5:21; 1 Peter 2:24"
+      ],
+      "choice": [
+        "Now everyone has a choice. When we turn from sin and trust Jesus, God takes our sin away and covers us with His goodness.",
+        "Mark 1:15; Romans 10:9, 13"
+      ],
+      "tomb": [
+        "Three days later, His tomb was empty! Jesus is alive! He beat sin and death and made a way back home.",
+        "1 Corinthians 15:3–4"
+      ],
+      "gates": [
+        "One day, everyone who trusts Jesus will run through heaven’s open gates, right into His arms.",
+        "John 14:2–3"
+      ],
+      "new-earth": [
+        "God will make everything new, even better than Eden! Until then, tell others the good news.",
+        "Revelation 21:1, 5"
+      ]
+    },
+    "free": "Read and listen to the whole story, free:",
+    "langs": "In 17 languages"
   }
 }

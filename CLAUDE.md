@@ -169,6 +169,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   scan line and link on the right. RTL languages mirror it. Checked all 17 languages fit (de/sw titles shrink to ~10 pt);
   10/10 codes decode at 300 dpi.
   Tweaked same day (Johnny): fade only on the picture's last ~0.3 in (84%→100%), QR in the top-right corner (top-left in RTL), text at the bottom of the column. Then (Johnny: text touched the photo) the picture is 1.95 in wide and the text column 1.34 in, 0.08 in from the edge: a 0.12 in white gap between photo and text. Titles 11.5–13 pt (fr 9.5, de 10, sw 8 pt: long titles).
+- **Foldable gospel tract (16 Oct 2026, first draft, English).** `tract.html?lang=en`: one tabloid sheet (11 × 17 in), double-sided (flip on short edge), folded once into a 4-page letter-size leaflet. Outside = [page 4 | page 1 cover], inside = [page 2 | page 3]. Page 1: cover picture + title; pages 2–3: 12 uncropped pictures (3 × 2 each) with short captions and refs; page 4: tomb, gates, new earth, the A-B-C prayer, QR for thewaybackhome.net/<code>/. Shortened captions live in `"tract"` in the language's i18n file (English only so far; others fall back to English). Pictures come from `art/src/` (full-size). Not linked from the menu yet; the PDF was rendered with Playwright (`page.pdf` 17×11 in). Cover is full-bleed (print shop); a home printer will leave a white edge.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)
