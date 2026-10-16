@@ -223,7 +223,7 @@ const qrSvg = (() => {
 // Memory verses: CSB (checked word for word, 16 Oct 2026)
 const W = [
  { n: 1, col: 'green', title: 'God’s perfect home', pages: ['The garden', 'The one rule'],
-   thumbs: [['garden', 50], ['rule', 40]], pic: ['garden', 38],
+   thumbs: [['garden-clip', 50], ['rule-end', 40]], pic: ['garden-clip', 36],
    bible: 'Genesis 1:1, 26–31; 2:8–9, 15–17',
    idea: 'God made a perfect world, and He loves to be with us!',
    verse: ['“God saw all that he had made, and it was very good indeed.”', 'Genesis 1:31'],
@@ -239,7 +239,7 @@ const W = [
    home: { kind: 'trees', ask: 'What was the one rule God gave Adam and Eve?' } },
 
  { n: 2, col: 'purple', title: 'The big lie', pages: ['The serpent', 'The fruit', 'Out of the garden'],
-   thumbs: [['serpent', 40], ['fruit-end', 35], ['exile-end', 50]], pic: ['fruit-end', 28],
+   thumbs: [['serpent-end', 40], ['fruit-end', 35], ['exile-end', 50]], pic: ['fruit-end', 28],
    bible: 'Genesis 3:1–24',
    idea: 'Sin means not trusting God. But God made a promise!',
    verse: ['“Every word of God is pure; he is a shield to those who take refuge in him.”', 'Proverbs 30:5'],
@@ -256,7 +256,7 @@ const W = [
    home: { kind: 'truetrick', ask: 'What did God promise Adam and Eve?' } },
 
  { n: 3, col: 'night', title: 'Every one of us', pages: ['The long road', 'God’s law'],
-   thumbs: [['wall', 50], ['law', 40], ['test-2-end', 40]], pic: ['test-2-end', 52],
+   thumbs: [['road-end', 50], ['test-clip', 40], ['test-2-end', 40]], pic: ['test-2-end', 52],
    bible: 'Exodus 20:1–17; Romans 3:23; James 2:10',
    idea: 'Everybody sins. Me too.',
    verse: ['“For all have sinned and fall short of the glory of God.”', 'Romans 3:23'],
@@ -272,7 +272,7 @@ const W = [
    home: { kind: 'wordsearch', ask: 'Which two of God’s rules did the book ask about?' } },
 
  { n: 4, col: 'red', title: 'Locked out', pages: ['Locked out', 'Can we scrub it off?'],
-   thumbs: [['locked', 45], ['locked-2-end', 50], ['scrub', 30]], pic: ['scrub', 14],
+   thumbs: [['locked-end', 45], ['locked-2-end', 50], ['scrub-clip', 30]], pic: ['scrub-end', 12],
    bible: 'Romans 3:20; Isaiah 59:2; Romans 6:23; Ephesians 2:8–9',
    idea: 'Sin locks us out, and we can’t scrub it off.',
    verse: ['“For you are saved by grace through faith, and this is not from yourselves; it is God’s gift.”', 'Ephesians 2:8'],
@@ -288,7 +288,7 @@ const W = [
    home: { kind: 'wash', ask: 'Why couldn’t the children scrub their marks off?' } },
 
  { n: 5, col: 'orange', title: 'The door', pages: ['The door', 'The cross'],
-   thumbs: [['door', 50], ['cross', 50]], pic: ['cross', 42],
+   thumbs: [['door-end', 50], ['cross-end', 50]], pic: ['cross-end', 44],
    bible: 'John 10:9; John 3:16; John 14:6; Isaiah 53:6',
    idea: 'Jesus is the door! He died in our place.',
    verse: ['“For God loved the world in this way: He gave his one and only Son, so that everyone who believes in him will not perish but have eternal life.”', 'John 3:16'],
@@ -305,7 +305,7 @@ const W = [
    home: { kind: 'maze', ask: 'Who is the door? What did Jesus do for us?' } },
 
  { n: 6, col: 'orange', title: 'He is alive!', pages: ['The choice', 'The empty tomb'],
-   thumbs: [['choice', 45], ['tomb', 45], ['clean', 50]], pic: ['tomb', 40],
+   thumbs: [['choice-clip', 45], ['tomb-end', 45], ['clean', 50]], pic: ['tomb-end', 36],
    bible: 'Romans 10:9, 13; Luke 24:1–8; 1 Corinthians 15:3–4; Isaiah 1:18',
    idea: 'Jesus is alive! He makes us clean.',
    verse: ['“If you confess with your mouth, ‘Jesus is Lord,’ and believe in your heart that God raised him from the dead, you will be saved.”', 'Romans 10:9'],
@@ -322,7 +322,7 @@ const W = [
    home: { kind: 'code', ask: 'What did Jesus’ friends find on the third day?' } },
 
  { n: 7, col: 'sky', title: 'Welcome home', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'],
-   thumbs: [['gates', 50], ['hug', 35], ['new-earth', 40]], pic: ['gates', 45],
+   thumbs: [['gates-clip', 50], ['gates-end', 35], ['new-earth-end', 40]], pic: ['gates-end', 28],
    bible: 'John 14:2–3; John 20:27; Revelation 21:1–5; Matthew 28:19–20',
    idea: 'Jesus will welcome us home. Let’s tell others!',
    verse: ['“Look, I am making everything new.”', 'Revelation 21:5'],
@@ -479,7 +479,7 @@ const overview = () => `<div class="page ov" data-w="0" data-p="teacher">
 </div>`;
 
 // extras: 12 story cards on two sheets of 6, shuffled, lettered A–L
-const CARDS = [['garden', 40], ['rule', 40], ['serpent', 40], ['fruit-end', 30], ['exile-end', 45], ['wall', 50], ['law', 40], ['locked', 45], ['scrub', 40], ['cross', 50], ['tomb', 45], ['gates', 50]];
+const CARDS = [['garden-clip', 40], ['rule-end', 40], ['serpent-end', 40], ['fruit-end', 30], ['exile-end', 45], ['road-end', 50], ['test-clip', 40], ['locked-end', 45], ['scrub-clip', 40], ['cross-end', 50], ['tomb-end', 45], ['gates-clip', 50]];
 const cardsPages = () => {
   const R = rng(12), idx = CARDS.map((_, i) => i);
   for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
@@ -498,14 +498,14 @@ const doorSvg = `<svg viewBox="0 0 100 104"><rect width="100" height="104" fill=
   <circle cx="71" cy="70" r="2.4" fill="#1d1a24"/>
   <text x="50" y="100" font-size="4.2" text-anchor="middle" fill="#5a5566" font-family="Andika">Cut the dashed line. Fold back on the solid line.</text></svg>`;
 const craftPage = () => {
-  const set = `<div class="craft"><div><p class="lab">1 · The cross (glue this behind)</p><div class="p">${img('cross', 45)}<p class="cap">Jesus died in my place.<small>1 Peter 2:24</small></p></div></div>
+  const set = `<div class="craft"><div><p class="lab">1 · The cross (glue this behind)</p><div class="p">${img('cross-end', 45)}<p class="cap">Jesus died in my place.<small>1 Peter 2:24</small></p></div></div>
     <div><p class="lab">2 · The door (colour, cut, fold)</p><div class="p door">${doorSvg}</div></div></div>`;
   return `<div class="page ex orange" data-w="x" data-p="teacher"><h1>Door craft</h1><p class="how">For week 5. Two crafts per sheet. Colour the door. Cut out both pieces. Cut the door on its dashed line and fold it open. Glue the cross picture behind it, so opening the door shows the cross.</p>
     ${set}${set}${foot('The Way Back Home · Extras', '')}</div>`;
 };
 const certPage = () => `<div class="page ex sky" data-w="x" data-p="teacher"><div class="cert">
   <p style="font:900 10pt var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)">Certificate</p>
-  <h1>I finished<br>The Way Back Home!</h1>${img('hug', 30)}
+  <h1>I finished<br>The Way Back Home!</h1>${img('gates-end', 30)}
   <p style="font-size:10.5pt">This certificate is given to</p><div class="name"></div>
   <p style="font-size:9.5pt;color:var(--muted)">for learning the whole story, from the garden to the new earth!</p>
   <div class="vs"><p style="font:900 10pt var(--display);color:var(--blue);margin-bottom:3pt">Memory verses I can say</p>
