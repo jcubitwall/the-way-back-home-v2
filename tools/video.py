@@ -20,7 +20,7 @@ from common import path, story, lang, spoken, ROOT
 
 W, H, FPS = 1080, 1920, 25
 FADE = 0.35      # crossfade between captions
-TURN = 0.6       # crossfade between pages
+TURN = 0.5       # page turn: the next page slides up, as in the book (a crossfade looked like a blurry double image)
 GAP = 0.9        # quiet moment after each page's narration
 MUSIC = 0.21     # music level under the narrator
 SFX = 0.75       # scene sounds, as in the reader
@@ -170,14 +170,14 @@ def scene_page(i, page, tmp):
 
 
 def join(videos, lens, out):
-    """Crossfade the pages into one picture track (each page video runs TURN seconds past its time)."""
+    """Join the pages into one picture track with a slide-up page turn (each page video runs TURN seconds past its time)."""
     cmd, fc = ['ffmpeg', '-y', '-hide_banner'], []
     for k, v in enumerate(videos):
         cmd += ['-i', v]; fc.append(f'[{k}:v]fps={FPS},setsar=1,format=yuv420p,setpts=PTS-STARTPTS[p{k}]')
     prev, t = '[p0]', 0.0
     for k in range(1, len(videos)):
         t += lens[k - 1]
-        fc.append(f'{prev}[p{k}]xfade=transition=fade:duration={TURN}:offset={t:.3f}[j{k}]'); prev = f'[j{k}]'
+        fc.append(f'{prev}[p{k}]xfade=transition=slideup:duration={TURN}:offset={t:.3f}[j{k}]'); prev = f'[j{k}]'
     fc.append(f'{prev}trim=duration={sum(lens):.3f}[v]')
     script = out + '.filter'; open(script, 'w').write(';\n'.join(fc))
     # CRF 28 'slow': the scenes move, so this keeps a whole book near 55–75 MB (GitHub's limit is 100 MB per file)

@@ -151,7 +151,7 @@ button{font:inherit}
 .tip.bottom{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:auto;right:12px;transform:none}
 .toast{position:fixed;z-index:20;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:rgba(20,20,30,.88);color:#fff;font:600 15px var(--body);padding:10px 18px;border-radius:99px;opacity:0;transition:opacity .25s;pointer-events:none}
 .toast.on{opacity:1}
-.render .bar,.render .chip,.render .cta{display:none}
+.render .bar,.render .chip,.render .cta,.render .qr,.render .mslot{display:none}
 .render .track{transition:none}
 
 @media (prefers-reduced-motion:reduce){.track.anim{transition-duration:.01s}.caps .cap{transition:opacity .2s}.rb[aria-pressed=true]{animation:none}}
