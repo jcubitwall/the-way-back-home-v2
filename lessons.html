@@ -11,7 +11,8 @@
 <style>
 /* A 7-week Sunday school series built on the book (English). Each week has a teacher page and a take-home
    sheet; then extras (story order cards, door craft, certificate). Every page is 7.4 × 10 in, which fits inside
-   Letter and A4 with the browser's default margins. lessons.html?week=3 shows one week; ?part=teacher|home|extras. */
+   Letter and A4 with the browser's default margins. lessons.html?week=3 shows one week; ?part=teacher|home.
+   Memory verses: CSB. */
 :root{
   --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
   --body:'Andika','Verdana',system-ui,sans-serif;
@@ -23,141 +24,148 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;
   padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
 .top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
-.top .ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--muted)}
+.top .ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .top select{font:600 15px var(--body);padding:7px 10px;border-radius:10px;border:1px solid #cfcadb;background:#fff;color:var(--ink)}
 .btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
 .wrap{padding:20px 16px 40px;overflow:hidden}
 .pages{transform-origin:top left;width:7.4in;margin:0 auto}
 
-/* one printed page */
+/* one printed page; --c is the chapter colour, --t a light tint of it */
 .page{position:relative;width:7.4in;height:10in;background:#fff;overflow:hidden;margin:0 0 .3in;box-shadow:0 6px 24px rgba(0,0,0,.16);
-  font-size:10.8pt;line-height:1.38;--c:var(--blue)}
-.page.green{--c:var(--green)}.page.purple{--c:var(--purple)}.page.night{--c:var(--night)}.page.red{--c:var(--red)}
-.page.orange{--c:var(--orange)}.page.sky{--c:var(--sky)}
+  font-size:10.8pt;line-height:1.38;--c:var(--blue);--t:#e8f1fc}
+.page.green{--c:var(--green);--t:#e6f4ea}.page.purple{--c:var(--purple);--t:#f0e9f8}.page.night{--c:var(--night);--t:#ebe9f5}
+.page.red{--c:var(--red);--t:#fbebe9}.page.orange{--c:var(--orange);--t:#fdf0e4}.page.sky{--c:var(--sky);--t:#e8f1fc}
 h1,h2,h3{font-family:var(--display);font-weight:900;margin:0;line-height:1.1}
 p{margin:0}
-.foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-size:7.5pt;color:#8a8496;border-top:1px solid var(--line);padding-top:4pt}
+.foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:12pt;font-size:7pt;color:#8a8496;border-top:1px solid var(--line);padding-top:4pt}
 
-/* teacher page */
-.t-head{display:flex;gap:.18in;align-items:stretch;height:1.62in}
-.t-head .tt{flex:1;display:flex;flex-direction:column;justify-content:center;gap:5pt}
+/* ---------- teacher page ---------- */
+.page.tp{font-size:12pt;line-height:1.4}
+.page.tp .need,.page.tp .tip p{font-size:10.4pt}
+.page.tp .side .verse{font-size:12pt}
+.t-head{display:flex;gap:.16in;align-items:stretch}
+.t-head .tt{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6pt}
 .pill{display:inline-block;align-self:flex-start;background:var(--c);color:#fff;font:900 9.5pt var(--display);letter-spacing:.06em;
   text-transform:uppercase;padding:3pt 9pt;border-radius:99px}
-.t-head h1{font-size:25pt;color:var(--c)}
+.t-head h1{font-size:30pt;color:var(--c)}
 .t-head .pg{font-size:9.5pt;color:var(--muted)}
 .thumbs{display:flex;gap:5pt}
-.thumbs img{width:.92in;height:1.62in;object-fit:cover;border-radius:7pt;display:block}
-.idea{margin:.14in 0 .1in;background:var(--cream);border-left:5pt solid var(--c);border-radius:0 8pt 8pt 0;padding:7pt 11pt;
-  font:800 12.5pt/1.3 var(--display)}
+.thumbs img{width:1.3in;height:2.35in;object-fit:cover;border-radius:9pt;display:block}
+.idea{margin:.14in 0 .06in;background:var(--t);border-radius:12pt;padding:8pt 12pt;font:900 14pt/1.25 var(--display);color:var(--c)}
 .idea small{display:block;font:700 7.5pt var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2pt}
-.two{display:grid;grid-template-columns:1fr 2.35in;gap:.18in}
-.sec{margin-top:8pt}
-.sec h3{font-size:11pt;color:var(--c);margin-bottom:3pt;display:flex;align-items:baseline;gap:6pt}
+.two{display:grid;grid-template-columns:1fr 2.3in;gap:.18in}
+.sec{margin-top:10pt}
+.sec h3{font-size:13pt;color:var(--c);margin-bottom:2pt;display:flex;align-items:baseline;gap:6pt}
 .sec h3 .min{font:700 8pt var(--body);color:var(--muted)}
-.sec ol,.sec ul{margin:0;padding-left:15pt}
+.sec ol{margin:0;padding-left:15pt}
 .sec li{margin:0 0 2.5pt}
 .ans{color:var(--muted);font-style:italic}
-.side .box{border:1.2pt solid var(--line);border-radius:9pt;padding:7pt 9pt;margin-top:8pt}
-.side .box:first-child{margin-top:0}
+.side .box{border:1.2pt solid var(--line);border-radius:10pt;padding:7pt 9pt;margin-top:8pt}
+.side .box:first-child{margin-top:8pt;background:var(--t);border-color:var(--t)}
 .side h3{font-size:10pt;color:var(--c);margin-bottom:3pt}
 .verse{font:800 11pt/1.3 var(--display)}
 .verse .ref{display:block;font:700 9pt var(--body);color:var(--muted);margin-top:3pt}
-.need{font-size:9.2pt}
+.need{font-size:9.4pt}
 .need ul{margin:0;padding-left:13pt}
 .tip{background:#fff7e3;border-color:#f0d9a3 !important}
-.tip p{font-size:9.2pt}
+.tip p{font-size:9.4pt}
 
-/* take-home sheet */
-.h-pic{position:relative;height:2.75in;border-radius:12pt;overflow:hidden}
+/* ---------- take-home sheet ---------- */
+.h-pic{position:relative;height:3.35in;border-radius:16pt;overflow:hidden}
 .h-pic img{width:100%;height:100%;object-fit:cover;display:block}
-.h-pic .lab{position:absolute;left:0;right:0;bottom:0;padding:22pt 14pt 10pt;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff}
-.h-pic .lab .pill{background:#fff;color:var(--c)}
-.h-pic h1{font-size:24pt;margin-top:4pt;text-shadow:0 1pt 3pt rgba(0,0,0,.4)}
-.h-idea{text-align:center;font:800 12.5pt/1.3 var(--display);color:var(--c);margin:.12in .2in .08in}
-.mv{display:flex;gap:10pt;align-items:center;border:1.5pt dashed var(--c);border-radius:10pt;padding:6pt 11pt}
-.mv .tag{flex:none;font:900 8.5pt/1.1 var(--display);color:var(--c);text-transform:uppercase;letter-spacing:.05em;width:.7in}
-.mv .verse{font-size:10.5pt}
-.act{margin-top:.12in}
-.act h2{font-size:14pt;color:var(--c)}
-.act .how{font-size:10pt;color:var(--ink);margin:2pt 0 7pt}
-.home{position:absolute;left:0;right:0;bottom:.24in;display:flex;gap:12pt;align-items:center;background:var(--cream);border-radius:10pt;padding:8pt 11pt}
-.home .qr{width:.82in;height:.82in;flex:none}
+.h-pic .lab{position:absolute;left:0;right:0;bottom:0;padding:30pt 16pt 11pt;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.h-pic h1{font-size:32pt;color:#fff;text-shadow:0 2pt 0 var(--c),0 3pt 8pt rgba(0,0,0,.45)}
+.sticker{position:absolute;left:12pt;top:12pt;width:.78in;height:.78in;border-radius:50%;background:#fff;color:var(--c);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 3pt var(--c),0 3pt 8pt rgba(0,0,0,.35);transform:rotate(-8deg)}
+.sticker small{font:900 8pt/1 var(--display);letter-spacing:.08em}
+.sticker b{font:900 26pt/1 var(--display)}
+.bubble{position:relative;margin:.16in .1in .1in;background:var(--t);border-radius:16pt;padding:8pt 14pt;text-align:center;
+  font:900 15.5pt/1.25 var(--display);color:var(--c)}
+.bubble::before{content:'';position:absolute;left:50%;top:-9pt;margin-left:-9pt;border:9pt solid transparent;border-top:0;border-bottom-color:var(--t)}
+.mv{display:flex;gap:10pt;align-items:center;background:var(--c);color:#fff;border-radius:14pt;padding:8pt 13pt}
+.mv .star{flex:none;width:.5in;height:.5in}
+.mv .tag{display:block;font:900 8pt var(--display);text-transform:uppercase;letter-spacing:.1em;opacity:.85;margin-bottom:1pt}
+.mv .verse{font-size:11.5pt}
+.mv .verse .ref{display:inline;color:#fff;opacity:.85;margin-left:4pt}
+.act{margin-top:.14in}
+.act h2{font-size:17pt;color:var(--c)}
+.act .how{font-size:11.2pt;margin:2pt 0 8pt}
+.home{position:absolute;left:0;right:0;bottom:.24in;display:flex;gap:12pt;align-items:center;border:1.2pt solid var(--line);border-radius:12pt;padding:7pt 11pt}
+.home .qr{width:.78in;height:.78in;flex:none}
 .home .qr svg{width:100%;height:100%;display:block}
 .home b{font-family:var(--display);color:var(--c)}
-.home p{font-size:9.4pt}
+.home p{font-size:9.2pt}
 .home p+p{margin-top:3pt}
 
 /* activities */
 .trees{display:grid;grid-template-columns:repeat(9,1fr);gap:2pt 6pt}
 .trees svg{width:100%;height:auto;display:block}
-.draw{margin-top:8pt;border:1.4pt solid var(--line);border-radius:10pt;height:1.35in;position:relative}
-.draw span{position:absolute;left:9pt;top:6pt;font-size:9pt;color:var(--muted)}
-.tt-list{display:grid;gap:5pt}
-.tt-row{display:flex;align-items:center;gap:9pt;border-bottom:1pt solid var(--line);padding:3.5pt 0}
-.tt-row .q{flex:1;font-size:10.6pt}
-.chip{font:900 9.5pt var(--display);border:1.5pt solid var(--ink);border-radius:99px;padding:2.5pt 9pt;letter-spacing:.04em}
-.ws{display:grid;grid-template-columns:3.55in 1fr;gap:.2in;align-items:start}
-.grid{display:grid;border:1.5pt solid var(--ink);border-radius:6pt;overflow:hidden}
-.grid div{display:flex;align-items:center;justify-content:center;font:800 13pt var(--display);aspect-ratio:1}
-.words{columns:2;column-gap:10pt;font:800 10pt var(--display);margin:0;padding:0;list-style:none}
+.draw{margin-top:8pt;border:1.6pt dashed var(--line);border-radius:12pt;position:relative}
+.draw span{position:absolute;left:10pt;top:7pt;font:800 10pt var(--display);color:var(--muted)}
+.tt-row{display:flex;align-items:center;gap:9pt;border-bottom:1pt solid var(--line);padding:5pt 0}
+.tt-row .q{flex:1;font-size:12pt}
+.chip{font:900 10pt var(--display);border:1.6pt solid var(--ink);border-radius:99px;padding:2.5pt 10pt;letter-spacing:.04em}
+.ws{display:grid;grid-template-columns:3.05in 1fr;gap:.2in;align-items:start}
+.grid{display:grid;border:1.6pt solid var(--ink);border-radius:8pt;overflow:hidden}
+.grid div{display:flex;align-items:center;justify-content:center;font:800 12pt var(--display);aspect-ratio:1}
+.words{columns:2;column-gap:10pt;font:800 10.5pt var(--display);margin:0;padding:0;list-style:none}
 .words li{margin-bottom:3pt}
 .words li::before{content:'☐ ';font-family:var(--body);font-weight:400}
-.ten{margin-top:8pt;font-size:9.2pt;columns:2;column-gap:12pt;padding-left:14pt;margin-bottom:0}
-.wash{display:grid;gap:5pt}
-.wash .row{display:flex;align-items:center;gap:10pt;border-bottom:1pt solid var(--line);padding:3pt 0}
-.wash .row span{flex:1;font-size:10.6pt}
-.wash .yn{display:flex;gap:6pt;font:900 9pt var(--display)}
-.wash .yn i{font-style:normal;border:1.4pt solid var(--ink);border-radius:5pt;padding:1.5pt 7pt}
-.who{margin-top:8pt;display:flex;gap:12pt;align-items:center;border:1.4pt solid var(--line);border-radius:10pt;padding:8pt 12pt}
-.who .big{font:900 40pt/1 var(--display);color:var(--c)}
+.ten{font-size:9.8pt;padding-left:15pt;margin:2pt 0 0;columns:2;column-gap:16pt}
+.ten li{break-inside:avoid;margin-bottom:2pt}
+.wash .row{display:flex;align-items:center;gap:10pt;border-bottom:1pt solid var(--line);padding:4pt 0}
+.wash .row span{flex:1;font-size:12pt}
+.wash .yn{display:flex;gap:6pt;font:900 10pt var(--display)}
+.wash .yn i{font-style:normal;border:1.6pt solid var(--ink);border-radius:6pt;padding:1.5pt 8pt}
 .maze svg{display:block;margin:0 auto}
-.code .key{display:flex;flex-wrap:wrap;gap:5pt 9pt;justify-content:center;margin-bottom:10pt}
-.code .k{display:flex;align-items:center;gap:4pt;border:1.2pt solid var(--line);border-radius:7pt;padding:2pt 7pt 2pt 4pt;font:900 12pt var(--display)}
-.code .msg{display:flex;flex-wrap:wrap;gap:6pt 4pt;justify-content:center}
-.code .c{display:flex;flex-direction:column;align-items:center;gap:3pt;width:.4in}
-.code .c .bl{width:.36in;border-bottom:1.5pt solid var(--ink);height:.3in}
-.code .gap{width:.25in}
-.abc .st{display:flex;gap:9pt;align-items:flex-start;margin-bottom:5pt}
-.abc .st b.k{flex:none;width:.34in;height:.34in;border-radius:50%;background:var(--c);color:#fff;font:900 13pt/.34in var(--display);text-align:center}
-.abc .st span{font-size:10.4pt;padding-top:3pt}
-.abc .pr{margin-top:6pt;background:#f4f1fa;border-radius:9pt;padding:7pt 11pt;font-size:10pt;font-style:italic}
-.lines{margin-top:9pt;font-size:10.5pt}
-.lines .l{border-bottom:1.2pt solid var(--ink);height:.32in;margin-bottom:2pt}
+.code .key{display:flex;flex-wrap:wrap;gap:6pt 9pt;justify-content:center;margin-bottom:12pt}
+.code .k{display:flex;align-items:center;gap:4pt;border:1.2pt solid var(--line);border-radius:8pt;padding:3pt 8pt 3pt 5pt;font:900 13pt var(--display)}
+.code .msg{display:flex;flex-wrap:wrap;gap:6pt 5pt;justify-content:center}
+.code .c{display:flex;flex-direction:column;align-items:center;gap:4pt;width:.44in}
+.code .c svg{width:24px;height:24px}
+.code .c .bl{width:.4in;border-bottom:1.8pt solid var(--ink);height:.34in}
+.code .gap{width:.28in}
+.abc .st{display:flex;gap:10pt;align-items:center;margin-bottom:6pt}
+.abc .st b.k{flex:none;width:.42in;height:.42in;border-radius:50%;background:var(--c);color:#fff;font:900 16pt/.42in var(--display);text-align:center}
+.abc .st span{font-size:12pt}
+.abc .pr{margin-top:6pt;background:var(--t);border-radius:12pt;padding:8pt 12pt;font-size:10.8pt;font-style:italic}
+.lines{margin-top:9pt;font:800 11pt var(--display)}
+.lines .l{border-bottom:1.4pt solid var(--ink);height:.34in}
 
-/* overview */
+/* ---------- overview ---------- */
 .ov h1{font-size:30pt;color:var(--blue)}
 .ov .sub{font:800 13pt var(--display);color:var(--muted);margin-top:3pt}
 .ov .lead{display:flex;gap:.2in;margin-top:.16in;align-items:center}
-.ov .lead img{width:1.6in;height:2.1in;object-fit:cover;border-radius:10pt}
-.ov table{width:100%;border-collapse:collapse;margin-top:.14in;font-size:9.4pt}
+.ov .lead img{width:1.9in;height:2.6in;object-fit:cover;border-radius:12pt;flex:none}
+.ov table{width:100%;border-collapse:collapse;margin-top:.14in;font-size:9.6pt}
 .ov th{font:900 8.5pt var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:3pt 5pt;border-bottom:1.5pt solid var(--ink)}
-.ov td{padding:5pt;border-bottom:1pt solid var(--line);vertical-align:top}
-.ov td.w{font:900 13pt var(--display);color:#fff;text-align:center;width:.34in;border-radius:6pt}
+.ov td{padding:5pt;border-bottom:1pt solid var(--line);vertical-align:middle}
+.ov td.w{font:900 13pt var(--display);color:#fff;text-align:center;width:.34in}
 .ov td b{font-family:var(--display)}
-.ov .how{display:grid;grid-template-columns:1fr 1fr;gap:.16in;margin-top:.12in;font-size:9.4pt}
+.ov .how{display:grid;grid-template-columns:1fr 1fr;gap:.16in;margin-top:.14in;font-size:9.6pt}
 .ov .how h3{font-size:11pt;color:var(--blue);margin-bottom:3pt}
 .ov .how ul{margin:0;padding-left:14pt}
 
-/* extras */
-.ex h1{font-size:20pt;color:var(--c)}
-.ex .how{font-size:9.6pt;margin:3pt 0 8pt;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,2.72in);border-top:1pt dashed #999;border-left:1pt dashed #999}
-.cards div{position:relative;border-right:1pt dashed #999;border-bottom:1pt dashed #999;padding:6pt}
-.cards img{width:100%;height:100%;object-fit:cover;border-radius:6pt;display:block}
-.cards b{position:absolute;left:10pt;top:10pt;background:#fff;color:var(--ink);font:900 10pt/1 var(--display);padding:3pt 6pt;border-radius:5pt}
-.key-ans{margin-top:7pt;font-size:8pt;color:var(--muted)}
+/* ---------- extras ---------- */
+.ex h1{font-size:22pt;color:var(--c)}
+.ex .how{font-size:10pt;margin:3pt 0 8pt;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,4.15in);border-top:1pt dashed #999;border-left:1pt dashed #999}
+.cards div{position:relative;border-right:1pt dashed #999;border-bottom:1pt dashed #999;padding:7pt}
+.cards img{width:100%;height:100%;object-fit:cover;border-radius:9pt;display:block}
+.cards b{position:absolute;left:12pt;top:12pt;background:#fff;color:var(--ink);font:900 13pt/1 var(--display);padding:4pt 8pt;border-radius:7pt}
+.key-ans{margin-top:7pt;font-size:8.5pt;color:var(--muted)}
 .craft{display:grid;grid-template-columns:1fr 1fr;gap:.22in;margin-bottom:.2in}
 .craft .p{height:3.75in;border:1pt dashed #999;border-radius:4pt;position:relative;overflow:hidden}
 .craft .p img{width:100%;height:100%;object-fit:cover;display:block}
-.craft .p .cap{position:absolute;left:8pt;right:8pt;bottom:8pt;background:rgba(255,255,255,.92);border-radius:7pt;padding:5pt 7pt;text-align:center;font:800 10pt/1.25 var(--display)}
+.craft .p .cap{position:absolute;left:8pt;right:8pt;bottom:8pt;background:rgba(255,255,255,.92);border-radius:7pt;padding:5pt 7pt;text-align:center;font:800 10.5pt/1.25 var(--display)}
 .craft .p .cap small{display:block;font:700 8pt var(--body);color:var(--muted)}
 .craft .p.door svg{position:absolute;inset:0;width:100%;height:100%}
 .craft .lab{font:900 8.5pt var(--display);color:var(--muted);margin-bottom:3pt;text-transform:uppercase;letter-spacing:.05em}
-.cert{border:4pt double var(--gold2);border-radius:14pt;height:100%;padding:.3in;text-align:center;display:flex;flex-direction:column;align-items:center}
-.cert img{width:2.3in;height:2.5in;object-fit:cover;border-radius:12pt;margin:.12in 0}
-.cert h1{font-size:26pt;color:var(--blue)}
-.cert .name{width:4.6in;border-bottom:1.5pt solid var(--ink);height:.5in;margin:.1in auto 3pt}
-.cert .vs{text-align:left;width:5.6in;margin-top:.1in;font-size:9.3pt}
+.cert{border:4pt double var(--gold2);border-radius:14pt;height:calc(100% - .25in);padding:.3in;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cert img{width:2.6in;height:2.9in;object-fit:cover;border-radius:14pt;margin:.12in 0}
+.cert h1{font-size:28pt;color:var(--blue)}
+.cert .name{width:4.6in;border-bottom:1.5pt solid var(--ink);height:.45in;margin:.06in auto 3pt}
+.cert .vs{text-align:left;width:5.4in;margin-top:.1in;font-size:9.5pt}
 .cert .vs div{display:flex;gap:7pt;border-bottom:1pt solid var(--line);padding:2.5pt 0}
 .cert .vs div b{font-family:var(--display);min-width:1.1in}
 .cert .sig{display:flex;gap:.4in;margin-top:auto;font-size:9pt;color:var(--muted)}
@@ -200,11 +208,11 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&am
 const img = (n, y = 50, x = 50) => `<img src="art/src/${n}.jpg" alt="" style="object-position:${x}% ${y}%">`;
 const SITE = 'thewaybackhome.net';
 const LINK = `https://${SITE}/en/`;
+const CSB = 'Scripture quotations are from the Christian Standard Bible®, © 2017 by Holman Bible Publishers. Used by permission.';
 
 // a seeded random, so every print of the puzzles is the same
 const rng = seed => () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
 
-// QR code for the take-home sheets
 const qrSvg = (() => {
   const qr = qrcode(0, 'M'); qr.addData(LINK); qr.make();
   const n = qr.getModuleCount(), m = 1; let d = '';
@@ -212,127 +220,122 @@ const qrSvg = (() => {
   return `<svg viewBox="0 0 ${n + 2} ${n + 2}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
 })();
 
+// Memory verses: CSB (checked word for word, 16 Oct 2026)
 const W = [
  { n: 1, col: 'green', title: 'God’s perfect home', pages: ['The garden', 'The one rule'],
    thumbs: [['garden', 50], ['rule', 40]], pic: ['garden', 38],
    bible: 'Genesis 1:1, 26–31; 2:8–9, 15–17',
-   idea: 'God made everything good, and He made us to live close to Him and trust Him.',
-   verse: ['“And God saw everything that he had made, and behold, it was very good.”', 'Genesis 1:31'],
-   welcome: 'What is your favourite place in the whole world? What makes a place feel like home?',
+   idea: 'God made a perfect world, and He loves to be with us!',
+   verse: ['“God saw all that he had made, and it was very good indeed.”', 'Genesis 1:31'],
+   welcome: 'What is your favourite place in the whole world?',
    talk: [
-     ['What did God make? What was the very best thing about Eden?', 'God was with them, and they loved being with Him.'],
-     ['How many rules did God give Adam and Eve?', 'Just one. Every other tree was a “yes”.'],
-     ['The book says the rule came “from a Father who loved them”. How can a rule be a loving thing?', 'Think of “Don’t touch the hot stove.”'],
-     ['Adam pointed at the tree so Eve would remember. How can we help each other remember what God says?', '']],
-   act: ['The one-rule game', ['Masking tape (mark one square on the floor)'],
-     'Play like Simon Says, but every action is allowed except one: “Don’t step in the square.” Call out lots of fun actions, sometimes near the square. Afterwards ask: How many yeses were there? How many noes? Was the one rule hard to keep? Point out that God gave Adam and Eve a garden full of yeses.'],
-   pray: 'Thank God for the good world He made, and for wanting to be close to us.',
-   tip: 'Keep this week bright. Everything was perfect, so let the children enjoy it. The sadness comes next week, and it lands harder when they have felt how good Eden was.',
-   home: { kind: 'trees', ask: 'What was the one rule God gave Adam and Eve? Why do you think He gave it?' } },
+     ['What was the very best thing about Eden?', 'God was with them.'],
+     ['How many rules did God give Adam and Eve?', 'Just one! Every other tree was a “yes”.'],
+     ['Why would a loving Father give a rule?', 'Think of “Don’t touch the hot stove.”']],
+   act: ['The one-rule game', ['Tape to mark a square on the floor'],
+     'Play Simon Says, but everything is allowed except one thing: “Don’t step in the square.” Then ask: How many yeses were there? How many noes? God gave Adam and Eve a garden full of yeses.'],
+   pray: 'Thank God for His good world, and for wanting to be close to us.',
+   tip: 'Keep this week bright and happy. The sadness comes next week, and it means more once the children have enjoyed how good Eden was.',
+   home: { kind: 'trees', ask: 'What was the one rule God gave Adam and Eve?' } },
 
- { n: 2, col: 'purple', title: 'The big lie', pages: ['The serpent', 'The fruit', 'Sent out of the garden'],
+ { n: 2, col: 'purple', title: 'The big lie', pages: ['The serpent', 'The fruit', 'Out of the garden'],
    thumbs: [['serpent', 40], ['fruit-end', 35], ['exile-end', 50]], pic: ['fruit-end', 28],
    bible: 'Genesis 3:1–24',
-   idea: 'Sin is not trusting and obeying God. It broke our friendship with Him, but God made a promise.',
-   verse: ['“Every word of God proves true; he is a shield to those who take refuge in him.”', 'Proverbs 30:5'],
-   welcome: 'Has anyone ever tricked you? How did you feel when you found out?',
+   idea: 'Sin means not trusting God. But God made a promise!',
+   verse: ['“Every word of God is pure; he is a shield to those who take refuge in him.”', 'Proverbs 30:5'],
+   welcome: 'Has anyone ever tricked you? How did it feel?',
    talk: [
-     ['What did the serpent say? Was it true?', 'He twisted God’s words and called God a liar.'],
-     ['What did Eve and Adam do? What does the Bible call disobeying God?', 'Sin.'],
-     ['How did things change after they sinned?', 'They felt afraid and ashamed, and they had to leave the garden.'],
-     ['How did God make clothes for them? What did it cost?', 'Animals had to die. Remember this, it comes back later!'],
-     ['What did God promise?', 'Someone would come to crush the serpent and open the way back home. Who might it be?']],
+     ['What did the serpent say? Was it true?', 'No. He twisted God’s words.'],
+     ['What does the Bible call disobeying God?', 'Sin.'],
+     ['How did God make clothes for Adam and Eve?', 'Animals had to die. Remember this, it comes back later!'],
+     ['What did God promise?', 'Someone would come to open the way back home.']],
    act: ['Whisper chain', ['Nothing extra'],
-     'Sit in a line or circle. Whisper “God said: you may eat from every tree, but not from that one tree” to the first child, and pass it along. Compare the last version with the first. Then say: our words get mixed up by accident, but the serpent changed God’s words on purpose. That’s why we check what God really said in the Bible.'],
-   pray: 'Ask God to help us trust what He says, even when something else looks good.',
-   tip: 'The book shows the serpent grinning. Name him as the Bible does: a liar. Children should leave knowing that sin is not just “a mistake”. It is choosing not to trust God.',
-   home: { kind: 'truetrick', ask: 'What did God promise Adam and Eve, even after they sinned?' } },
+     'Pass a whisper down the line: “You may eat from every tree, but not from that one.” See how it changes. Our words get mixed up by accident. The serpent changed God’s words on purpose. That’s why we check what God really said.'],
+   pray: 'Ask God to help us trust what He says.',
+   tip: 'Call the serpent what the Bible calls him: a liar. Sin is not just a mistake. It is choosing not to trust God.',
+   home: { kind: 'truetrick', ask: 'What did God promise Adam and Eve?' } },
 
- { n: 3, col: 'night', title: 'Every one of us', pages: ['The long road', 'The Ten Commandments'],
+ { n: 3, col: 'night', title: 'Every one of us', pages: ['The long road', 'God’s law'],
    thumbs: [['wall', 50], ['law', 40], ['test-2-end', 40]], pic: ['test-2-end', 52],
    bible: 'Exodus 20:1–17; Romans 3:23; James 2:10',
-   idea: 'Not only Adam and Eve. Everyone has sinned, and that includes me.',
+   idea: 'Everybody sins. Me too.',
    verse: ['“For all have sinned and fall short of the glory of God.”', 'Romans 3:23'],
-   welcome: 'Who is the oldest person in your family? Who were their parents? (If we kept going back, we would reach Adam and Eve!)',
+   welcome: 'Who is the oldest person in your family? (If we kept going back, we would reach Adam and Eve!)',
    talk: [
-     ['What did every person on the long road have?', 'Sin marks, just like Adam and Eve.'],
-     ['Read the short Ten Commandments together (on the take-home sheet). Which ones are easy to break when nobody is watching?', ''],
-     ['Have you ever told a lie? Taken something that wasn’t yours?', 'Answer silently, in your heart. Nobody has to say it out loud.'],
-     ['The book says, “And that’s only two of the ten!” Why does breaking even one matter?', 'James 2:10.']],
+     ['What did every person on the road have?', 'Sin marks, like Adam and Eve.'],
+     ['Have you ever told a lie? Taken something that wasn’t yours?', 'Answer quietly, in your heart.'],
+     ['“And that’s only two of the ten!” Why does breaking one rule matter?', 'James 2:10.']],
    act: ['Ten on my fingers', ['Nothing extra'],
-     'Teach the ten commandments with one finger each and a simple action: one finger up for “one God”, hands together for “honour your parents”, hand over mouth for “don’t lie”, and so on. Go through them twice, faster the second time. Then ask: which finger could you hold up and say “I’ve always kept this one”?'],
-   pray: 'Tell God honestly, quietly, that we have broken His good rules.',
-   tip: 'Don’t ask children to confess sins aloud. Let the questions work quietly, as the book does. Join in yourself: “I have broken these too.” That keeps it from sounding like a lecture.',
-   home: { kind: 'wordsearch', ask: 'The book asked two questions about the Ten Commandments. Do you remember them?' } },
+     'Learn God’s ten rules (on the take-home sheet), one finger each, with a simple action for each one. Say them twice, faster the second time. Then ask: is there a finger you could hold up and say, “I have always kept this one”?'],
+   pray: 'Tell God quietly that we have broken His good rules.',
+   tip: 'Never ask children to confess sins out loud. Say “I have broken these too.” Then it isn’t a lecture.',
+   home: { kind: 'wordsearch', ask: 'Which two of God’s rules did the book ask about?' } },
 
  { n: 4, col: 'red', title: 'Locked out', pages: ['Locked out', 'Can we scrub it off?'],
-   thumbs: [['locked', 45], ['locked-2-end', 50], ['scrub', 40]], pic: ['scrub', 14],
-   bible: 'Romans 3:20; Isaiah 59:2; Romans 6:23; Isaiah 64:6; Ephesians 2:8–9',
-   idea: 'Sin locks us out of God’s home, and we can’t wash it away by ourselves.',
-   verse: ['“For by grace you have been saved through faith. And this is not your own doing; it is the gift of God.”', 'Ephesians 2:8'],
-   welcome: 'Have you ever been locked out of your house? What did you do?',
+   thumbs: [['locked', 45], ['locked-2-end', 50], ['scrub', 30]], pic: ['scrub', 14],
+   bible: 'Romans 3:20; Isaiah 59:2; Romans 6:23; Ephesians 2:8–9',
+   idea: 'Sin locks us out, and we can’t scrub it off.',
+   verse: ['“For you are saved by grace through faith, and this is not from yourselves; it is God’s gift.”', 'Ephesians 2:8'],
+   welcome: 'Have you ever been locked out of your house?',
    talk: [
-     ['What does a mirror do? What can’t it do?', 'It shows the dirt but can’t wash it off. God’s law is like that.'],
-     ['Why can’t God just pretend our sin never happened?', 'He is good and fair, like a fair judge.'],
-     ['What did the children try, to scrub their marks off? Did it work?', 'Being extra good, saying sorry, going to church. The marks stayed.'],
-     ['Remember the animals in the garden? Someone has to take our place. Who could it be?', 'Leave it as a question until next week.']],
-   act: ['The mark that won’t come off', ['A white plastic plate (keep it for week 6!)', 'A permanent marker', 'Water, soap, a sponge, paper towels'],
-     'Draw a small mark on the plate with the permanent marker: a “sin mark”. Let the children try to scrub it off with water, then soap, then the sponge. It stays. Ask: Would being extra good tomorrow clean it? Put the plate away and say: “Next week we find out who can make us clean.”'],
-   pray: 'Tell God we can’t clean ourselves, and thank Him that the story isn’t finished.',
-   tip: 'The book names hell plainly. Say it calmly and truthfully, the way the book does, without adding scary detail, then point forward: “That is very bad news, but it is not the end of the story.”',
-   home: { kind: 'wash', ask: 'Why couldn’t the children in the book scrub their marks off?' } },
+     ['What does a mirror do? What can’t it do?', 'It shows the dirt but can’t wash it off. God’s law is the same.'],
+     ['What did the children try, to scrub their marks off?', 'Being good, saying sorry, going to church. It didn’t work.'],
+     ['Someone has to take our place. Who could it be?', 'Leave it as a question until next week!']],
+   act: ['The mark that won’t come off', ['A white plastic plate (keep it for week 6!)', 'A permanent marker', 'Water, soap, a sponge'],
+     'Draw a small “sin mark” on the plate with the permanent marker. Let the children try to scrub it off with water, then soap. It stays. Put the plate away: “Next week we find out who can make us clean.”'],
+   pray: 'Tell God we can’t clean ourselves, and thank Him the story isn’t over.',
+   tip: 'The book names hell plainly. Say it calmly, as the book does, then point ahead: “That is very bad news, but it is not the end of the story.”',
+   home: { kind: 'wash', ask: 'Why couldn’t the children scrub their marks off?' } },
 
  { n: 5, col: 'orange', title: 'The door', pages: ['The door', 'The cross'],
    thumbs: [['door', 50], ['cross', 50]], pic: ['cross', 42],
-   bible: 'John 10:9; John 3:16; John 14:6; Isaiah 53:6; 1 Peter 2:24',
-   idea: 'Jesus is the way back home. He took the punishment for our sin on the cross.',
-   verse: ['“For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life.”', 'John 3:16'],
+   bible: 'John 10:9; John 3:16; John 14:6; Isaiah 53:6',
+   idea: 'Jesus is the door! He died in our place.',
+   verse: ['“For God loved the world in this way: He gave his one and only Son, so that everyone who believes in him will not perish but have eternal life.”', 'John 3:16'],
    welcome: 'If you were locked out, what would you need to get back in?',
    talk: [
-     ['Who is the Someone God promised back in the garden?', 'Jesus, God’s own Son.'],
-     ['Jesus said, “I am the door.” What does a door do?', 'It lets you in. Jesus is the only way back to God (John 14:6).'],
-     ['Did Jesus ever sin? Why does that matter?', 'Only someone with no sin of His own could take our place.'],
-     ['How is the cross like the animals in the garden?', 'Someone innocent died in our place.'],
+     ['Who is the Someone God promised in the garden?', 'Jesus, God’s own Son.'],
+     ['Jesus said, “I am the door.” What does a door do?', 'It lets you in. Jesus is the only way to God.'],
+     ['Jesus never sinned. Why does that matter?', 'Only someone with no sin could take our place.'],
      ['Why did Jesus do it?', 'Because He loves us.']],
-   act: ['Door craft', ['The door craft sheet (in the extras), one per child', 'Scissors, glue sticks, crayons'],
-     'Children colour the door and the cross picture, cut both out, cut the door on its dashed line and fold it open along its solid left side. They glue the cross picture behind it, so opening the door shows the cross. Say together: “Jesus is the door.”'],
-   pray: 'Thank Jesus for dying in our place because He loves us.',
-   tip: 'Let this page be the turn of the whole series. After four weeks of bad news, slow down and let the good news land. The children in the book cry out “Come and see!” Your tone can do the same.',
-   home: { kind: 'maze', ask: 'Who is the door? What did Jesus do for us on the cross?' } },
+   act: ['Door craft', ['Door craft sheets (extras)', 'Scissors, glue sticks, crayons'],
+     'Colour the door, cut it on its dashed line, and fold it open. Glue the cross picture behind it, so opening the door shows the cross. Say together: “Jesus is the door!”'],
+   pray: 'Thank Jesus for dying in our place.',
+   tip: 'This is the turning point of the series. After four weeks of bad news, slow down and let the good news land.',
+   home: { kind: 'maze', ask: 'Who is the door? What did Jesus do for us?' } },
 
  { n: 6, col: 'orange', title: 'He is alive!', pages: ['The choice', 'The empty tomb'],
    thumbs: [['choice', 45], ['tomb', 45], ['clean', 50]], pic: ['tomb', 40],
-   bible: 'Mark 1:15; Romans 10:9, 13; Luke 24:1–8; 1 Corinthians 15:3–4; Isaiah 1:18',
-   idea: 'Jesus rose again! Everyone who turns from sin and trusts Him is made clean.',
-   verse: ['“If you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved.”', 'Romans 10:9'],
+   bible: 'Romans 10:9, 13; Luke 24:1–8; 1 Corinthians 15:3–4; Isaiah 1:18',
+   idea: 'Jesus is alive! He makes us clean.',
+   verse: ['“If you confess with your mouth, ‘Jesus is Lord,’ and believe in your heart that God raised him from the dead, you will be saved.”', 'Romans 10:9'],
    welcome: 'What is the best surprise you have ever had?',
    talk: [
-     ['What two choices did the people in the book make?', 'Some said “No thanks” and walked away. Others said sorry and trusted Jesus.'],
-     ['What does it mean to turn away from sin and trust Jesus?', 'Stop going your own way, and depend on Jesus instead of on being good.'],
-     ['What did Jesus’ friends find three days after He died?', 'An empty tomb. Jesus was alive!'],
-     ['How clean does God make everyone who trusts Jesus?', 'As white as snow (Isaiah 1:18).']],
-   act: ['The mark comes off', ['Last week’s plate', 'Rubbing alcohol or whiteboard cleaner, a cloth (test at home first!)'],
-     'Bring out the plate from week 4. Remind the children how nothing they tried worked. Now wipe it with the cleaner and the mark comes away. Say: “We couldn’t clean it. But Jesus can make us clean, because He died and rose again.” Make clear the cleaner is only a picture: Jesus really takes sin away.'],
-   pray: 'Praise Jesus that He is alive and that He makes people clean.',
-   tip: 'Jesus “lets you choose”. Leave room for that. Explain the choice clearly, but save the invitation for next week, when the prayer page comes, so no one feels rushed.',
-   home: { kind: 'code', ask: 'What did Jesus’ friends find on the third day? Why is that good news?' } },
+     ['What two choices did people make in the book?', '“No thanks”, or “I’m sorry, please save me!”'],
+     ['What does it mean to trust Jesus?', 'Turn from sin, and count on Jesus instead of on being good.'],
+     ['What did Jesus’ friends find on the third day?', 'An empty tomb!'],
+     ['How clean does God make us?', 'As white as snow (Isaiah 1:18).']],
+   act: ['The mark comes off', ['Last week’s plate', 'Rubbing alcohol or whiteboard cleaner (test it first!)'],
+     'Bring back the plate. Remind them nothing worked. Now wipe it with the cleaner, and the mark is gone. “We couldn’t do it. Jesus can make us clean, because He died and rose again.”'],
+   pray: 'Praise Jesus that He is alive!',
+   tip: 'Explain the choice clearly, but save the invitation for next week, when the prayer page comes, so no one feels rushed.',
+   home: { kind: 'code', ask: 'What did Jesus’ friends find on the third day?' } },
 
- { n: 7, col: 'sky', title: 'Welcome home', pages: ['Heaven’s open gates', 'The new earth', 'Would you like to follow Jesus?'],
+ { n: 7, col: 'sky', title: 'Welcome home', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'],
    thumbs: [['gates', 50], ['hug', 35], ['new-earth', 40]], pic: ['gates', 45],
    bible: 'John 14:2–3; John 20:27; Revelation 21:1–5; Matthew 28:19–20',
-   idea: 'Jesus will welcome His children home, and He asks us to tell others the way.',
-   verse: ['“Behold, I am making all things new.”', 'Revelation 21:5'],
+   idea: 'Jesus will welcome us home. Let’s tell others!',
+   verse: ['“Look, I am making everything new.”', 'Revelation 21:5'],
    welcome: 'What is the best welcome home you have ever had?',
    talk: [
-     ['Who is waiting at heaven’s open gates? What can you still see in His hands?', 'The scars of His love.'],
-     ['The same Jesus who sent Adam and Eve out of the garden welcomes His children home. What changed?', 'He paid for sin Himself.'],
-     ['What will the new heaven and new earth be like?', 'Even better than Eden, and God will be with us.'],
-     ['Who could you tell the good news to this week?', '']],
-   act: ['Story review, then pass it on', ['Story order cards (extras), one set per small group', 'QR cards from the book (⋯ menu → Print QR cards)'],
-     'In small groups, children put the 12 story cards in order and retell the story in their own words. Then give each child a few QR cards to give to friends, so they can hear the story too.'],
-   pray: 'Read A, B, C from the take-home sheet. Invite anyone who wants to follow Jesus to pray the prayer quietly, and to talk with you afterwards.',
-   tip: 'Invite, never pressure. If a child prays, tell their parents and help the child read about Jesus at home. Hand out the certificates (extras) at the end.',
-   home: { kind: 'abc', ask: 'Who is waiting at heaven’s gates? Who could our family tell about Jesus?' } }
+     ['Who is waiting at heaven’s gates? What is in His hands?', 'Scars: the scars of His love.'],
+     ['What will the new earth be like?', 'Even better than Eden!'],
+     ['Who could you tell about Jesus this week?', '']],
+   act: ['Story cards, then pass it on', ['Story order cards (extras)', 'QR cards from the book (⋯ menu → Print QR cards)'],
+     'In small groups, put the story cards in order and tell the story in your own words. Then give each child some QR cards to share with friends.'],
+   pray: 'Read A, B, C together. Invite anyone who wants to follow Jesus to pray quietly and talk with you afterwards.',
+   tip: 'Invite, never pressure. If a child prays, tell their parents. Hand out the certificates at the end.',
+   home: { kind: 'abc', ask: 'Who could our family tell about Jesus?' } }
 ];
 
 // ---------- take-home activities ----------
@@ -345,22 +348,20 @@ const treeSvg = (rule) => {
 };
 const homeTrees = () => {
   let t = ''; for (let i = 0; i < 18; i++) t += treeSvg(i === 10);
-  return `<div class="act"><h2>A garden full of yeses</h2><p class="how">God gave Adam and Eve every tree in the garden, except one. Colour all the “yes” trees. Find the one rule tree (it has the big round fruit) and put a circle around it.</p>` +
-    `<div class="trees">${t}</div><div class="draw"><span>Draw your favourite thing God made:</span></div></div>`;
+  return `<div class="act"><h2>A garden full of YES!</h2><p class="how">God said yes to every tree but one. Colour all the yes trees. Circle the one rule tree (it has big red fruit).</p>` +
+    `<div class="trees">${t}</div><div class="draw" style="height:1.05in"><span>Draw your favourite thing God made!</span></div></div>`;
 };
 const homeTrueTrick = () => {
-  const Q = ['God made everything good.', 'God gave Adam and Eve every tree in the garden but one.', '“You won’t die!”',
-    '“That fruit will make you like God!”', 'Sin means not trusting and not obeying God.', 'God promised that Someone would come to open the way back home.'];
-  return `<div class="act"><h2>True or trick?</h2><p class="how">Who said it: God (true!) or the sneaky serpent (a trick)? Circle the right word.</p>` +
-    `<div class="tt-list">${Q.map((q, i) => `<div class="tt-row"><span class="q">${i + 1}. ${esc(q)}</span><span class="chip">TRUE</span><span class="chip">TRICK</span></div>`).join('')}</div>` +
-    `<div class="draw" style="height:1.1in"><span>Draw the serpent hiding in the tree:</span></div></div>`;
+  const Q = ['God made everything good.', 'Adam and Eve could eat from every tree but one.', '“You won’t die!”',
+    '“That fruit will make you like God!”', 'Sin means not trusting God.', 'God promised Someone would come to bring us home.'];
+  return `<div class="act"><h2>True or trick?</h2><p class="how">Did God say it (TRUE) or the sneaky serpent (TRICK)? Circle one.</p>` +
+    Q.map((q, i) => `<div class="tt-row"><span class="q">${i + 1}. ${esc(q)}</span><span class="chip">TRUE</span><span class="chip">TRICK</span></div>`).join('') + `</div>`;
 };
 const wordSearch = () => {
   const words = ['ADAM', 'EVE', 'EDEN', 'GARDEN', 'TREE', 'SERPENT', 'FRUIT', 'SIN', 'PROMISE', 'LAW', 'COMMANDMENTS', 'PEOPLE'];
   const N = 12, R = rng(7), g = Array.from({ length: N }, () => Array(N).fill(''));
   const dirs = [[0, 1], [1, 0], [1, 1]];
-  const order = [...words].sort((a, b) => b.length - a.length);
-  for (const w of order) {
+  for (const w of [...words].sort((a, b) => b.length - a.length)) {
     for (let tries = 0; tries < 2000; tries++) {
       const [dy, dx] = dirs[Math.floor(R() * dirs.length)];
       const y = Math.floor(R() * (N - dy * (w.length - 1))), x = Math.floor(R() * (N - dx * (w.length - 1)));
@@ -372,22 +373,21 @@ const wordSearch = () => {
   }
   const AB = 'ABCDEFGHIJKLMNOPRSTUVWY';
   const cells = g.flat().map(c => `<div>${c || AB[Math.floor(R() * AB.length)]}</div>`).join('');
-  return `<div class="act"><h2>Word search</h2><p class="how">Find the words from weeks 1 to 3. They go across, down, or slanting down.</p>` +
+  return `<div class="act"><h2>Word search</h2><p class="how">Find the words. They go across, down, or slanting down.</p>` +
     `<div class="ws"><div class="grid" style="grid-template-columns:repeat(${N},1fr)">${cells}</div><div><ul class="words">${words.map(w => `<li>${w}</li>`).join('')}</ul>` +
-    `<p style="font:900 10.5pt var(--display);color:var(--c);margin-top:9pt">God’s ten good rules</p><ol class="ten" style="columns:1;padding-left:14pt;margin-top:2pt">` +
-    ['Love God more than anything.', 'Don’t make idols to worship.', 'Use God’s name with respect.', 'Keep God’s day holy.', 'Honour your father and mother.',
-      'Don’t murder.', 'Be faithful in marriage.', 'Don’t steal.', 'Don’t lie.', 'Don’t want what belongs to others.'].map(t => `<li>${t}</li>`).join('') +
+    `<p style="font:900 11pt var(--display);color:var(--c);margin-top:8pt">God’s ten good rules</p><ol class="ten">` +
+    ['Love God most of all.', 'Don’t worship idols.', 'Use God’s name with respect.', 'Keep God’s day holy.', 'Honour your mom and dad.',
+      'Don’t murder.', 'Keep marriage pure.', 'Don’t steal.', 'Don’t lie.', 'Don’t want what is not yours.'].map(t => `<li>${t}</li>`).join('') +
     `</ol></div></div></div>`;
 };
 const homeWash = () => {
-  const T = ['Soap and water', 'Being extra good', 'Saying sorry', 'Going to church', 'Trying really hard tomorrow'];
-  return `<div class="act"><h2>Can it wash sin away?</h2><p class="how">The children in the book tried to scrub their sin marks off. Can these take sin away? Circle YES or NO.</p>` +
-    `<div class="wash">${T.map(t => `<div class="row"><span>${t}</span><span class="yn"><i>YES</i><i>NO</i></span></div>`).join('')}</div>` +
-    `<div class="who"><span class="big">?</span><p style="font-size:10.6pt"><b style="font-family:var(--display)">Someone has to take our place.</b> Remember the animals that died to cover Adam and Eve? Who could take our place? Write or draw your guess, then find out next week!</p></div>` +
-    `<div class="draw" style="height:1.05in"><span>My guess:</span></div></div>`;
+  const T = ['Soap and water', 'Being extra good', 'Saying sorry', 'Going to church', 'Trying harder tomorrow'];
+  return `<div class="act wash"><h2>Can it wash sin away?</h2><p class="how">The kids tried to scrub their sin marks off. Can these take sin away? Circle YES or NO.</p>` +
+    T.map(t => `<div class="row"><span>${t}</span><span class="yn"><i>YES</i><i>NO</i></span></div>`).join('') +
+    `<div class="draw" style="height:1.15in"><span>Someone has to take our place. But who? Draw your guess!</span></div></div>`;
 };
 const homeMaze = () => {
-  const C = 13, Rw = 10, R = rng(2026), s = 34;
+  const C = 13, Rw = 8, R = rng(2026), s = 34;
   const seen = Array.from({ length: Rw }, () => Array(C).fill(false));
   const walls = { h: Array.from({ length: Rw + 1 }, () => Array(C).fill(true)), v: Array.from({ length: Rw }, () => Array(C + 1).fill(true)) };
   const st = [[0, 0]]; seen[0][0] = true;
@@ -399,7 +399,7 @@ const homeMaze = () => {
     if (a !== y) walls.h[Math.max(a, y)][x] = false; else walls.v[y][Math.max(b, x)] = false;
     seen[a][b] = true; st.push([a, b]);
   }
-  walls.v[0][0] = false; walls.v[Rw - 1][C] = false;           // entrance left top, exit right bottom
+  walls.v[0][0] = false; walls.v[Rw - 1][C] = false;
   const ox = 46, oy = 8, w = C * s + ox + 70, h = Rw * s + oy * 2;
   let d = '';
   for (let y = 0; y <= Rw; y++) for (let x = 0; x < C; x++) if (walls.h[y][x]) d += `M${ox + x * s} ${oy + y * s}h${s}`;
@@ -408,8 +408,8 @@ const homeMaze = () => {
   const door = `<g transform="translate(${ex + 10} ${ey - 26})"><path d="M0 60V22a22 22 0 0 1 44 0v38z" fill="#fff" stroke="#1d1a24" stroke-width="2.4"/>` +
     `<path d="M22 8v40M12 22h20" stroke="#1d1a24" stroke-width="3"/><circle cx="36" cy="40" r="2.6" fill="#1d1a24"/></g>`;
   const kid = `<g transform="translate(6 ${oy + 4})"><circle cx="16" cy="8" r="7" fill="#fff" stroke="#1d1a24" stroke-width="2"/><path d="M5 30c0-9 22-9 22 0" fill="#fff" stroke="#1d1a24" stroke-width="2"/><text x="16" y="44" font-family="Grandstander" font-weight="900" font-size="11" text-anchor="middle">YOU</text></g>`;
-  return `<div class="act maze"><h2>Find the way to the door</h2><p class="how">Jesus said, “I am the door. Whoever comes in through Me will be saved” (John 10:9). Help the child find the way to the door.</p>` +
-    `<svg viewBox="0 0 ${w} ${h}" width="${(w / 96 * 1.0).toFixed(2)}in" style="max-width:100%"><path d="${d}" stroke="#1d1a24" stroke-width="2.6" stroke-linecap="round" fill="none"/>${door}${kid}</svg></div>`;
+  return `<div class="act maze"><h2>Find the door!</h2><p class="how">Jesus said, “I am the door.” Find your way to Him!</p>` +
+    `<svg viewBox="0 0 ${w} ${h}" width="${(w / 96).toFixed(2)}in" style="max-width:100%"><path d="${d}" stroke="#1d1a24" stroke-width="2.6" stroke-linecap="round" fill="none"/>${door}${kid}</svg></div>`;
 };
 const SYM = {
   circle: '<circle cx="10" cy="10" r="7"/>', square: '<rect x="3.5" y="3.5" width="13" height="13"/>', tri: '<path d="M10 3l8 14H2z"/>',
@@ -423,72 +423,71 @@ const homeCode = () => {
   const fill = { J: 1, E: 0, S: 1, U: 0, I: 0, A: 1, L: 0, V: 1, H: 0, O: 1 };
   const key = Object.keys(map).sort().map(L => `<span class="k">${sym(map[L], fill[L])} = ${L}</span>`).join('');
   const msg = 'JESUS IS ALIVE'.split('').map(c => c === ' ' ? '<span class="gap"></span>' : `<span class="c">${sym(map[c], fill[c])}<span class="bl"></span></span>`).join('');
-  return `<div class="act code"><h2>Secret message</h2><p class="how">Jesus’ friends found His tomb empty! Use the key to find out why. Write the letter under each shape.</p>` +
+  return `<div class="act code"><h2>Secret message!</h2><p class="how">The tomb was empty! Why? Crack the code: write the letter under each shape.</p>` +
     `<div class="key">${key}</div><div class="msg">${msg}</div>` +
-    `<div class="draw" style="height:1.45in;margin-top:12pt"><span>Draw the empty tomb, with the stone rolled away:</span></div></div>`;
+    `<div class="draw" style="height:1.05in;margin-top:12pt"><span>Draw the empty tomb!</span></div></div>`;
 };
-const homeAbc = () => `<div class="act abc"><h2>Would you like to follow Jesus?</h2><p class="how">Here is what it means: A, B, C.</p>
-  <div class="st"><b class="k">A</b><span><b>Admit</b> to God that you have sinned, and say you are sorry.</span></div>
-  <div class="st"><b class="k">B</b><span><b>Believe</b> that Jesus is God’s Son, that He died for you, and that He rose again.</span></div>
+const homeAbc = () => `<div class="act abc"><h2>Would you like to follow Jesus?</h2><p class="how">It’s as easy as A, B, C:</p>
+  <div class="st"><b class="k">A</b><span><b>Admit</b> to God that you have sinned, and say sorry.</span></div>
+  <div class="st"><b class="k">B</b><span><b>Believe</b> that Jesus died for you and rose again.</span></div>
   <div class="st"><b class="k">C</b><span><b>Choose</b> to trust Jesus and follow Him every day.</span></div>
   <p class="pr">“Dear God, I know I have sinned, and I am sorry. Thank You for sending Jesus to die for me and rise again. Please forgive me and make me clean. I want to follow You. In Jesus’ name, amen.”</p>
-  <div class="lines">I can tell these people the good news about Jesus:<div class="l"></div><div class="l"></div></div></div>`;
+  <div class="lines">I can tell these friends about Jesus:<div class="l"></div><div class="l"></div></div></div>`;
 const HOME = { trees: homeTrees, truetrick: homeTrueTrick, wordsearch: wordSearch, wash: homeWash, maze: homeMaze, code: homeCode, abc: homeAbc };
 
 const foot = (l, r) => `<div class="foot"><span>${esc(l)}</span><span>${esc(r)}</span></div>`;
-const ESV = 'Scripture quotations are from the ESV® Bible, © 2001 by Crossway. Used by permission.';
+const starSvg = '<svg class="star" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.5 6 .7-4.5 4.1 1.2 5.9L10 14.7l-5.3 3 1.2-5.9L1.4 7.7l6-.7z" fill="#F4B740" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>';
 
-const teacher = w => `<div class="page ${w.col}" data-w="${w.n}" data-p="teacher">
+const teacher = w => `<div class="page tp ${w.col}" data-w="${w.n}" data-p="teacher">
   <div class="t-head"><div class="tt"><span class="pill">Week ${w.n} of 7 · Teacher</span><h1>${esc(w.title)}</h1>
     <p class="pg">Book pages: <b>${w.pages.map(esc).join(' · ')}</b><br>Bible: ${esc(w.bible)}</p></div>
     <div class="thumbs">${w.thumbs.map(([n, y]) => img(n, y)).join('')}</div></div>
   <div class="idea"><small>Big idea</small>${esc(w.idea)}</div>
   <div class="two"><div>
     <div class="sec"><h3>1 · Welcome <span class="min">5 min</span></h3><p>${esc(w.welcome)}</p></div>
-    <div class="sec"><h3>2 · Read and listen <span class="min">10 min</span></h3><p>Show the book on a screen or phone at <b>${SITE}</b> and tap <b>Listen</b>. Play this week’s pages (${w.n > 1 ? 'start with a quick look back at last week’s pages, then ' : ''}let the pictures and music do the work). Then read the Bible passage together.</p></div>
+    <div class="sec"><h3>2 · Read and listen <span class="min">10 min</span></h3><p>Open <b>${SITE}</b> on a screen or phone, tap <b>Listen</b>, and play this week’s pages. Then read the Bible passage together.</p></div>
     <div class="sec"><h3>3 · Talk about it <span class="min">10 min</span></h3><ol>${w.talk.map(([q, a]) => `<li>${esc(q)}${a ? ` <span class="ans">${esc(a)}</span>` : ''}</li>`).join('')}</ol></div>
     <div class="sec"><h3>4 · ${esc(w.act[0])} <span class="min">15 min</span></h3><p>${esc(w.act[2])}</p></div>
-    <div class="sec"><h3>5 · Pray and send home <span class="min">5 min</span></h3><p>${esc(w.pray)} Practise the memory verse together, then hand out the take-home sheet.</p></div>
+    <div class="sec"><h3>5 · Pray and go home <span class="min">5 min</span></h3><p>${esc(w.pray)} Say the memory verse together. Hand out the take-home sheet.</p></div>
   </div><div class="side">
-    <div class="box"><h3>Memory verse</h3><p class="verse">${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])}</span></p></div>
-    <div class="box need"><h3>You need</h3><ul><li>A screen or phone with the book</li><li>Bibles</li>${w.act[1].map(t => `<li>${esc(t)}</li>`).join('')}<li>Take-home sheets</li></ul></div>
+    <div class="box"><h3>Memory verse</h3><p class="verse">${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])} (CSB)</span></p></div>
+    <div class="box need"><h3>You need</h3><ul><li>A screen or phone</li><li>Bibles</li>${w.act[1].map(t => `<li>${esc(t)}</li>`).join('')}<li>Take-home sheets</li></ul></div>
     <div class="box tip"><h3>Teacher tip</h3><p>${esc(w.tip)}</p></div>
   </div></div>
-  ${foot('The Way Back Home · Sunday school series', ESV)}
+  ${foot('The Way Back Home · Sunday school series', CSB)}
 </div>`;
 
 const takehome = w => `<div class="page ${w.col}" data-w="${w.n}" data-p="home">
-  <div class="h-pic">${img(w.pic[0], w.pic[1])}<div class="lab"><span class="pill">Week ${w.n}</span><h1>${esc(w.title)}</h1></div></div>
-  <p class="h-idea">${esc(w.idea)}</p>
-  <div class="mv"><span class="tag">Memory verse</span><p class="verse">${esc(w.verse[0])} <span class="ref" style="display:inline">${esc(w.verse[1])}</span></p></div>
+  <div class="h-pic">${img(w.pic[0], w.pic[1])}<div class="sticker"><small>WEEK</small><b>${w.n}</b></div><div class="lab"><h1>${esc(w.title)}</h1></div></div>
+  <p class="bubble">${esc(w.idea)}</p>
+  <div class="mv">${starSvg}<p class="verse"><span class="tag">Memory verse</span>${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])}</span></p></div>
   ${HOME[w.home.kind]()}
-  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> this week we read “${esc(w.pages.join('”, “'))}” from <i>The Way Back Home</i>. Read and listen together for free at <b>${SITE}</b> (scan the code).</p>
+  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> read and listen to <i>The Way Back Home</i> together for free at <b>${SITE}</b> (scan the code). This week: ${esc(w.pages.join(', '))}${/[?!]$/.test(w.pages[w.pages.length - 1]) ? '' : '.'}</p>
     <p><b>Ask your child:</b> ${esc(w.home.ask)}</p></div></div>
-  ${foot('The Way Back Home · Take-home sheet', ESV)}
+  ${foot('The Way Back Home · Take-home sheet', CSB)}
 </div>`;
 
 const overview = () => `<div class="page ov" data-w="0" data-p="teacher">
   <h1>The Way Back Home</h1><p class="sub">A 7-week Sunday school series for ages 6–12</p>
-  <div class="lead">${img('cover', 30)}<p style="font-size:10.5pt;line-height:1.45">This series walks children through <i>The Way Back Home</i>, an illustrated, narrated Bible story from Creation to the new earth.
-    Each week you play two or three pages of the book (pictures, narration and music), read the Bible passage behind them, talk, do one hands-on activity, and send home a sheet with the memory verse and a puzzle.
-    The story builds week by week: four weeks of the problem (sin), then three of the answer (Jesus). Please don’t skip ahead to the good news; it means more when the children have felt the bad news.</p></div>
-  <table><tr><th></th><th>Theme</th><th>Book pages</th><th>Memory verse</th></tr>
-  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(w.title)}</b></td><td>${w.pages.map(esc).join(', ')}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
+  <div class="lead">${img('cover', 30)}<p style="font-size:10.8pt;line-height:1.45">Each week, play two or three pages of <i>The Way Back Home</i> (pictures, narration and music), read the Bible passage, talk, do one hands-on activity, and send home a sheet with the memory verse and a puzzle.<br><br>
+    The story builds week by week: four weeks of the problem (sin), then three weeks of the answer (Jesus). Please don’t skip ahead to the good news. It means more once the children have felt the bad news.</p></div>
+  <table><tr><th></th><th>Theme</th><th>Big idea</th><th>Memory verse</th></tr>
+  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(w.title)}</b></td><td>${esc(w.idea)}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
   <div class="how"><div><h3>Each week (about 45 minutes)</h3><ul><li>Welcome question · 5 min</li><li>Read and listen to the book · 10 min</li><li>Talk about it · 10 min</li><li>Activity · 15 min</li><li>Pray, memory verse, take-home · 5 min</li></ul></div>
-    <div><h3>Printing</h3><ul><li>Teacher pages: one copy for each leader.</li><li>Take-home sheets: one per child, in colour or black and white.</li><li>Extras: story cards (week 7), door craft (week 5) and certificates (week 7).</li><li>The book works on any phone, in 17 languages, so families can listen at home.</li></ul></div></div>
-  ${foot('The Way Back Home · Sunday school series', ESV)}
+    <div><h3>Printing</h3><ul><li>Teacher pages: one per leader.</li><li>Take-home sheets: one per child.</li><li>Extras: story cards (week 7), door craft (week 5), certificates (week 7).</li><li>Families can read the book on any phone, in 17 languages.</li></ul></div></div>
+  ${foot('The Way Back Home · Sunday school series', CSB)}
 </div>`;
 
-// extras
+// extras: 12 story cards on two sheets of 6, shuffled, lettered A–L
 const CARDS = [['garden', 40], ['rule', 40], ['serpent', 40], ['fruit-end', 30], ['exile-end', 45], ['wall', 50], ['law', 40], ['locked', 45], ['scrub', 40], ['cross', 50], ['tomb', 45], ['gates', 50]];
-const cardsPage = () => {
+const cardsPages = () => {
   const R = rng(12), idx = CARDS.map((_, i) => i);
   for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
-  const letters = 'ABCDEFGHIJKL';
-  const pos = []; idx.forEach((ci, k) => pos[ci] = letters[k]);
-  return `<div class="page ex sky" data-w="x" data-p="teacher"><h1>Story order cards</h1><p class="how">For week 7 (or any week as a review). Cut on the dashed lines. Children put the 12 cards in story order and retell the story.</p>
-    <div class="cards">${idx.map((ci, k) => `<div>${img(CARDS[ci][0], CARDS[ci][1])}<b>${letters[k]}</b></div>`).join('')}</div>
-    <p class="key-ans">Answer: ${pos.join(' · ')}</p>${foot('The Way Back Home · Extras', '')}</div>`;
+  const letters = 'ABCDEFGHIJKL', pos = []; idx.forEach((ci, k) => pos[ci] = letters[k]);
+  const sheet = (from, last) => `<div class="page ex sky" data-w="x" data-p="teacher"><h1>Story order cards ${from ? '(2 of 2)' : '(1 of 2)'}</h1><p class="how">Print both sheets. Cut on the dashed lines. Put the 12 cards in story order and tell the story!</p>
+    <div class="cards">${idx.slice(from, from + 6).map((ci, k) => `<div>${img(CARDS[ci][0], CARDS[ci][1])}<b>${letters[from + k]}</b></div>`).join('')}</div>
+    ${last ? `<p class="key-ans">Answer: ${pos.join(' · ')}</p>` : ''}${foot('The Way Back Home · Extras', '')}</div>`;
+  return sheet(0, false) + sheet(6, true);
 };
 const doorSvg = `<svg viewBox="0 0 100 104"><rect width="100" height="104" fill="#fff"/>
   <text x="50" y="11" font-size="7" font-weight="900" text-anchor="middle" fill="#1d1a24" font-family="Grandstander">“I am the door.”</text>
@@ -501,38 +500,38 @@ const doorSvg = `<svg viewBox="0 0 100 104"><rect width="100" height="104" fill=
 const craftPage = () => {
   const set = `<div class="craft"><div><p class="lab">1 · The cross (glue this behind)</p><div class="p">${img('cross', 45)}<p class="cap">Jesus died in my place.<small>1 Peter 2:24</small></p></div></div>
     <div><p class="lab">2 · The door (colour, cut, fold)</p><div class="p door">${doorSvg}</div></div></div>`;
-  return `<div class="page ex orange" data-w="x" data-p="teacher"><h1>Door craft</h1><p class="how">For week 5. Two crafts per sheet. Colour the door. Cut out both pieces on the outer dashed lines. Cut the door on its dashed line and fold it open along the solid line on its left side. Glue the cross picture behind the door piece, so opening the door shows the cross.</p>
+  return `<div class="page ex orange" data-w="x" data-p="teacher"><h1>Door craft</h1><p class="how">For week 5. Two crafts per sheet. Colour the door. Cut out both pieces. Cut the door on its dashed line and fold it open. Glue the cross picture behind it, so opening the door shows the cross.</p>
     ${set}${set}${foot('The Way Back Home · Extras', '')}</div>`;
 };
 const certPage = () => `<div class="page ex sky" data-w="x" data-p="teacher"><div class="cert">
   <p style="font:900 10pt var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)">Certificate</p>
   <h1>I finished<br>The Way Back Home!</h1>${img('hug', 30)}
   <p style="font-size:10.5pt">This certificate is given to</p><div class="name"></div>
-  <p style="font-size:9.5pt;color:var(--muted)">for learning the whole story, from the garden to the new earth.</p>
+  <p style="font-size:9.5pt;color:var(--muted)">for learning the whole story, from the garden to the new earth!</p>
   <div class="vs"><p style="font:900 10pt var(--display);color:var(--blue);margin-bottom:3pt">Memory verses I can say</p>
     ${W.map(w => `<div><b>Week ${w.n}</b><span>${esc(w.verse[1])}</span><span style="margin-left:auto">☐</span></div>`).join('')}</div>
-  <div class="sig"><div>Teacher</div><div>Date</div></div></div>${foot('The Way Back Home · Extras', ESV)}</div>`;
+  <div class="sig"><div>Teacher</div><div>Date</div></div></div>${foot('The Way Back Home · Extras', CSB)}</div>`;
 
 // ---------- render ----------
 const sp = new URLSearchParams(location.search);
 const selW = document.getElementById('week'), selP = document.getElementById('part');
 selW.value = sp.get('week') || ''; selP.value = sp.get('part') || '';
 const root = document.getElementById('pages');
-root.innerHTML = overview() + W.map(w => teacher(w) + takehome(w)).join('') + cardsPage() + craftPage() + certPage();
+root.innerHTML = overview() + W.map(w => teacher(w) + takehome(w)).join('') + cardsPages() + craftPage() + certPage();
+const fit = () => {
+  const wrap = document.getElementById('wrap'), avail = wrap.clientWidth - 32, k = Math.min(1, avail / (7.4 * 96));
+  root.style.transform = k < 1 ? `scale(${k})` : ''; root.style.marginLeft = k < 1 ? '0' : '';
+  wrap.style.height = k < 1 ? (root.offsetHeight * k + 60) + 'px' : '';
+};
 const apply = () => {
   const wk = selW.value, pt = selP.value;
   root.querySelectorAll('.page').forEach(p => {
-    const okW = !wk || p.dataset.w === wk, okP = !pt || p.dataset.p === pt || (pt === 'teacher' && p.dataset.w === 'x');
+    const okW = !wk || p.dataset.w === wk, okP = !pt || p.dataset.p === pt;
     p.style.display = okW && okP ? '' : 'none';
   });
   const q = new URLSearchParams(); if (wk) q.set('week', wk); if (pt) q.set('part', pt);
   history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
   fit();
-};
-const fit = () => {
-  const wrap = document.getElementById('wrap'), avail = wrap.clientWidth - 32, k = Math.min(1, avail / (7.4 * 96));
-  root.style.transform = k < 1 ? `scale(${k})` : ''; root.style.marginLeft = k < 1 ? '0' : '';
-  wrap.style.height = k < 1 ? (root.offsetHeight * k + 60) + 'px' : '';
 };
 selW.onchange = selP.onchange = apply;
 addEventListener('resize', fit);
