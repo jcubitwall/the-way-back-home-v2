@@ -9,16 +9,17 @@
 <link rel="stylesheet" href="fonts/fonts.css">
 <script src="qr.js"></script>
 <style>
-/* A foldable gospel tract: one tabloid sheet (11 × 17 in), printed on both sides (flip on short edge)
-   and folded once into a 4-page letter-size leaflet.
-     outside: [page 4 | page 1 cover]     inside: [page 2 | page 3]
-   Page 1: the cover picture and title. Pages 2–3: the story in 12 pictures. Page 4: the ending,
-   the A-B-C prayer, and a QR code for the book. Words come from "tract" in content/i18n/<code>.json.
-   tract.html?lang=xx   (only languages with a "tract" section; others fall back to English) */
+/* A foldable gospel tract: one tabloid sheet (17 × 11 in), printed on both sides (flip on short edge),
+   folded in half ONCE to letter size (8.5 × 11 in).
+     Outside: [back: QR + "given to you by" | front cover]
+     Inside:  the whole story as one open spread, 1 → 15 and the prayer, left page then right page.
+   So you never have to turn it over while reading: closed you see the cover, open it and the story
+   runs straight through. Words come from "tract" in content/i18n/<code>.json (others fall back to English).
+   tract.html?lang=xx */
 :root{
   --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;
   --body:'Andika','Verdana',system-ui,sans-serif;
-  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --gold2:#C99A1E; --cut:#9a96a3; --soft:#f6f3ec;
+  --blue:#2F7FD9; --ink:#1d1a24; --muted:#5a5566; --gold:#F4B740; --gold2:#C99A1E; --soft:#f6f3ec;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
@@ -27,14 +28,15 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .top p{margin:0;flex:1 1 260px;font-size:15px;line-height:1.4;color:var(--muted)}
 .top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
 .btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;
-  box-shadow:0 3px 0 var(--gold2);display:inline-flex;align-items:center;gap:8px}
+  box-shadow:0 3px 0 var(--gold2)}
 .wrap{padding:20px 16px 40px;overflow:hidden}
 .sheets{transform-origin:top left;width:17in;margin:0 auto}
-.sheet{width:17in;height:11in;display:flex;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.4in;position:relative}
-.sheet::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(0,0,0,.12)}
+.label{font:800 15px var(--display);color:var(--muted);margin:0 0 8px}
+.sheet{width:17in;height:11in;display:flex;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.35in;position:relative}
+.sheet::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(0,0,0,.15)}
 .pg{width:8.5in;height:11in;position:relative;overflow:hidden;background:#fff}
 
-/* ---- page 1: cover ---- */
+/* ---- outside right: cover ---- */
 .cover{background:linear-gradient(180deg,#7fb3e6 0%,#bcd8f0 22%,#f6e2bd 48%,#fbf3e6 62%,#fff 76%)}
 .cover .blur{position:absolute;inset:-.6in;background:url(art/src/cover.jpg) center top/100% auto no-repeat;filter:blur(40px);opacity:.55}
 .cover .art{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);height:11in;width:auto;
@@ -44,39 +46,43 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .cover h1{margin:0;font:900 58pt/1 var(--display);color:var(--ink);letter-spacing:-.5pt}
 .cover .tag{margin:.12in 0 0;font:700 17pt/1.25 var(--body);color:var(--blue)}
 
-/* ---- story pages ---- */
-.inner{padding:.36in .5in .3in}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:.3in;row-gap:.16in}
-.panel{display:flex;flex-direction:column;min-width:0}
-.ph{position:relative;aspect-ratio:9/16;border-radius:.12in;overflow:hidden;background:#ddd}
-.ph img{width:100%;height:100%;object-fit:cover;display:block}
-.num{position:absolute;left:.08in;top:.08in;width:.32in;height:.32in;border-radius:50%;background:var(--gold);color:#2B2233;
-  font:900 12pt/.32in var(--display);text-align:center;box-shadow:0 1.5pt 0 var(--gold2)}
-.cap{margin:.06in .02in 0;font:400 9.4pt/1.28 var(--body)}
-.ref{margin:.03in .02in 0;font:700 7pt/1.2 var(--body);color:var(--muted)}
+/* ---- outside left: back ---- */
+.back{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.8in .9in}
+.back .qr{width:2.6in;height:2.6in}
+.back .qr svg{display:block;width:100%;height:100%}
+.back .t{margin-top:.3in;font:900 22pt/1.15 var(--display)}
+.back .u{margin-top:.1in;font:700 19pt/1.2 var(--body);color:var(--blue)}
+.back .s{margin-top:.08in;font:400 13pt/1.35 var(--body);color:var(--muted)}
+.back .given{margin-top:1.1in;width:4.6in;text-align:left;font:700 12pt var(--body);color:var(--muted)}
+.back .given i{display:block;height:.45in;border-bottom:1.2pt solid #cfcad6}
 
-/* ---- page 4: ending, prayer, QR ---- */
-.pray{margin-top:.22in;padding:.24in .3in .22in;background:var(--soft);border-radius:.16in}
-.pray h2{margin:0 0 .06in;font:900 23pt/1.1 var(--display);color:var(--ink)}
-.pray .intro{margin:0 0 .12in;font:400 11.5pt/1.3 var(--body);color:var(--muted)}
-.steps{display:grid;gap:.09in;margin:0 0 .16in}
-.step{display:flex;gap:.1in;align-items:baseline;font:400 11.5pt/1.3 var(--body)}
-.step b.k{flex:none;width:.3in;height:.3in;border-radius:50%;background:var(--blue);color:#fff;font:900 12pt/.3in var(--display);text-align:center;transform:translateY(.05in)}
+/* ---- inside: the story spread ---- */
+.inner{position:absolute;inset:.4in .4in .4in .4in;display:flex;flex-direction:column}
+.l .inner{right:.32in} .r .inner{left:.32in}
+.inner h2{margin:0 0 .06in;font:900 23pt/1.1 var(--display);color:var(--ink)}
+.inner h2 span{color:var(--blue)}
+.grid{flex:1;display:grid;grid-template-columns:repeat(4,1fr);column-gap:.18in;row-gap:.2in;grid-template-rows:1fr 1fr;padding-top:.12in}
+.panel{display:flex;flex-direction:column;min-width:0}
+.ph{position:relative;aspect-ratio:9/16;border-radius:.1in;overflow:hidden;background:#ddd}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.num{position:absolute;left:.06in;top:.06in;width:.28in;height:.28in;border-radius:50%;background:var(--gold);color:#2B2233;
+  font:900 10.5pt/.28in var(--display);text-align:center;box-shadow:0 1.5pt 0 var(--gold2)}
+.cap{margin:.07in .01in 0;font:400 9.4pt/1.3 var(--body)}
+.ref{margin:.03in .01in 0;font:700 7pt/1.2 var(--body);color:var(--muted)}
+/* the prayer fills the last slot */
+.pray{align-self:start;background:var(--soft);border-radius:.1in;padding:.13in .12in;display:flex;flex-direction:column;gap:.06in}
+.pray h3{margin:0;font:900 12.5pt/1.1 var(--display)}
+.step{display:flex;gap:.06in;align-items:flex-start;font:400 8.3pt/1.25 var(--body)}
+.step b.k{flex:none;width:.2in;height:.2in;border-radius:50%;background:var(--blue);color:#fff;font:900 8.5pt/.2in var(--display);text-align:center}
 .step b.w{font-weight:700}
-.prayer{margin:0;padding-left:.12in;border-left:3pt solid var(--gold);font:400 11.5pt/1.4 var(--body);font-style:italic}
-.pray .note{margin:.12in 0 0;font:400 9.2pt/1.3 var(--body);color:var(--muted)}
-.foot{display:flex;align-items:center;gap:.22in;margin-top:.24in}
-.foot .qr{flex:none;width:1.45in;height:1.45in}
-.foot .qr svg{display:block;width:100%;height:100%}
-.foot .t{font:900 18pt/1.15 var(--display)}
-.foot .s{margin-top:.04in;font:400 11.5pt/1.3 var(--body);color:var(--muted)}
-.foot .u{margin-top:.05in;font:700 15pt/1.2 var(--body);color:var(--blue)}
+.prayer{margin:.02in 0 0;padding-left:.08in;border-left:2.5pt solid var(--gold);font:italic 400 8.3pt/1.3 var(--body)}
+.pray .note{margin:0;font:400 7.2pt/1.25 var(--body);color:var(--muted)}
 
 .err{padding:24px;font-size:16px}
 @page{size:17in 11in;margin:0}
 @media print{
   html,body{background:#fff}
-  .top{display:none}
+  .top,.label{display:none}
   .wrap{padding:0;overflow:visible}
   .sheets{transform:none!important;margin:0}
   .sheet{box-shadow:none;margin:0;break-after:page}
@@ -88,7 +94,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 <body>
 <div class="top" id="top">
   <a id="back" href="./">‹ The Way Back Home</a>
-  <p>Print on tabloid paper (11 × 17 in), double-sided, flip on short edge. Fold in half with the cover outside.</p>
+  <p>Print on tabloid paper (11 × 17 in), double-sided, flip on short edge. Fold in half once with the cover outside. Open it and the whole story reads straight through.</p>
   <button class="btn" id="print" type="button">Print</button>
 </div>
 <div class="wrap" id="wrap"><div class="sheets" id="sheets"></div></div>
@@ -123,23 +129,23 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
     const svg = `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#1d1a24"/></svg>`;
 
-    const p1 = `<div class="pg cover"><div class="blur"></div><img class="art" src="art/src/cover.jpg" alt="">` +
+    const front = `<div class="pg cover"><div class="blur"></div><img class="art" src="art/src/cover.jpg" alt="">` +
       `<div class="fade"></div><div class="words"><h1>${esc(cover.title)}</h1><p class="tag">${esc(tr.tag)}</p></div></div>`;
-    const p2 = `<div class="pg"><div class="inner"><div class="grid">${ORDER.slice(0, 6).map(panel).join('')}</div></div></div>`;
-    const p3 = `<div class="pg"><div class="inner"><div class="grid">${ORDER.slice(6, 12).map(panel).join('')}</div></div></div>`;
+    const backPg = `<div class="pg back"><div class="qr">${svg}</div><div class="t">${esc(tr.free)}</div>` +
+      `<div class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</div><div class="s">${esc(tr.langs)} · ${esc(tr.scan)}</div>` +
+      `<div class="given">${esc(tr.given)}<i></i><i></i></div></div>`;
     const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
-    const p4 = `<div class="pg end"><div class="inner"><div class="grid">${ORDER.slice(12).map(panel).join('')}</div>` +
-      `<div class="pray"><h2>${esc(P.title)}</h2><p class="intro">${esc(P.intro)}</p><div class="steps">${steps}</div>` +
-      `<p class="prayer">${esc(P.prayer)}</p><p class="note">${esc(P.note)}</p></div>` +
-      `<div class="foot"><div class="qr">${svg}</div><div><div class="t">${esc(tr.free)}</div>` +
-      `<div class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</div><div class="s">${esc(tr.langs)}</div></div></div></div></div>`;
-    // folded order: outside = [4 | 1], inside = [2 | 3]
+    const pray = `<div class="pray"><h3>${esc(P.title)}</h3>${steps}<p class="prayer">${esc(P.prayer)}</p><p class="note">${esc(P.note)}</p></div>`;
+    const left = `<div class="pg l"><div class="inner"><h2>${esc(tr.left)}</h2><div class="grid">${ORDER.slice(0, 8).map(panel).join('')}</div></div></div>`;
+    const right = `<div class="pg r"><div class="inner"><h2><span>${esc(tr.right)}</span></h2><div class="grid">${ORDER.slice(8).map(panel).join('')}${pray}</div></div></div>`;
+    // outside = [back | cover] (folded, the cover is on top); inside = [left | right], one open spread
     const sheets = document.getElementById('sheets');
-    sheets.innerHTML = `<div class="sheet">${p4}${p1}</div><div class="sheet">${p2}${p3}</div>`;
+    sheets.innerHTML = `<p class="label">Side 1: outside</p><div class="sheet">${backPg}${front}</div>` +
+      `<p class="label">Side 2: inside</p><div class="sheet">${left}${right}</div>`;
     const fit = () => {
       const avail = document.getElementById('wrap').clientWidth - 32, w = 17 * 96, k = Math.min(1, avail / w);
       sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
-      document.getElementById('wrap').style.height = k < 1 ? (2 * 11.4 * 96 * k + 60) + 'px' : '';
+      document.getElementById('wrap').style.height = k < 1 ? (sheets.offsetHeight * k + 60) + 'px' : '';
     };
     fit(); addEventListener('resize', fit);
     document.getElementById('print').onclick = () => window.print();
