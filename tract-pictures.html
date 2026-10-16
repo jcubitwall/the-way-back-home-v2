@@ -68,6 +68,11 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .qrtile .icons{display:flex;gap:.1in;color:var(--blue)}
 .qrtile .icons svg{width:.22in;height:.22in}
 
+/* cartoon style: ink-black comic frames and badges */
+.toon .ph{box-shadow:0 0 0 .055in #1d1a24,0 3pt 10pt rgba(0,0,0,.35);border-radius:.1in}
+.toon .num,.toon .arrow{box-shadow:0 0 0 2pt #1d1a24}
+.toon .num{color:#1d1a24!important}
+.toon .qrtile{box-shadow:0 0 0 2.5pt #1d1a24}
 .err{padding:24px;font-size:16px}
 @page{size:17.25in 11.25in;margin:0}
 @media print{
@@ -105,7 +110,10 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>';
   try {
     const langs = await get('content/languages.json');
-    const q = new URLSearchParams(location.search).get('lang');
+    const sp = new URLSearchParams(location.search), q = sp.get('lang');
+    // ?style=cartoon uses the 2D comic versions in art/toon/ (made by tools/toon.py) with ink-black frames
+    const toon = sp.get('style') === 'cartoon', DIR = toon ? 'art/toon' : 'art/src';
+    if (toon) document.body.classList.add('toon');
     const L = langs.langs[q] && langs.langs[q].ready ? q : 'en';
     const T = await get(`content/i18n/${L}.json`);
     document.title = `${T.pages.cover.title} · Picture tract`;
@@ -120,9 +128,9 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const story = i => {
       const [img, col, y] = ART[i];
       const arrow = i === 3 ? `<div class="arrow r">${DOWN}</div>` : i === 11 ? `<div class="arrow r">${TURN}</div>` : '';
-      return [col, `<div class="ph"><img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%"></div><div class="num">${i + 1}</div>${arrow}`];
+      return [col, `<div class="ph"><img src="${DIR}/${img}.jpg" alt="" style="object-position:50% ${y}%"></div><div class="num">${i + 1}</div>${arrow}`];
     };
-    const coverP = ['cover', `<div class="art"></div><div class="qrtile"><div class="qr">${svg}</div><div class="icons">${BOOK}${EAR}${GLOBE}</div></div>`];
+    const coverP = ['cover', `<div class="art" style="background-image:url(${DIR}/cover.jpg)"></div><div class="qrtile"><div class="qr">${svg}</div><div class="icons">${BOOK}${EAR}${GLOBE}</div></div>`];
     const side = rows => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
       const [[cls, html], flip] = p;
       return `<div class="cell ${cls} c${c} r${r}${flip ? ' flip' : ''}"><div class="pn">${html}</div></div>`;
