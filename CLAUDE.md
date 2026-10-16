@@ -141,7 +141,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
 - **Smaller items:**
   - Page numbers don't match.
   - iPhone bottom edge (16 Oct 2026): FIXED. A solid bar covered the bottom of every page on Johnny's iPhone: Safari on iOS 26 paints an opaque bar in the colour of any position:fixed layer touching the bottom edge. `.book` is now position:absolute (confirmed on his phone). `fitBook()` from the first attempt is harmless and stays.
-  - Listening blur (16 Oct 2026): while reading aloud, the blur behind the caption now hugs the sentence on screen (`updateTh()` measures the active caption; `--th` is a registered @property so it glides between sentences), with tighter fade margins.
+  - Listening blur (16 Oct 2026): while reading aloud, the blur behind the caption now hugs the sentence on screen (`updateTh()` measures the active caption), with tighter fade margins. Do NOT register --th with @property to animate it: on Johnny's iPhone that broke the mask and blurred the whole cover picture.
   - Downloadable videos: **English done 16 Oct 2026** (`video/The-Way-Back-Home_EN.mp4`, 6:32, 65 MB, menu ⋯ → Download video).
     video.py now includes the animated scenes (three layers per scene page: picture, clip in the picture's frame then its sharp
     end still, see-through top layer with blur/shade/caption), the scene sounds (0.75) and the music hush/rise; checked the crack
