@@ -168,6 +168,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   fills the left 2 in of each card and fades into white; QR (0.86 in, white tile), title (13 pt, shrinks to fit), subtitle,
   scan line and link on the right. RTL languages mirror it. Checked all 17 languages fit (de/sw titles shrink to ~10 pt);
   10/10 codes decode at 300 dpi.
+  Tweaked same day (Johnny): fade only on the picture's last ~0.3 in (84%→100%), QR in the top-right corner (top-left in RTL), text at the bottom of the column. Titles 11.5–13 pt (sw 8.5 pt, its title is long).
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
 ## Cover layout (15 Oct 2026)
