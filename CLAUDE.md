@@ -145,6 +145,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   - Pictures never cropped (16 Oct 2026, Johnny: "I do not want to sacrifice any of the photo"). On tall phones the picture ends about 4/5 down and a blurred copy fills below it; that band stays. The picture's own fade into it now starts at 93% of its height (was 84%), so more of it shows sharp.
   - Listening blur (16 Oct 2026): while reading aloud, the blur behind the caption now hugs the sentence on screen (`updateTh()` measures the active caption), with tighter fade margins. Do NOT register --th with @property to animate it: on Johnny's iPhone that broke the mask and blurred the whole cover picture.
   - Downloadable videos: **English done 16 Oct 2026** (`video/The-Way-Back-Home_EN.mp4`, 6:32, 65 MB, menu ⋯ → Download video).
+    Rebuilt 16 Oct 2026 (61 MB, ~25 min to build): page turns now slide up like the book (the 0.6 s crossfade looked like a blurry double image), and the cover's QR code and menu are hidden in render mode (the QR would point at the local render server).
     video.py now includes the animated scenes (three layers per scene page: picture, clip in the picture's frame then its sharp
     end still, see-through top layer with blur/shade/caption), the scene sounds (0.75) and the music hush/rise; checked the crack
     (2:24.5) and the boom (2:38) land in silence before their lines. Takes ~25 min per language here. Final encode CRF 28 'slow'
