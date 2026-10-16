@@ -179,9 +179,17 @@ function fitBook() {
   if (want > h + 1) book.style.height = want + 'px';
 }
 // the blur and colour start just above the text, however tall the text is on this page and screen
-const measure = new ResizeObserver(es => es.forEach(e => {
-  const sec = e.target.closest('.pg'); sec.style.setProperty('--th', e.target.offsetHeight + 'px');
-}));
+// while the book reads aloud, the blur only covers the sentence on screen (not the longest sentence of the page)
+function updateTh(sec) {
+  const t = sec && sec.querySelector('.txt'); if (!t) return;
+  let h = t.offsetHeight;
+  if (reading && sec.classList.contains('story')) {
+    const on = sec.querySelector('.cap.on'); if (!on) return;      // between sentences: keep the blur where it is
+    h = on.offsetHeight + parseFloat(getComputedStyle(t).paddingBottom || 0);
+  }
+  sec.style.setProperty('--th', Math.round(h) + 'px');
+}
+const measure = new ResizeObserver(es => es.forEach(e => updateTh(e.target.closest('.pg'))));
 // long pages (and long languages) shrink their text a little rather than covering the picture
 function fitAll() {
   secs.forEach(sec => {
@@ -331,6 +339,7 @@ addEventListener('popstate', () => { if (!secs.length) return; const m = locatio
 function setCap(i, k) {
   const sec = secs[i]; if (!sec) return;
   sec.querySelectorAll('.cap').forEach(p => p.classList.toggle('on', +p.dataset.k === k));
+  updateTh(sec);
 }
 
 /* ---------------- sound: narration, scene sounds and music share one audio clock ---------------- */
