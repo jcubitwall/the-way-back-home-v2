@@ -40,7 +40,7 @@ p{margin:0}
 .foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:12pt;font-size:7pt;color:#8a8496;border-top:1px solid var(--line);padding-top:4pt}
 
 /* ---------- teacher page ---------- */
-.page.tp{font-size:12pt;line-height:1.4}
+.page.tp{font-size:11.5pt;line-height:1.38}
 .page.tp .need,.page.tp .tip p{font-size:10.4pt}
 .page.tp .side .verse{font-size:12pt}
 .t-head{display:flex;gap:.16in;align-items:stretch}
@@ -171,6 +171,28 @@ p{margin:0}
 .cert .sig{display:flex;gap:.4in;margin-top:auto;font-size:9pt;color:var(--muted)}
 .cert .sig div{width:2.3in;border-top:1.2pt solid var(--ink);padding-top:3pt}
 
+.idea .moves{display:block;font:700 9.6pt/1.35 var(--body);color:var(--ink);margin-top:3pt}
+.map .road{position:absolute;inset:0;width:100%;height:100%}
+.map .stop{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4pt #fff,0 0 0 6pt var(--green),0 4pt 10pt rgba(0,0,0,.25)}
+.map .stop img{width:100%;height:100%;object-fit:cover;display:block}
+.map .stop .sn{position:absolute;left:50%;bottom:4pt;transform:translateX(-50%);background:#fff;color:var(--green);font:900 12pt/1 var(--display);padding:3pt 8pt;border-radius:99px}
+.map .slab{position:absolute;width:2in;display:flex;align-items:center;justify-content:center;gap:4pt;font:900 11.5pt var(--display);text-align:center}
+.map .slab span{background:#fff;border-radius:99px;padding:2pt 7pt;box-shadow:0 1pt 3pt rgba(0,0,0,.15)}
+.map .flag{position:absolute;font:900 12pt var(--display);color:#fff;background:var(--green);padding:3pt 10pt;border-radius:99px;transform:rotate(-6deg)}
+.map .mname{position:absolute;left:0;right:0;bottom:.3in;font:900 13pt var(--display)}
+.map .mname span{display:inline-block;width:4.5in;border-bottom:1.5pt solid var(--ink);margin-left:6pt}
+.snakes{display:flex;flex-direction:column;align-items:center;gap:.15in}
+.snake{width:4.05in;height:4.05in;display:block}
+.invs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:4.35in 4.35in;border-top:1pt dashed #999;border-left:1pt dashed #999}
+.inv{border-right:1pt dashed #999;border-bottom:1pt dashed #999;padding:8pt;display:flex;flex-direction:column}
+.inv img{width:100%;height:1.75in;object-fit:cover;border-radius:10pt;display:block}
+.inv .iw{padding:6pt 4pt 0;display:flex;flex-direction:column;flex:1}
+.inv h2{font-size:19pt;color:var(--sky)}
+.inv p{font-size:10pt;margin-top:3pt}
+.inv .ib{display:flex;align-items:flex-end;gap:8pt;margin-top:auto}
+.inv .qr{width:.95in;height:.95in;flex:none}.inv .qr svg{width:100%;height:100%;display:block}
+.inv .from{flex:1;font:900 10pt var(--display);padding-bottom:4pt}.inv .from span{display:block;border-bottom:1.3pt solid var(--ink);height:.3in}
+
 @media print{
   @page{margin:.4in}
   html,body{background:#fff}
@@ -223,118 +245,131 @@ const qrSvg = (() => {
 // Memory verses: CSB (checked word for word, 16 Oct 2026)
 const W = [
  { n: 1, col: 'green', title: 'God’s perfect home', pages: ['The garden', 'The one rule'],
-   thumbs: [['garden-clip', 50], ['rule-end', 40]], pic: ['garden-clip', 36],
+   thumbs: [['garden-clip', 40], ['garden-end', 40], ['rule-end', 40]], pic: ['garden-clip', 36],
    bible: 'Genesis 1:1, 26–31; 2:8–9, 15–17',
-   idea: 'God made a perfect world, and He loves to be with us!',
+   idea: 'God made it good, and He made me to be with Him!',
+   moves: 'Sweep both arms wide on “good”, point up on “Him”, then hug yourself.',
    verse: ['“God saw all that he had made, and it was very good indeed.”', 'Genesis 1:31'],
-   welcome: 'What is your favourite place in the whole world?',
+   hook: ['Mystery bag', 'Hide things God made in a bag (a leaf, a stone, a feather, an apple, a shell). Children reach in without looking and guess. Then ask: who made all of these? God made everything, and it was all good!'],
+   hookNeed: ['A cloth bag with 5–6 things from nature'],
    talk: [
-     ['What was the very best thing about Eden?', 'God was with them.'],
+     ['What was the very best thing about Eden?', 'God was with them, and they loved being with Him.'],
      ['How many rules did God give Adam and Eve?', 'Just one! Every other tree was a “yes”.'],
-     ['Why would a loving Father give a rule?', 'Think of “Don’t touch the hot stove.”']],
-   act: ['The one-rule game', ['Tape to mark a square on the floor'],
-     'Play Simon Says, but everything is allowed except one thing: “Don’t step in the square.” Then ask: How many yeses were there? How many noes? God gave Adam and Eve a garden full of yeses.'],
+     ['Your mom or dad says “Don’t touch the hot stove.” Is that a mean rule or a loving rule?', 'Loving! God’s rule was too.']],
+   act: ['The one-rule game', ['Tape to mark one square on the floor'],
+     'Play Simon Says, but everything is allowed except one thing: “Don’t step in the square!” Call out fun actions that lead near the square (hop, spin, tiptoe). Afterwards count: how many yeses? Just one no! That’s what Eden was like.'],
    pray: 'Thank God for His good world, and for wanting to be close to us.',
-   tip: 'Keep this week bright and happy. The sadness comes next week, and it means more once the children have enjoyed how good Eden was.',
+   tip: 'Keep this week bright and happy. The sadness comes next week, and it means more once the children have enjoyed how good Eden was. Give each child their Road Home map today.',
    home: { kind: 'trees', ask: 'What was the one rule God gave Adam and Eve?' } },
 
  { n: 2, col: 'purple', title: 'The big lie', pages: ['The serpent', 'The fruit', 'Out of the garden'],
    thumbs: [['serpent-end', 40], ['fruit-end', 35], ['exile-end', 50]], pic: ['fruit-end', 28],
    bible: 'Genesis 3:1–24',
-   idea: 'Sin means not trusting God. But God made a promise!',
+   idea: 'Trust God, not the snake!',
+   moves: 'Point up on “Trust God”, wiggle one hand like a snake on “not the snake”, and shake your head.',
    verse: ['“Every word of God is pure; he is a shield to those who take refuge in him.”', 'Proverbs 30:5'],
-   welcome: 'Has anyone ever tricked you? How did it feel?',
+   hook: ['Two boxes', 'Show a beautifully wrapped box and a plain paper bag. Let the children vote for one. Open the pretty box: an old onion (or a mouldy sock)! The plain bag has the treats. Say: the fruit looked good, but the snake’s promise was a trick.'],
+   hookNeed: ['A pretty gift box with an onion inside', 'A plain bag with a treat for each child'],
    talk: [
-     ['What did the serpent say? Was it true?', 'No. He twisted God’s words.'],
+     ['What did the serpent say? Was it true?', 'No. He twisted God’s words: “Did God really say…?”'],
+     ['Have you ever seen an ad that made a toy look amazing, but it wasn’t?', 'Things can look good and still be a trick.'],
      ['What does the Bible call disobeying God?', 'Sin.'],
-     ['How did God make clothes for Adam and Eve?', 'Animals had to die. Remember this, it comes back later!'],
-     ['What did God promise?', 'Someone would come to open the way back home.']],
-   act: ['Whisper chain', ['Nothing extra'],
-     'Pass a whisper down the line: “You may eat from every tree, but not from that one.” See how it changes. Our words get mixed up by accident. The serpent changed God’s words on purpose. That’s why we check what God really said.'],
-   pray: 'Ask God to help us trust what He says.',
-   tip: 'Call the serpent what the Bible calls him: a liar. Sin is not just a mistake. It is choosing not to trust God.',
-   home: { kind: 'truetrick', ask: 'What did God promise Adam and Eve?' } },
+     ['How did God make clothes for Adam and Eve?', 'Animals had to die. Remember this, it comes back later!']],
+   act: ['Twisty snake craft', ['Twisty snake sheets (extras)', 'Crayons, scissors, string or yarn'],
+     'Children colour the snake, cut along the spiral line, and hang it from a string. The snake’s lie and God’s truth spiral around it. Read it together as it twists: who do we trust?'],
+   pray: 'Ask God to help us trust what He says, even when something else looks good.',
+   tip: 'Call the serpent what the Bible calls him: a liar. Sin is not just a mistake. It is choosing not to trust God. End on the hope: God made a promise that Someone would come!',
+   home: { kind: 'truetrick', ask: 'What did God promise Adam and Eve, even after they sinned?' } },
 
  { n: 3, col: 'night', title: 'Every one of us', pages: ['The long road', 'God’s law'],
    thumbs: [['road-end', 50], ['test-clip', 40], ['test-2-end', 40]], pic: ['test-2-end', 52],
    bible: 'Exodus 20:1–17; Romans 3:23; James 2:10',
    idea: 'Everybody sins. Me too.',
+   moves: 'Point around the whole room on “Everybody”, then point to yourself on “Me too”.',
    verse: ['“For all have sinned and fall short of the glory of God.”', 'Romans 3:23'],
-   welcome: 'Who is the oldest person in your family? (If we kept going back, we would reach Adam and Eve!)',
+   hook: ['Mirror, mirror', 'Pass a hand mirror around. Each child looks and says one thing they see (a smile, messy hair, a smudge). Say: a mirror shows us what is really there. Today God’s law is like a mirror for our hearts.'],
+   hookNeed: ['A hand mirror'],
    talk: [
-     ['What did every person on the road have?', 'Sin marks, like Adam and Eve.'],
+     ['What did every person on the long road have?', 'Sin marks, just like Adam and Eve.'],
      ['Have you ever told a lie? Taken something that wasn’t yours?', 'Answer quietly, in your heart.'],
-     ['“And that’s only two of the ten!” Why does breaking one rule matter?', 'James 2:10.']],
-   act: ['Ten on my fingers', ['Nothing extra'],
-     'Learn God’s ten rules (on the take-home sheet), one finger each, with a simple action for each one. Say them twice, faster the second time. Then ask: is there a finger you could hold up and say, “I have always kept this one”?'],
+     ['“And that’s only two of the ten!” Why does breaking even one rule matter?', 'James 2:10.']],
+   act: ['Fall short toss', ['A bucket or basket', 'Paper balls, 3 per child', 'Tape for a throwing line'],
+     'Put the bucket far away, much too far. Everyone throws from the line. Almost every ball falls short! Read the verse: “all have sinned and fall short”. Sin means missing God’s perfect mark, and nobody can throw that far. Not the teacher, not the pastor, not anyone.'],
    pray: 'Tell God quietly that we have broken His good rules.',
-   tip: 'Never ask children to confess sins out loud. Say “I have broken these too.” Then it isn’t a lecture.',
+   tip: 'Never ask children to confess sins out loud. Throw too, and fall short yourself: “I miss the mark too.” Then it isn’t a lecture.',
    home: { kind: 'wordsearch', ask: 'Which two of God’s rules did the book ask about?' } },
 
  { n: 4, col: 'red', title: 'Locked out', pages: ['Locked out', 'Can we scrub it off?'],
    thumbs: [['locked-end', 45], ['locked-2-end', 50], ['scrub-clip', 30]], pic: ['scrub-end', 12],
    bible: 'Romans 3:20; Isaiah 59:2; Romans 6:23; Ephesians 2:8–9',
-   idea: 'Sin locks us out, and we can’t scrub it off.',
+   idea: 'I can’t scrub sin off!',
+   moves: 'Scrub one arm hard with the other hand, then stop and shake your head on “can’t”.',
    verse: ['“For you are saved by grace through faith, and this is not from yourselves; it is God’s gift.”', 'Ephesians 2:8'],
-   welcome: 'Have you ever been locked out of your house?',
+   hook: ['The locked box', 'Show a box with a padlock and say there is a prize inside. Let children try to open it: pulling, shaking, saying “please”, being extra good. Nothing works. Say: sin locks us out of God’s home, and we don’t have the key. Keep the box shut until week 5!'],
+   hookNeed: ['A box with a padlock (hide the key)'],
    talk: [
-     ['What does a mirror do? What can’t it do?', 'It shows the dirt but can’t wash it off. God’s law is the same.'],
-     ['What did the children try, to scrub their marks off?', 'Being good, saying sorry, going to church. It didn’t work.'],
+     ['What does a mirror do? What can’t it do?', 'It shows the dirt, but it can’t wash it off. God’s law is the same.'],
+     ['Ever spilled juice on a white shirt? Did scrubbing get it all out?', ''],
      ['Someone has to take our place. Who could it be?', 'Leave it as a question until next week!']],
    act: ['The mark that won’t come off', ['A white plastic plate (keep it for week 6!)', 'A permanent marker', 'Water, soap, a sponge'],
-     'Draw a small “sin mark” on the plate with the permanent marker. Let the children try to scrub it off with water, then soap. It stays. Put the plate away: “Next week we find out who can make us clean.”'],
-   pray: 'Tell God we can’t clean ourselves, and thank Him the story isn’t over.',
+     'Draw a small “sin mark” on the plate with the permanent marker. Let the children take turns scrubbing it with water, soap and the sponge. Count how many scrubs. It stays! Put the plate away: “Next week we find out who has the key, and in two weeks who can make us clean.”'],
+   pray: 'Tell God we can’t clean ourselves, and thank Him that the story isn’t over.',
    tip: 'The book names hell plainly. Say it calmly, as the book does, then point ahead: “That is very bad news, but it is not the end of the story.”',
    home: { kind: 'wash', ask: 'Why couldn’t the children scrub their marks off?' } },
 
  { n: 5, col: 'orange', title: 'The door', pages: ['The door', 'The cross'],
-   thumbs: [['door-end', 50], ['cross-end', 50]], pic: ['cross-end', 44],
+   thumbs: [['door-end', 50], ['cross-clip', 50], ['cross-end', 50]], pic: ['cross-end', 44],
    bible: 'John 10:9; John 3:16; John 14:6; Isaiah 53:6',
-   idea: 'Jesus is the door! He died in our place.',
+   idea: 'Jesus is the door! He took my place.',
+   moves: 'Swing both arms open like a door on “Jesus is the door”, then put a hand on your heart on “He took my place”.',
    verse: ['“For God loved the world in this way: He gave his one and only Son, so that everyone who believes in him will not perish but have eternal life.”', 'John 3:16'],
-   welcome: 'If you were locked out, what would you need to get back in?',
+   hook: ['I’ll take your place', 'Say someone broke the rules and must do 20 jumping jacks. Pick a child to come up. Just before they start, say: “Wait, I’ll do them for you.” Do all 20 yourself, puffing hard! Ask: how did that feel? That is what Jesus did, but He paid for our sin with His life.'],
+   hookNeed: ['Last week’s locked box, now with the key'],
    talk: [
-     ['Who is the Someone God promised in the garden?', 'Jesus, God’s own Son.'],
-     ['Jesus said, “I am the door.” What does a door do?', 'It lets you in. Jesus is the only way to God.'],
-     ['Jesus never sinned. Why does that matter?', 'Only someone with no sin could take our place.'],
-     ['Why did Jesus do it?', 'Because He loves us.']],
+     ['Who is the Someone God promised back in the garden?', 'Jesus, God’s own Son.'],
+     ['Jesus said, “I am the door.” What does a door do?', 'It lets you in! Now open the locked box: Jesus is the key.'],
+     ['Jesus never sinned. Why does that matter?', 'Only someone with no sin could take our place.']],
    act: ['Door craft', ['Door craft sheets (extras)', 'Scissors, glue sticks, crayons'],
-     'Colour the door, cut it on its dashed line, and fold it open. Glue the cross picture behind it, so opening the door shows the cross. Say together: “Jesus is the door!”'],
-   pray: 'Thank Jesus for dying in our place.',
-   tip: 'This is the turning point of the series. After four weeks of bad news, slow down and let the good news land.',
+     'Colour the door, cut it on its dashed line, and fold it open. Glue the cross picture behind it, so opening the door shows the cross. Practise: open the door and say, “Jesus is the door! He took my place.”'],
+   pray: 'Thank Jesus for dying in our place because He loves us.',
+   tip: 'This is the turning point of the series. After four weeks of bad news, slow down and let the good news land. The children in the book shout “Come and see!” Let your voice do the same.',
    home: { kind: 'maze', ask: 'Who is the door? What did Jesus do for us?' } },
 
  { n: 6, col: 'orange', title: 'He is alive!', pages: ['The choice', 'The empty tomb'],
-   thumbs: [['choice-clip', 45], ['tomb-end', 45], ['clean', 50]], pic: ['tomb-end', 36],
+   thumbs: [['choice-clip', 45], ['tomb-end', 45], ['choice-end', 50]], pic: ['tomb-end', 36],
    bible: 'Romans 10:9, 13; Luke 24:1–8; 1 Corinthians 15:3–4; Isaiah 1:18',
-   idea: 'Jesus is alive! He makes us clean.',
+   idea: 'Jesus is alive! He makes me clean!',
+   moves: 'Jump up with arms high on “Jesus is alive!”, then wipe your hands clean on “He makes me clean!”',
    verse: ['“If you confess with your mouth, ‘Jesus is Lord,’ and believe in your heart that God raised him from the dead, you will be saved.”', 'Romans 10:9'],
-   welcome: 'What is the best surprise you have ever had?',
+   hook: ['The empty tomb box', 'Show a box with a “stone” lid (a paper plate painted grey). Build it up: “Jesus’ friends came to His tomb on Sunday morning…” Slowly roll the stone away. Empty! Shout together: “He is not here! He is alive!”'],
+   hookNeed: ['A box with a paper-plate “stone” for a lid'],
    talk: [
      ['What two choices did people make in the book?', '“No thanks”, or “I’m sorry, please save me!”'],
      ['What does it mean to trust Jesus?', 'Turn from sin, and count on Jesus instead of on being good.'],
-     ['What did Jesus’ friends find on the third day?', 'An empty tomb!'],
      ['How clean does God make us?', 'As white as snow (Isaiah 1:18).']],
-   act: ['The mark comes off', ['Last week’s plate', 'Rubbing alcohol or whiteboard cleaner (test it first!)'],
-     'Bring back the plate. Remind them nothing worked. Now wipe it with the cleaner, and the mark is gone. “We couldn’t do it. Jesus can make us clean, because He died and rose again.”'],
-   pray: 'Praise Jesus that He is alive!',
-   tip: 'Explain the choice clearly, but save the invitation for next week, when the prayer page comes, so no one feels rushed.',
+   act: ['Clean plate + sleeping soldiers', ['The plate from week 4', 'Rubbing alcohol or whiteboard cleaner (test it first!)'],
+     'Bring back the plate. Nothing worked last time. Wipe it with the cleaner: the mark is gone! “We couldn’t. Jesus can.” Then play Sleeping soldiers: everyone lies still guarding the tomb. Anyone who moves sits up to help. When you shout “He is alive!”, everyone jumps up cheering.'],
+   pray: 'Praise Jesus that He is alive and makes us clean.',
+   tip: 'Make clear the cleaner is only a picture: Jesus really takes sin away. Explain the choice clearly, but save the invitation for next week, so no one feels rushed.',
    home: { kind: 'code', ask: 'What did Jesus’ friends find on the third day?' } },
 
  { n: 7, col: 'sky', title: 'Welcome home', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'],
    thumbs: [['gates-clip', 50], ['gates-end', 35], ['new-earth-end', 40]], pic: ['gates-end', 28],
    bible: 'John 14:2–3; John 20:27; Revelation 21:1–5; Matthew 28:19–20',
-   idea: 'Jesus will welcome us home. Let’s tell others!',
+   idea: 'Jesus welcomes me home, and I can bring a friend!',
+   moves: 'Open your arms wide on “welcomes me home”, then wave a friend over on “bring a friend”.',
    verse: ['“Look, I am making everything new.”', 'Revelation 21:5'],
-   welcome: 'What is the best welcome home you have ever had?',
+   hook: ['Welcome-home tunnel', 'Before class, hang streamers or balloons at the door. Leaders make a high-five tunnel and cheer each child in by name: “Welcome home!” Ask: how did that feel? That is a tiny picture of heaven’s open gates.'],
+   hookNeed: ['Streamers or balloons'],
    talk: [
      ['Who is waiting at heaven’s gates? What is in His hands?', 'Scars: the scars of His love.'],
+     ['Remember coming home after a long trip? What will it be like to come home to Jesus?', ''],
      ['What will the new earth be like?', 'Even better than Eden!'],
-     ['Who could you tell about Jesus this week?', '']],
-   act: ['Story cards, then pass it on', ['Story order cards (extras)', 'QR cards from the book (⋯ menu → Print QR cards)'],
-     'In small groups, put the story cards in order and tell the story in your own words. Then give each child some QR cards to share with friends.'],
-   pray: 'Read A, B, C together. Invite anyone who wants to follow Jesus to pray quietly and talk with you afterwards.',
-   tip: 'Invite, never pressure. If a child prays, tell their parents. Hand out the certificates at the end.',
+     ['Who could you bring this week?', '']],
+   act: ['Story relay + invite cards', ['Story order cards (extras), a set per team', 'Invite cards (extras)'],
+     'Teams race to put the 12 story cards in order, then tell the whole story back, one card each. Then each child fills in an invite card for a friend, with the QR code that plays the book.'],
+   pray: 'Read A, B, C together. Invite anyone who wants to follow Jesus to pray quietly, and to talk with you after.',
+   tip: 'Invite, never pressure. If a child prays, tell their parents. Give out the certificates, and celebrate the finished Road Home maps!',
    home: { kind: 'abc', ask: 'Who could our family tell about Jesus?' } }
 ];
 
@@ -442,16 +477,16 @@ const teacher = w => `<div class="page tp ${w.col}" data-w="${w.n}" data-p="teac
   <div class="t-head"><div class="tt"><span class="pill">Week ${w.n} of 7 · Teacher</span><h1>${esc(w.title)}</h1>
     <p class="pg">Book pages: <b>${w.pages.map(esc).join(' · ')}</b><br>Bible: ${esc(w.bible)}</p></div>
     <div class="thumbs">${w.thumbs.map(([n, y]) => img(n, y)).join('')}</div></div>
-  <div class="idea"><small>Big idea</small>${esc(w.idea)}</div>
+  <div class="idea"><small>Say it with me (do the moves!)</small>${esc(w.idea)}<span class="moves">${esc(w.moves)}</span></div>
   <div class="two"><div>
-    <div class="sec"><h3>1 · Welcome <span class="min">5 min</span></h3><p>${esc(w.welcome)}</p></div>
-    <div class="sec"><h3>2 · Read and listen <span class="min">10 min</span></h3><p>Open <b>${SITE}</b> on a screen or phone, tap <b>Listen</b>, and play this week’s pages. Then read the Bible passage together.</p></div>
+    <div class="sec"><h3>1 · Hook: ${esc(w.hook[0])} <span class="min">5 min</span></h3><p>${esc(w.hook[1])}</p></div>
+    <div class="sec"><h3>2 · Read and listen <span class="min">10 min</span></h3><p>Open <b>${SITE}</b>, tap <b>Listen</b>, and play this week’s pages. Then read the Bible passage together.</p></div>
     <div class="sec"><h3>3 · Talk about it <span class="min">10 min</span></h3><ol>${w.talk.map(([q, a]) => `<li>${esc(q)}${a ? ` <span class="ans">${esc(a)}</span>` : ''}</li>`).join('')}</ol></div>
     <div class="sec"><h3>4 · ${esc(w.act[0])} <span class="min">15 min</span></h3><p>${esc(w.act[2])}</p></div>
-    <div class="sec"><h3>5 · Pray and go home <span class="min">5 min</span></h3><p>${esc(w.pray)} Say the memory verse together. Hand out the take-home sheet.</p></div>
+    <div class="sec"><h3>5 · Say it, stamp it, pray <span class="min">5 min</span></h3><p>Do the moves three times: whisper, normal, SHOUT! Colour stop ${w.n} on the Road Home map. ${esc(w.pray)}</p></div>
   </div><div class="side">
     <div class="box"><h3>Memory verse</h3><p class="verse">${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])} (CSB)</span></p></div>
-    <div class="box need"><h3>You need</h3><ul><li>A screen or phone</li><li>Bibles</li>${w.act[1].map(t => `<li>${esc(t)}</li>`).join('')}<li>Take-home sheets</li></ul></div>
+    <div class="box need"><h3>You need</h3><ul><li>A screen or phone, Bibles</li>${[...w.hookNeed, ...w.act[1]].map(t => `<li>${esc(t)}</li>`).join('')}<li>Take-home sheets, Road Home maps</li></ul></div>
     <div class="box tip"><h3>Teacher tip</h3><p>${esc(w.tip)}</p></div>
   </div></div>
   ${foot('The Way Back Home · Sunday school series', CSB)}
@@ -462,21 +497,72 @@ const takehome = w => `<div class="page ${w.col}" data-w="${w.n}" data-p="home">
   <p class="bubble">${esc(w.idea)}</p>
   <div class="mv">${starSvg}<p class="verse"><span class="tag">Memory verse</span>${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])}</span></p></div>
   ${HOME[w.home.kind]()}
-  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> read and listen to <i>The Way Back Home</i> together for free at <b>${SITE}</b> (scan the code). This week: ${esc(w.pages.join(', '))}${/[?!]$/.test(w.pages[w.pages.length - 1]) ? '' : '.'}</p>
-    <p><b>Ask your child:</b> ${esc(w.home.ask)}</p></div></div>
+  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> listen to <i>The Way Back Home</i> together for free at <b>${SITE}</b> (scan the code). This week: ${esc(w.pages.join(', '))}${/[?!]$/.test(w.pages[w.pages.length - 1]) ? '' : '.'}</p>
+    <p><b>Ask your child:</b> ${esc(w.home.ask)} Then ask them to show you the moves for “${esc(w.idea)}”</p></div></div>
   ${foot('The Way Back Home · Take-home sheet', CSB)}
 </div>`;
 
 const overview = () => `<div class="page ov" data-w="0" data-p="teacher">
-  <h1>The Way Back Home</h1><p class="sub">A 7-week Sunday school series for ages 6–12</p>
-  <div class="lead">${img('cover', 30)}<p style="font-size:10.8pt;line-height:1.45">Each week, play two or three pages of <i>The Way Back Home</i> (pictures, narration and music), read the Bible passage, talk, do one hands-on activity, and send home a sheet with the memory verse and a puzzle.<br><br>
-    The story builds week by week: four weeks of the problem (sin), then three weeks of the answer (Jesus). Please don’t skip ahead to the good news. It means more once the children have felt the bad news.</p></div>
-  <table><tr><th></th><th>Theme</th><th>Big idea</th><th>Memory verse</th></tr>
-  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(w.title)}</b></td><td>${esc(w.idea)}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
-  <div class="how"><div><h3>Each week (about 45 minutes)</h3><ul><li>Welcome question · 5 min</li><li>Read and listen to the book · 10 min</li><li>Talk about it · 10 min</li><li>Activity · 15 min</li><li>Pray, memory verse, take-home · 5 min</li></ul></div>
-    <div><h3>Printing</h3><ul><li>Teacher pages: one per leader.</li><li>Take-home sheets: one per child.</li><li>Extras: story cards (week 7), door craft (week 5), certificates (week 7).</li><li>Families can read the book on any phone, in 17 languages.</li></ul></div></div>
+  <h1>The Way Back Home</h1><p class="sub">A 7-week Sunday school series for ages 6–10</p>
+  <div class="lead">${img('cover', 30)}<div style="font-size:10.4pt;line-height:1.42"><p>Each week, play two or three pages of <i>The Way Back Home</i> (pictures, narration and music), then make the truth stick with a game, an object lesson and a craft.</p>
+    <p style="margin-top:6pt"><b>Three things run through all 7 weeks:</b></p>
+    <ul style="margin:2pt 0 0;padding-left:14pt"><li><b>Say it with me:</b> one short truth a week, with hand moves. Do it whisper, normal, SHOUT.</li>
+    <li><b>The Road Home map:</b> each child colours one stop a week, from the garden to heaven’s gates.</li>
+    <li><b>Mysteries that pay off:</b> the locked box (weeks 4–5) and the marked plate (weeks 4–6).</li></ul>
+    <p style="margin-top:6pt">Four weeks of the problem (sin), then three of the answer (Jesus). Don’t skip ahead: the good news means more once children have felt the bad news.</p></div></div>
+  <table><tr><th></th><th>Theme</th><th>Say it with me</th><th>Hook</th><th>Verse</th></tr>
+  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(w.title)}</b></td><td>${esc(w.idea)}</td><td>${esc(w.hook[0])}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
+  <div class="how"><div><h3>Each week (about 45 minutes)</h3><ul><li>Hook game or object · 5 min</li><li>Read and listen to the book · 10 min</li><li>Talk about it · 10 min</li><li>Activity or craft · 15 min</li><li>Say it, stamp the map, pray · 5 min</li></ul></div>
+    <div><h3>Printing</h3><ul><li>One teacher page per leader, one take-home sheet per child.</li><li>Week 1: a Road Home map per child.</li><li>Extras: twisty snake (week 2), door craft (5), story cards and invite cards (7), certificates (7).</li></ul></div></div>
   ${foot('The Way Back Home · Sunday school series', CSB)}
 </div>`;
+
+// the Road Home map: 7 stops on a winding road
+const STOPS = [['garden-clip', 30, 'God’s perfect home'], ['serpent-end', 30, 'The big lie'], ['test-2-end', 40, 'Every one of us'], ['locked-end', 40, 'Locked out'],
+  ['door-end', 45, 'The door'], ['tomb-end', 40, 'He is alive!'], ['gates-end', 25, 'Welcome home!']];
+const mapPage = () => {
+  const P = [[1.3, 2.35], [3.75, 1.9], [6.1, 2.75], [5.5, 5.05], [2.95, 5.0], [1.3, 7.25], [4.8, 7.75]];
+  const r = .66, D = 96;
+  const pts = P.map(([x, y]) => [x * D, y * D]);
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], mx = (x0 + x1) / 2, my = (y0 + y1) / 2 + (i % 2 ? -30 : 30);
+    d += ` Q${mx} ${my} ${x1} ${y1}`;
+  }
+  const star = '<svg viewBox="0 0 20 20" width="30" height="30"><path d="M10 1.5l2.6 5.5 6 .7-4.5 4.1 1.2 5.9L10 14.7l-5.3 3 1.2-5.9L1.4 7.7l6-.7z" fill="#fff" stroke="#1d1a24" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+  const stops = STOPS.map(([n, y, lab], i) => { const [x, yy] = P[i], big = i === 6 ? 1.25 : 1;
+    return `<div class="stop" style="left:${x - r * big}in;top:${yy - r * big}in;width:${2 * r * big}in;height:${2 * r * big}in">${img(n, y)}<b class="sn">${i + 1}</b></div>` +
+      `<div class="slab" style="left:${x - 1}in;top:${yy + r * big + .04}in"><span>${esc(lab)}</span>${star}</div>`; }).join('');
+  return `<div class="page ex green map" data-w="x" data-p="home"><h1>My Road Home</h1><p class="how">Each week, colour in that week’s stop. Say the memory verse to colour its star!</p>
+    <svg class="road" viewBox="0 0 ${7.4 * D} ${10 * D}"><path d="${d}" fill="none" stroke="#e8dcc0" stroke-width="44" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#1d1a24" stroke-width="2.2" stroke-dasharray="10 9" stroke-linecap="round"/></svg>
+    ${stops}<span class="flag" style="left:.15in;top:1.25in">START</span><span class="flag" style="left:5.95in;top:6.55in;background:var(--gold2)">HOME!</span><div class="mname">My name: <span></span></div>${foot('The Way Back Home · Road Home map', '')}</div>`;
+};
+
+// twisty snake: a spiral to colour and cut, words along the band
+const snakeSvg = (id) => {
+  const S = 330, c = S / 2, turns = 3.4, p = (c - 8) / (turns + .35), th0 = 2.3 * Math.PI, th1 = turns * 2 * Math.PI + th0 - 2 * Math.PI;
+  const at = (th, off) => { const rr = p * th / (2 * Math.PI) + off; return [c + rr * Math.cos(th), c + rr * Math.sin(th)]; };
+  const path = off => { let d = ''; for (let th = th0; th <= th1; th += .04) { const [x, y] = at(th, off); d += (d ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); } return d; };
+  const cut = path(0), mid = path(p / 2 - 4);
+  const [hx, hy] = at(th0, p / 2);
+  const words = '“Did God really say?” hissed the snake. But the snake was lying! Every word of God is pure. Trust God, not the snake! ~ ';
+  return `<svg viewBox="0 0 ${S} ${S}" class="snake"><circle cx="${c}" cy="${c}" r="${c - 2}" fill="#fff" stroke="#1d1a24" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <path d="${cut}" fill="none" stroke="#1d1a24" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <path id="${id}" d="${mid}" fill="none"/>
+    <text font-family="Grandstander" font-weight="900" font-size="12.5" fill="#1d1a24"><textPath href="#${id}">${esc(words + words)}</textPath></text>
+    <g transform="translate(${c} ${c})"><ellipse rx="22" ry="17" fill="#fff" stroke="#1d1a24" stroke-width="2"/><circle cx="-8" cy="-5" r="4" fill="#1d1a24"/><circle cx="8" cy="-5" r="4" fill="#1d1a24"/>
+      <path d="M0 15v10M0 25l-5 6M0 25l5 6" stroke="#c0392b" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="0" cy="-22" r="2.4" fill="none" stroke="#1d1a24" stroke-width="1.4"/></g></svg>`;
+};
+const snakePage = () => `<div class="page ex purple" data-w="x" data-p="teacher"><h1>Twisty snake</h1><p class="how">For week 2. Colour the snake. Cut out the circle, then cut along the spiral dashed line all the way to the head. Poke a hole by the small circle on the head, tie on a string, and hang it up. When it twists, remember: trust God, not the snake!</p>
+  <div class="snakes">${snakeSvg('sp1')}${snakeSvg('sp2')}</div>${foot('The Way Back Home · Extras', CSB)}</div>`;
+
+// invite cards: 4 per sheet
+const invitePage = () => {
+  const card = `<div class="inv">${img('cover', 22)}<div class="iw"><h2>You’re invited!</h2><p>Come and hear a true story: <b>The Way Back Home</b>. Scan to read and listen for free!</p>
+    <div class="ib"><div class="qr">${qrSvg}</div><div class="from">From:<span></span></div></div></div></div>`;
+  return `<div class="page ex sky" data-w="x" data-p="teacher"><h1>Invite cards</h1><p class="how">For week 7. Cut on the dashed lines. Each child writes their name and gives the card to a friend.</p>
+    <div class="invs">${card + card + card + card}</div>${foot('The Way Back Home · Extras', '')}</div>`;
+};
 
 // extras: 12 story cards on two sheets of 6, shuffled, lettered A–L
 const CARDS = [['garden-clip', 40], ['rule-end', 40], ['serpent-end', 40], ['fruit-end', 30], ['exile-end', 45], ['road-end', 50], ['test-clip', 40], ['locked-end', 45], ['scrub-clip', 40], ['cross-end', 50], ['tomb-end', 45], ['gates-clip', 50]];
@@ -517,7 +603,7 @@ const sp = new URLSearchParams(location.search);
 const selW = document.getElementById('week'), selP = document.getElementById('part');
 selW.value = sp.get('week') || ''; selP.value = sp.get('part') || '';
 const root = document.getElementById('pages');
-root.innerHTML = overview() + W.map(w => teacher(w) + takehome(w)).join('') + cardsPages() + craftPage() + certPage();
+root.innerHTML = overview() + mapPage() + W.map(w => teacher(w) + takehome(w)).join('') + snakePage() + craftPage() + cardsPages() + invitePage() + certPage();
 const fit = () => {
   const wrap = document.getElementById('wrap'), avail = wrap.clientWidth - 32, k = Math.min(1, avail / (7.4 * 96));
   root.style.transform = k < 1 ? `scale(${k})` : ''; root.style.marginLeft = k < 1 ? '0' : '';
