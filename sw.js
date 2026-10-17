@@ -15,7 +15,12 @@ self.addEventListener('fetch', e => {
   if (u.pathname.includes('/video/')) return;  // the downloadable book videos (60+ MB) go straight to the network, never into the cache
   if (r.mode === 'navigate' || u.pathname.endsWith('.json') && !u.search.includes('v=')) {
     e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(C).then(c => c.put(r, cp)); return res; })
-      .catch(() => caches.match(r, { ignoreSearch: r.mode === 'navigate' }).then(m => m || caches.match(new URL('./', self.registration.scope).href))));
+      .catch(async () => {
+        const m = await caches.match(r, { ignoreSearch: r.mode === 'navigate' }); if (m) return m;
+        // a page link like /en/p5 opens offline from the saved language page /en/
+        const lang = r.mode === 'navigate' && u.pathname.match(/^(.*\/[a-z]{2,3}\/)p\d+$/);
+        return (lang && await caches.match(u.origin + lang[1])) || caches.match(new URL('./', self.registration.scope).href);
+      }));
     return;
   }
   if (u.search.includes('v=') || u.pathname.includes('/fonts/')) {

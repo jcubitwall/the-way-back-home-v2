@@ -2,6 +2,10 @@
   "about": "Bengali text for The Way Back Home. Page ids match content/story.json. Each story page is a list of paragraphs; each paragraph is a list of sentences (one caption each). \"cues\" holds the start time in seconds of every sentence in the narration (written by tools/narrate.py or tools/cues.py).",
   "title": "ঘরে ফেরার পথ",
   "ui": {
+    "offline": "ইন্টারনেট ছাড়া পড়ার জন্য সেভ করো",
+    "saving": "সেভ হচ্ছে…",
+    "saved": "সেভ হয়েছে: ইন্টারনেট ছাড়াও চলবে",
+    "offfail": "সেভ করা গেল না। ইন্টারনেট চালু করে আবার চেষ্টা করো।",
     "app": "অ্যাপ ডাউনলোড",
     "apptip": "“শেয়ার” (বা ব্রাউজার মেনু ⋮) চাপুন, তারপর “হোম স্ক্রিনে যোগ করুন” বেছে নিন।",
     "apptip26": "নিচে ••• চাপুন, তারপর “শেয়ার”, তারপর “হোম স্ক্রিনে যোগ করুন”।",

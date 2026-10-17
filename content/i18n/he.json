@@ -2,6 +2,10 @@
   "about": "Hebrew text for The Way Back Home. Page ids match content/story.json. Each story page is a list of paragraphs; each paragraph is a list of sentences (one caption each). \"cues\" holds the start time in seconds of every sentence in the narration (written by tools/narrate.py or tools/cues.py).",
   "title": "הדרך הביתה",
   "ui": {
+    "offline": "לשמור לשימוש בלי אינטרנט",
+    "saving": "שומר…",
+    "saved": "נשמר: עובד גם בלי אינטרנט",
+    "offfail": "השמירה לא הצליחה. נסו שוב עם אינטרנט.",
     "app": "הורדת האפליקציה",
     "apptip": "הקישו על שיתוף (או על תפריט הדפדפן ⋮) ואז על „הוספה למסך הבית”.",
     "apptip26": "הקישו על ••• למטה, אחר כך על שיתוף ואז על „הוספה למסך הבית”.",

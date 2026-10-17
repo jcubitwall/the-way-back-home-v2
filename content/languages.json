@@ -28,7 +28,7 @@
       "dir": "ltr",
       "ready": true,
       "narration": true,
-      "video": true
+      "video": false
     },
     "zh": {
       "name": "中文",

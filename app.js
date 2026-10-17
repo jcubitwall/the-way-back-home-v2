@@ -50,7 +50,9 @@ async function boot() {
   build();
   setupControls();
   if (RENDER) return renderMode();
-  goTo(pageIndex(Q.get('p')), false);
+  // ?p=5, or a page link like /en/p5 opened offline (normally 404.html turns it into ?p=5)
+  const pm = location.pathname.match(/\/p(\d+)$/);
+  goTo(pageIndex(Q.get('p') || (pm && pm[1])), false);
   if ('serviceWorker' in navigator && TRACK) { try { navigator.serviceWorker.register(ROOT + 'sw.js'); } catch (e) {} }
 }
 
@@ -274,7 +276,9 @@ function fetchClip(v) {
 // file instead, so it is never downloaded twice
 function clipReady(v) {
   if (v.src) return Promise.resolve();
-  const u = v.dataset.src, m = clipMem[u], direct = () => { if (!v.src) { v.preload = 'auto'; v.src = u; } };
+  const u = v.dataset.src, direct = () => { if (!v.src) { v.preload = 'auto'; v.src = u; } };
+  if (!navigator.onLine) { fetchClip(v); const mo = clipMem[u]; if (mo) return mo.p.then(b => { if (!v.src) { v.preload = 'auto'; v.src = b; } }, direct); }
+  const m = clipMem[u];
   if (m && (!m.total || m.got / m.total > 0.5)) return m.p.then(b => { if (!v.src) { v.preload = 'auto'; v.src = b; } }, direct);
   if (m) { m.stop(); delete clipMem[u]; }
   direct(); return Promise.resolve();
@@ -622,6 +626,62 @@ function setupQR() {
   };
 }
 const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg>';
+/* ---------------- save for offline ----------------
+   Downloads everything this language needs (pages, pictures, scenes, music, narration) into the phone's offline
+   copy in one go, so the whole book then works with no internet. The service worker keeps these files. */
+const OFFKEY = 'twbh-offline-' + (() => { try { return new URL('./', document.baseURI).pathname; } catch (e) { return ''; } })();
+function offlineList() {
+  const v = [], plain = [ROOT.href, new URL(L + '/', ROOT).href, ROOT + 'content/story.json', ROOT + 'content/languages.json',
+    ROOT + `content/i18n/${L}.json`, ROOT + 'content/i18n/en.json', ROOT + 'manifest.webmanifest'];
+  const add = p => v.push(url(p));
+  ['app.js', 'app.css', 'fonts/fonts.css', 'qr.js', 'art/favicon-48.png', 'art/icon-192.png', 'art/apple-touch-icon.png'].forEach(add);
+  S.pages.forEach(p => {
+    ['-soft.webp', '-720.webp', '.webp'].forEach(x => add(`art/${p.art}${x}`));
+    (p.clips || []).forEach(c => { add(c.src); if (c.sound) add(c.sound); if (c.end) { add(`art/${c.end}-720.webp`); add(`art/${c.end}-soft.webp`); } });
+    if (p.mood) add(`music/cue_${p.mood}.mp3`);
+    if (META.narration) add(`audio/${L}/${p.id}.mp3`);
+  });
+  return { plain, v: [...new Set(v)] };
+}
+async function saveOffline(quiet) {
+  const t = $('#mOffT'), sm = $('#mOffS'), list = offlineList();
+  const jobs = [...list.plain.map(u => ({ u, plain: true })), ...list.v.map(u => ({ u }))];
+  try {   // the fonts named inside fonts.css
+    const css = await (await fetch(url('fonts/fonts.css'))).text();
+    [...new Set([...css.matchAll(/url\(([^)]+)\)/g)].map(m => m[1].replace(/['"]/g, '')))].forEach(f => jobs.push({ u: ROOT + 'fonts/' + f }));
+  } catch (e) {}
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  let done = 0, failed = 0;
+  const show = () => { if (!quiet) { t.textContent = UI.saving || EN.ui.saving; sm.textContent = Math.round(100 * done / jobs.length) + '%'; } };
+  show();
+  const cache = window.caches ? await caches.open('twbh-v2').catch(() => null) : null;
+  const one = async j => {
+    try {
+      const res = await fetch(j.u, j.plain ? { cache: 'no-cache' } : {});
+      if (!res.ok) throw 0;
+      // kept in the same offline store the service worker reads from (even if it is not yet in charge of this page)
+      if (cache) await cache.put(j.u, res); else await res.arrayBuffer();
+    } catch (e) { failed++; }
+    done++; show();
+  };
+  const queue = jobs.slice();
+  await Promise.all(Array.from({ length: 4 }, async () => { while (queue.length) await one(queue.shift()); }));
+  if (failed) { if (!quiet) { t.textContent = UI.offline || EN.ui.offline; sm.textContent = ''; toast(UI.offfail || EN.ui.offfail); } return false; }
+  try { localStorage.setItem(OFFKEY, JSON.stringify({ v: V, l: L })); } catch (e) {}
+  t.textContent = UI.saved || EN.ui.saved; sm.textContent = '';
+  if (!quiet) toast(UI.saved || EN.ui.saved);
+  return true;
+}
+function setupOffline() {
+  const b = $('#mOffline'); if (!b) return;
+  if (!('serviceWorker' in navigator) || !window.caches) { b.hidden = true; return; }
+  let saved = null; try { saved = JSON.parse(localStorage.getItem(OFFKEY) || 'null'); } catch (e) {}
+  $('#mOffT').textContent = saved && saved.l === L ? (UI.saved || EN.ui.saved) : (UI.offline || EN.ui.offline);
+  let busy = false;
+  b.onclick = async e => { e.stopPropagation(); if (busy) return; busy = true; count('offline'); await saveOffline(false); busy = false; };
+  // a saved book that has since been updated refreshes its offline copy by itself the next time it is opened online
+  if (saved && saved.l === L && saved.v !== V && navigator.onLine) setTimeout(() => { if (!busy) { busy = true; saveOffline(true).finally(() => busy = false); } }, 6000);
+}
 function setupControls() {
   const read = $('#read');
   read.hidden = !(META.narration || DEMO);
@@ -641,20 +701,7 @@ function setupControls() {
   const ctas = document.querySelector('.cfoot .ctas'); if (ctas) ctas.appendChild(chip);
   setupQR();
 
-  const U = L.toUpperCase(), mv = $('#mVideo');
-  if (META.video) { mv.href = ROOT + `video/The-Way-Back-Home_${U}.mp4`; mv.setAttribute('download', `The-Way-Back-Home_${U}.mp4`); }
-  else mv.hidden = true;
-  // iPhones and iPads ignore "download" (and an installed home-screen app can't download at all): open the video
-  // instead, with a tip to save it from the Share button
-  mv.addEventListener('click', e => {
-    count('video');
-    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (!ios) { toast(UI.downloading || '…'); return; }
-    e.preventDefault(); closeMenus();
-    window.open(mv.href, '_blank');
-    const t = $('#tip'); t.dir = META.dir; t.classList.remove('bottom'); t.textContent = UI.videotip || EN.ui.videotip; t.hidden = false;
-    clearTimeout(t._h); t._h = setTimeout(() => t.hidden = true, 9000);
-  });
+  setupOffline();
 
   // a printable sheet of 10 QR business cards for this language (cards.html)
   const mc = $('#mCards'); mc.href = ROOT + `cards.html?lang=${L}`;

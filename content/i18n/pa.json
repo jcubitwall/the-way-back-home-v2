@@ -2,6 +2,10 @@
   "about": "Punjabi text for The Way Back Home. Page ids match content/story.json. Each story page is a list of paragraphs; each paragraph is a list of sentences (one caption each). \"cues\" holds the start time in seconds of every sentence in the narration (written by tools/narrate.py or tools/cues.py).",
   "title": "ਘਰ ਮੁੜਨ ਦਾ ਰਾਹ",
   "ui": {
+    "offline": "ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਪੜ੍ਹਨ ਲਈ ਸੇਵ ਕਰੋ",
+    "saving": "ਸੇਵ ਹੋ ਰਿਹਾ ਹੈ…",
+    "saved": "ਸੇਵ ਹੋ ਗਿਆ: ਹੁਣ ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਵੀ ਚੱਲੇਗਾ",
+    "offfail": "ਸੇਵ ਨਹੀਂ ਹੋ ਸਕਿਆ। ਇੰਟਰਨੈੱਟ ਨਾਲ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "app": "ਐਪ ਡਾਊਨਲੋਡ ਕਰੋ",
     "apptip": "“ਸਾਂਝਾ ਕਰੋ” (ਜਾਂ ਬ੍ਰਾਊਜ਼ਰ ਮੀਨੂ ⋮) ’ਤੇ ਟੈਪ ਕਰੋ, ਫਿਰ “ਹੋਮ ਸਕ੍ਰੀਨ ’ਤੇ ਸ਼ਾਮਲ ਕਰੋ” ਚੁਣੋ।",
     "apptip26": "ਹੇਠਾਂ ••• ’ਤੇ ਟੈਪ ਕਰੋ, ਫਿਰ “ਸਾਂਝਾ ਕਰੋ”, ਫਿਰ “ਹੋਮ ਸਕ੍ਰੀਨ ’ਤੇ ਸ਼ਾਮਲ ਕਰੋ”।",

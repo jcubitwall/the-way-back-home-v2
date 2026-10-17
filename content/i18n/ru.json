@@ -2,6 +2,10 @@
   "about": "Russian text for The Way Back Home. Page ids match content/story.json. Each story page is a list of paragraphs; each paragraph is a list of sentences (one caption each). \"cues\" holds the start time in seconds of every sentence in the narration (written by tools/narrate.py or tools/cues.py).",
   "title": "Путь домой",
   "ui": {
+    "offline": "Сохранить для чтения без интернета",
+    "saving": "Сохраняем…",
+    "saved": "Сохранено: работает без интернета",
+    "offfail": "Не получилось сохранить. Попробуйте ещё раз с интернетом.",
     "app": "Скачать приложение",
     "apptip": "Нажмите «Поделиться» (или меню браузера ⋮), затем «На экран „Домой“».",
     "apptip26": "Нажмите ••• внизу, затем «Поделиться», затем «На экран „Домой“».",
