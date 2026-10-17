@@ -27,6 +27,8 @@ h2 small{display:block;font-family:var(--body);font-weight:400;font-size:15px;co
 .list{display:grid;gap:12px;margin:12px 0 8px}
 .item{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px}
 .open{display:flex;gap:14px;align-items:center;color:inherit;text-decoration:none}
+.pick{display:flex;align-items:center;gap:10px;margin:12px 4px 2px;font-weight:700}
+.pick select{flex:1;font:600 16px var(--body);padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .meta{display:block;margin-top:6px;font-size:13px;color:var(--soft)}
 .acts{display:flex;gap:10px;margin-top:12px}
 .act{flex:1;font:700 16px var(--body);border:0;border-radius:999px;padding:11px 10px;cursor:pointer;background:var(--sky);color:#fff}
@@ -83,7 +85,8 @@ footer{color:var(--soft);font-size:13px;line-height:1.6;margin:26px 4px 0}
     </div>
   </div>
 
-  <h2>Share the story<small>Printables for giving the book to others.</small></h2>
+  <h2>Share the story<small>Printables for giving the book to others. They print in the language you choose, and their QR code opens the book in that language.</small></h2>
+  <label class="pick">Language <select id="plang"></select></label>
   <div class="list">
     <div class="item" data-kind="page" data-title="QR cards">
       <a class="open" id="cards" href="cards.html">
@@ -116,18 +119,28 @@ footer{color:var(--soft);font-size:13px;line-height:1.6;margin:26px 4px 0}
 <script>
 // keep the reader's language for the back link and the printables
 var L = new URLSearchParams(location.search).get('lang');
-if (/^[a-z]{2,3}$/.test(L || '')) {
-  document.getElementById('back').href = L + '/';
-  ['cards', 'tract', 'tractp'].forEach(function (id) { var a = document.getElementById(id); a.href = a.getAttribute('href') + '?lang=' + L; });
-}
+if (/^[a-z]{2,3}$/.test(L || '')) document.getElementById('back').href = L + '/';
+// the printables (QR cards, tracts) follow the language picked here; it starts on the reader's language
+var PAGES = { cards: 'cards.html', tract: 'tract.html', tractp: 'tract-pictures.html' };
+function setPrintLang(l) { Object.keys(PAGES).forEach(function (id) { document.getElementById(id).href = PAGES[id] + '?lang=' + l; }); }
+setPrintLang(/^[a-z]{2,3}$/.test(L || '') ? L : 'en');
+fetch('content/languages.json').then(function (r) { return r.json(); }).then(function (d) {
+  var sel = document.getElementById('plang'), cur = /^[a-z]{2,3}$/.test(L || '') ? L : 'en';
+  (d.order || Object.keys(d.langs)).forEach(function (c) {
+    var m = d.langs[c]; if (!m || !m.ready) return;
+    var o = document.createElement('option'); o.value = c; o.textContent = m.name + (m.english && m.english !== m.name ? ' · ' + m.english : ''); if (c === cur) o.selected = true; sel.appendChild(o);
+  });
+  sel.onchange = function () { setPrintLang(sel.value); };
+}).catch(function () { document.querySelector('.pick').hidden = true; });
 var toastT;
 function toast(t) { var e = document.getElementById('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { e.classList.remove('on'); }, 3500); }
 var touch = matchMedia('(pointer:coarse)').matches;
 document.querySelectorAll('.item').forEach(function (it) {
-  var a = it.querySelector('.open'), href = a.href, pdf = it.dataset.kind === 'pdf', title = 'The Way Back Home · ' + it.dataset.title;
+  var a = it.querySelector('.open'), pdf = it.dataset.kind === 'pdf', title = 'The Way Back Home · ' + it.dataset.title;
   // Print: a printable page prints itself; a PDF prints straight from here on a computer, and opens in the phone's
   // viewer on a phone (where Print is in its Share or ⋮ menu)
   it.querySelector('.print').onclick = function () {
+    var href = a.href;
     if (!pdf) { window.open(href + (href.indexOf('?') < 0 ? '?' : '&') + 'print', '_blank'); return; }
     if (touch) { window.open(href, '_blank'); toast('Tap Share (or ⋮) in the PDF, then Print.'); return; }
     var f = document.createElement('iframe'); f.style.cssText = 'position:fixed;width:0;height:0;border:0;right:0;bottom:0';
@@ -136,6 +149,7 @@ document.querySelectorAll('.item').forEach(function (it) {
   };
   // Share: the PDF file itself where the phone allows it (WhatsApp, email, AirDrop…), otherwise the link
   it.querySelector('.share').onclick = async function () {
+    var href = a.href;
     try {
       if (pdf && navigator.canShare) {
         toast('Getting the file ready…');
