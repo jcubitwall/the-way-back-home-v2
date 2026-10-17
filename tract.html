@@ -164,6 +164,8 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     };
     fit(); addEventListener('resize', fit);
     document.getElementById('print').onclick = () => window.print();
+    // opened from Resources with ?print: print straight away once the pictures have loaded
+    if (new URLSearchParams(location.search).has('print')) (document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r))).then(() => setTimeout(() => window.print(), 500));
   } catch (e) {
     document.getElementById('wrap').innerHTML = '<p class="err">The tract could not load. Please check your connection and try again.</p>';
   }

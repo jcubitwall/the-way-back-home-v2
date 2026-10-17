@@ -184,7 +184,8 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   - **Youth:** The gospel in 7 words, ages 8–12 (`resources/TWBH-Youth-ages-8-12.pdf`).
   - **Share the story:** QR cards, tract and picture tract (the HTML print pages, passed the reader's language).
 - The PDFs are Johnny's printouts of little.html, lessons.html and deeper.html. If those pages change, ask him for new PDFs (or print them to PDF) and replace the files; thumbnails are `resources/*.webp`.
-- To add a resource: drop the PDF in `resources/`, make a ~360 px wide first-page thumbnail (`pdftoppm -f 1 -l 1 -r 50 -png`, then webp), and add an `<a class="item">` in the right section of resources.html.
+- Every item has **Print** and **Share** buttons. Print: printable pages open with `?print` and print themselves once loaded (cards, tract, picture tract); a PDF prints straight away on a computer (hidden iframe) and opens in the phone's PDF viewer on a phone with a tip (Share or ⋮ → Print). Share: phones that allow it share the PDF file itself (WhatsApp, email, AirDrop); otherwise the link (share sheet, or copied).
+- To add a resource: drop the PDF in `resources/`, make a ~360 px wide first-page thumbnail (`pdftoppm -f 1 -l 1 -r 50 -png`, then webp), and add an item in the right section of resources.html (copy an existing `<div class="item">`).
 
 ## Cover layout (15 Oct 2026)
 
