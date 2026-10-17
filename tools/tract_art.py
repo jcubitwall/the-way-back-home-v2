@@ -8,19 +8,20 @@ Run from the repo root after changing a picture or its framing:  python3 tools/t
 The panel colour tint is added in tract.html on top of these.
 """
 from PIL import Image, ImageFilter, ImageEnhance
-import os
+import os, json
+import numpy as np
 
-# picture (art/src), focus (0 = keep the top, 100 = keep the bottom), same order as the tract's panels 1–12
-PANELS = [('garden-end', 45), ('rule-point', 40), ('fruit-end', 32), ('exile-end', 45),
-          ('test-2-end', 35), ('locked-end', 42), ('scrub-clip', 30), ('door-end', 35),
-          ('cross-kneel', 100), ('choice-end', 95), ('tomb-end', 60), ('gates-arrive', 75)]
+# picture (art/src), focus (0 = keep the top, 100 = keep the bottom), book page whose chapter colour it takes;
+# same order as the tract's panels 1–12
+PANELS = [('garden-end', 45, 'garden'), ('rule-point', 40, 'rule'), ('fruit-end', 32, 'fruit'), ('exile-end', 45, 'exile'),
+          ('test-2-end', 35, 'test'), ('locked-end', 42, 'locked'), ('scrub-clip', 30, 'scrub'), ('door-end', 35, 'door'),
+          ('cross-kneel', 100, 'cross'), ('choice-end', 95, 'choice'), ('tomb-end', 60, 'tomb'), ('gates-arrive', 75, 'gates')]
 
 BACKS = ['gates-end', 'choice-end', 'clean']
 
 W, H = 802, 1052          # 4.01 × 5.26 in at 200 dpi (the picture frame inside each panel)
-BLUR_AT = 0.60            # where the blur starts (share of the height)
-BAND = 0.035              # how quickly it switches over: a short, fairly sudden fade
-RADIUS = 18
+TEXT_TOP = 0.66           # where the words start, as a share of the height (the words sit below this)
+LEVELS = [0, 2.5, 5, 8, 12, 17, 23]   # blur radii, blended row by row: a progressive blur like the book's
 
 def crop(im, focus):
     sw, sh = im.size
@@ -30,22 +31,42 @@ def crop(im, focus):
     y = round((im.height - H) * focus / 100)
     return im.crop((x, y, x + W, y + H))
 
+def smooth(t):
+    t = np.clip(t, 0, 1)
+    return t * t * (3 - 2 * t)
+
+def page(sharp, tint):
+    """The book's look: the picture grows softer toward the bottom (no visible edge), then deepens into the
+    chapter colour, exactly as app.css does it (tint x 0.5 at half strength where the words start, tint x 0.42 at 72 % at the bottom)."""
+    stack = [np.asarray(sharp.filter(ImageFilter.GaussianBlur(r)) if r else sharp, dtype=np.float32) for r in LEVELS]
+    y = np.arange(H, dtype=np.float32) / H
+    # blur grows over the 20 % of the height above the words, reaching full softness just inside them
+    level = smooth((y - (TEXT_TOP - 0.20)) / 0.22) * (len(LEVELS) - 1)
+    lo = np.floor(level).astype(int); hi = np.minimum(lo + 1, len(LEVELS) - 1); f = (level - lo)[:, None, None]
+    S = np.stack(stack)                                   # levels × H × W × 3
+    rows = np.arange(H)
+    out = S[lo, rows] * (1 - f) + S[hi, rows] * f
+    # chapter colour, deepening toward the bottom
+    t = np.array([int(tint[i:i + 2], 16) for i in (1, 3, 5)], dtype=np.float32)
+    mid, deep = t * 0.5, t * 0.42
+    top = TEXT_TOP - 0.09
+    a = np.zeros(H, dtype=np.float32); c = np.zeros((H, 3), dtype=np.float32)
+    for i, yy in enumerate(y):
+        if yy <= top: continue
+        if yy <= TEXT_TOP + 0.01:
+            k = (yy - top) / (TEXT_TOP + 0.01 - top); a[i] = 0.5 * k; c[i] = mid
+        else:
+            k = (yy - TEXT_TOP - 0.01) / (1 - TEXT_TOP - 0.01); a[i] = 0.5 + 0.22 * k; c[i] = mid * (1 - k) + deep * k
+    out = out * (1 - a[:, None, None]) + c[:, None, :] * a[:, None, None]
+    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
+
 def main():
+    tints = {p['id']: p['tint'] for p in json.load(open('content/story.json'))['pages']}
     os.makedirs('art/tract', exist_ok=True)
-    for i, (name, focus) in enumerate(PANELS, 1):
+    for i, (name, focus, pid) in enumerate(PANELS, 1):
         sharp = crop(Image.open(f'art/src/{name}.jpg').convert('RGB'), focus)
-        soft = sharp.filter(ImageFilter.GaussianBlur(RADIUS))
-        soft = ImageEnhance.Brightness(soft).enhance(.8)
-        mask = Image.new('L', (W, H), 0)
-        y0, y1 = int(H * BLUR_AT), int(H * (BLUR_AT + BAND))
-        px = mask.load()
-        for y in range(y0, H):
-            v = 255 if y >= y1 else round(255 * (y - y0) / (y1 - y0))
-            for x in range(W):
-                px[x, y] = v
-        out = Image.composite(soft, sharp, mask)
-        out.save(f'art/tract/{i:02d}.jpg', quality=84, optimize=True, progressive=True)
-        print(f'{i:02d}  {name}')
+        page(sharp, tints[pid]).save(f'art/tract/{i:02d}.jpg', quality=86, optimize=True, progressive=True)
+        print(f'{i:02d}  {name}  {tints[pid]}')
     # soft backgrounds for the back, A-B-C and prayer panels
     for name in BACKS:
         im = crop(Image.open(f'art/src/{name}.jpg').convert('RGB'), 40).resize((W // 2, H // 2), Image.LANCZOS)

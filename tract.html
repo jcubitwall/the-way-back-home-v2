@@ -61,17 +61,13 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
    its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
 .fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000;box-shadow:0 2pt 6pt rgba(0,0,0,.25)}
 .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* the blur is baked into the pictures (tools/tract_art.py, blur from 60 %); this only adds the chapter colour on top of it */
-.fr .tint{position:absolute;inset:0;opacity:.5}
-.green .tint{background:linear-gradient(transparent 60%,var(--green) 63.5%)}.purple .tint{background:linear-gradient(transparent 60%,var(--purple) 63.5%)}
-.night .tint{background:linear-gradient(transparent 60%,var(--night) 63.5%)}.orange .tint{background:linear-gradient(transparent 60%,var(--orange) 63.5%)}
-.sky .tint{background:linear-gradient(transparent 60%,var(--sky) 63.5%)}
-.fr .txt{position:absolute;left:.2in;right:.2in;top:62%;bottom:.12in;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;text-align:center;
-  text-shadow:0 1px 2.5pt rgba(0,0,0,.55),0 0 10pt rgba(0,0,0,.3)}
-.num{position:absolute;left:.12in;top:.12in;z-index:2;width:.38in;height:.38in;border-radius:50%;
-  background:rgba(255,255,255,.92);color:var(--ink);font:900 12.5pt/.38in var(--display);text-align:center;box-shadow:0 1pt 4pt rgba(0,0,0,.3)}
-.cap{margin:0;font:700 10.2pt/1.38 var(--body)}
-.ref{margin:.07in 0 0;font:700 7.4pt/1.2 var(--body);opacity:.85;letter-spacing:.02em}
+/* the blur and the chapter colour are baked into the pictures (tools/tract_art.py), the same look as the book's pages */
+.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:left;
+  text-shadow:0 1px 2.5pt rgba(0,0,0,.55),0 0 10pt rgba(0,0,0,.25)}
+[dir=rtl] .fr .txt{text-align:right}
+.fr .no{margin:0 0 .04in;font:800 10pt var(--display);color:var(--gold)}
+.cap{margin:0;font:400 11pt/1.4 var(--body)}
+.ref{margin:.08in 0 0;font:400 7.6pt/1.2 var(--body);opacity:.8}
 .hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display);text-shadow:none;box-shadow:0 1.5pt 0 var(--gold2)}
 
 /* cover */
@@ -159,8 +155,8 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : '';
       const pic = `<img src="art/tract/${String(i + 1).padStart(2, '0')}.jpg" alt="">`;
-      return [col, `<div class="fr">${pic}<div class="tint"></div>` +
-        `<div class="txt"><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div><div class="num">${i + 1}</div>`];
+      return [col, `<div class="fr">${pic}` +
+        `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
     const backP = ['sky', `<div class="blurbg" style="background-image:url(art/tract/bg-gates-end.jpg)"></div><div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
