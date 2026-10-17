@@ -49,19 +49,23 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .green{background-color:var(--green)}.purple{background-color:var(--purple)}.night{background-color:var(--night)}
 .orange{background-color:var(--orange)}.sky{background-color:var(--sky)}
 
-/* story panel: picture on top, number, white card with the words */
-.ph{position:absolute;left:.17in;right:.17in;top:.17in;height:3.55in;border-radius:.14in;overflow:hidden;background:#000;
-  box-shadow:0 2pt 6pt rgba(0,0,0,.25)}
-.ph img{width:100%;height:100%;object-fit:cover;display:block}
-.num{position:absolute;left:50%;top:3.57in;transform:translate(-50%,-50%);z-index:2;width:.36in;height:.36in;border-radius:50%;
-  background:#fff;color:var(--ink);font:900 12pt/.36in var(--display);text-align:center;box-shadow:0 0 0 2.5pt currentColor}
-.green .num{color:var(--green)}.purple .num{color:var(--purple)}.night .num{color:var(--night)}.orange .num{color:var(--orange)}.sky .num{color:var(--sky)}
-.num b{color:var(--ink)}
-.card{position:absolute;left:.17in;right:.17in;top:3.84in;bottom:.17in;background:var(--cream);border-radius:.14in;
-  padding:.2in .18in .1in;display:flex;flex-direction:column;justify-content:center;text-align:center}
-.cap{margin:0;font:400 9.8pt/1.38 var(--body)}
-.ref{margin:.06in 0 0;font:700 7.2pt/1.2 var(--body);color:var(--muted)}
-.hint{margin:.05in 0 0;font:900 8.2pt/1.2 var(--display);color:var(--blue)}
+/* story panel (17 Oct 2026, Johnny: "the modern bottom page blur"): like the book itself, the picture fills the panel,
+   its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
+.fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000;box-shadow:0 2pt 6pt rgba(0,0,0,.25)}
+.fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.fr .soft{position:absolute;inset:0;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.65) 61%,#000 70%);mask-image:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.65) 61%,#000 70%)}
+.fr .soft img{filter:blur(9px) saturate(1.15) brightness(.82);transform:scale(1.08)}
+.fr .tint{position:absolute;inset:0;opacity:.62;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 58%,#000 82%);mask-image:linear-gradient(to bottom,transparent 58%,#000 82%)}
+.green .tint{background:var(--green)}.purple .tint{background:var(--purple)}.night .tint{background:var(--night)}.orange .tint{background:var(--orange)}.sky .tint{background:var(--sky)}
+.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:center;
+  text-shadow:0 1px 2.5pt rgba(0,0,0,.55),0 0 10pt rgba(0,0,0,.3)}
+.num{position:absolute;left:.12in;top:.12in;z-index:2;width:.38in;height:.38in;border-radius:50%;
+  background:rgba(255,255,255,.92);color:var(--ink);font:900 12.5pt/.38in var(--display);text-align:center;box-shadow:0 1pt 4pt rgba(0,0,0,.3)}
+.cap{margin:0;font:700 10.4pt/1.4 var(--body)}
+.ref{margin:.07in 0 0;font:700 7.4pt/1.2 var(--body);opacity:.85;letter-spacing:.02em}
+.hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display);text-shadow:none;box-shadow:0 1.5pt 0 var(--gold2)}
 
 /* cover */
 .cover{background:#7fb3e6}
@@ -72,7 +76,8 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .cover .tag{display:inline-block;margin:.12in 0 0;padding:.05in .16in;border-radius:999px;background:var(--gold);color:#2B2233;font:800 9pt var(--display);box-shadow:0 1.5pt 0 var(--gold2)}
 
 /* text panels (back, A-B-C, prayer) */
-.sheetcard{position:absolute;inset:.17in;background:var(--cream);border-radius:.14in;padding:.3in .26in;display:flex;flex-direction:column;justify-content:center}
+.sheetcard{position:absolute;inset:.12in;background:rgba(255,250,240,.9);border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
+.blurbg{position:absolute;inset:-.2in;background-size:cover;background-position:center;filter:blur(14px) saturate(1.2) brightness(.85)}
 .sheetcard h2{margin:0 0 .08in;font:900 15pt/1.15 var(--display);color:var(--orange)}
 .sky .sheetcard h2{color:var(--sky)}
 .sheetcard .intro{margin:0 0 .14in;font:400 9pt/1.35 var(--body);color:var(--muted)}
@@ -117,7 +122,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
   const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 45, 'purple'],
     ['test-2-end', 35, 'night'], ['locked-end', 42, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
-    ['cross-kneel', 55, 'orange'], ['choice-end', 55, 'orange'], ['tomb-end', 45, 'sky'], ['gates-clip', 45, 'sky']];
+    ['cross-kneel', 100, 'orange'], ['choice-end', 95, 'orange'], ['tomb-end', 60, 'sky'], ['gates-arrive', 75, 'sky']];
   try {
     const langs = await get('content/languages.json');
     const sp = new URLSearchParams(location.search), q = sp.get('lang');
@@ -139,15 +144,16 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const story = i => {
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : '';
-      return [col, `<div class="ph"><img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%"></div><div class="num">${i + 1}</div>` +
-        `<div class="card"><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div>`];
+      const pic = `<img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
+      return [col, `<div class="fr">${pic}<div class="soft">${pic}</div><div class="tint"></div>` +
+        `<div class="txt"><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div><div class="num">${i + 1}</div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
-    const backP = ['sky', `<div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
+    const backP = ['sky', `<div class="blurbg" style="background-image:url(art/src/gates-end.jpg)"></div><div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
       `<p class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</p><p class="small">${esc(tr.talk)}</p><p class="small">${esc(tr.gift)}</p></div>`];
     const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
-    const abcP = ['orange', `<div class="sheetcard"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}<p class="small">${esc(P.ref)}</p></div>`];
-    const prayP = ['orange', `<div class="sheetcard"><h2>${esc(tr.pray)}</h2><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)}</p></div>`];
+    const abcP = ['orange', `<div class="blurbg" style="background-image:url(art/src/choice-end.jpg)"></div><div class="sheetcard"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}<p class="small">${esc(P.ref)}</p></div>`];
+    const prayP = ['orange', `<div class="blurbg" style="background-image:url(art/src/clean.jpg)"></div><div class="sheetcard"><h2>${esc(tr.pray)}</h2><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)}</p></div>`];
 
     const side = (rows) => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
       const [cls, html] = p[0], flip = p[1];
