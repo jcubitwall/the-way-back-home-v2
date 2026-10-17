@@ -265,6 +265,83 @@ p{margin:0}
 .resp .nm{margin-top:auto;font:900 10pt var(--display)}
 .resp .nm span{display:inline-block;width:2in;border-bottom:1.2pt solid #1d1a24;margin-left:5pt}
 
+@font-face{font-family:'Bricolage Grotesque';font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-weight:800;font-display:swap;src:url(fonts/bricolage-grotesque-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Lexend';font-weight:400;font-display:swap;src:url(fonts/lexend-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Lexend';font-weight:600;font-display:swap;src:url(fonts/lexend-latin-600-normal.woff2) format('woff2')}
+:root{--display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;--body:'Lexend','Verdana',system-ui,sans-serif;
+  --ink:#1b2340;--soft:#f2f4f8;--sun:#ffb703;--green:#1e9e5a;--purple:#7b3fe4;--night:#3d3a8c;--red:#e0453a;--orange:#f07b1e;--gold:#e8a200;--sky:#1e88e5}
+.page{color:var(--ink)}
+.page.green{--c:var(--green);--t:#e5f5ec}.page.purple{--c:var(--purple);--t:#efe7fd}.page.night{--c:var(--night);--t:#e9e8f6}
+.page.red{--c:var(--red);--t:#fdeceb}.page.orange{--c:var(--orange);--t:#fef0e4}.page.gold{--c:var(--gold);--t:#fdf3d9}.page.sky{--c:var(--sky);--t:#e6f1fd}
+.big{font:800 50pt/.92 var(--display);letter-spacing:-.025em;color:var(--c)}
+.ln1{font:700 15pt/1.2 var(--display);margin-top:5pt}
+.wk{font:600 10pt var(--body);color:var(--c);margin-bottom:6pt}
+.wk span{color:#7c8399;font-weight:400;margin-left:8pt}
+/* teacher run-sheet */
+.yt{font:400 9.8pt/1.42 var(--body)}
+.yh{display:flex;gap:.18in;align-items:flex-end;padding-bottom:.14in;border-bottom:3pt solid var(--c)}
+.yhl{flex:1}
+.yth{display:flex;gap:6pt}
+.yth img{width:1.15in;height:1.55in;object-fit:cover;border-radius:10pt;display:block}
+.ycols{display:grid;grid-template-columns:1fr 2.25in;gap:.22in;margin-top:.16in}
+.run{list-style:none;margin:0;padding:0;position:relative}
+.run::before{content:'';position:absolute;left:.29in;top:6pt;bottom:10pt;width:2pt;background:var(--t)}
+.run li{display:grid;grid-template-columns:.6in 1fr;gap:6pt;margin-bottom:9pt;position:relative}
+.run .t{font:700 10pt var(--display);background:var(--c);color:#fff;border-radius:99px;text-align:center;height:18pt;line-height:18pt;width:.58in}
+.run h3{font:800 13pt/1.15 var(--display);margin:1pt 0 2pt}
+.run .d ul{margin:3pt 0 0;padding-left:13pt}
+.run .d li{display:list-item;margin:0 0 2pt}
+.run .d i{color:#6b7280}
+.run .end .t{background:var(--ink)}
+.yside{display:flex;flex-direction:column;gap:8pt}
+.yb{background:var(--soft);border-radius:12pt;padding:8pt 10pt}
+.yb h4{font:800 11pt var(--display);color:var(--c);margin:0 0 3pt}
+.yb p{font-size:9pt;line-height:1.4}
+.yb.vb{background:var(--c);color:#fff}.yb.vb h4{color:#fff;opacity:.85}
+.vt{font:700 11pt/1.3 var(--display) !important}
+.vr{margin-top:4pt;font-weight:600}
+.yb.care{background:#fff4d6}
+/* student sheet */
+.ys{font:400 10.4pt/1.42 var(--body)}
+.sp{position:relative;height:2.68in;border-radius:18pt;overflow:hidden}
+.sp img{width:100%;height:100%;object-fit:cover;display:block}
+.snum{position:absolute;right:12pt;top:12pt;width:.62in;height:.62in;border-radius:50%;background:var(--c);color:#fff;font:800 24pt/.62in var(--display);text-align:center;box-shadow:0 0 0 4pt #fff}
+.ys .big{margin-top:.16in}
+.steps{list-style:none;margin:.12in 0 0;padding:0}
+.steps>li{display:grid;grid-template-columns:.42in 1fr;gap:8pt;margin-top:.1in}
+.sn{width:.38in;height:.38in;border-radius:50%;background:var(--t);color:var(--c);font:800 15pt/.38in var(--display);text-align:center}
+.steps h2{font:800 14pt/1.1 var(--display);color:var(--c);margin:2pt 0 1pt}
+.hq{font:700 13pt/1.25 var(--display)}
+.ys .ln{border-bottom:1pt solid #c9cdd8;height:.3in}
+.vband{margin-top:.16in;border-left:6pt solid var(--c);background:var(--t);border-radius:0 12pt 12pt 0;padding:7pt 12pt}
+.vband p{font:700 10.6pt/1.32 var(--display)}
+.vband b{font:600 9pt var(--body);color:var(--c)}
+.trk{display:grid;grid-template-columns:.95in repeat(7,1fr);gap:4pt;align-items:center;margin-top:.12in}
+.tl{font:700 8.6pt/1.15 var(--display);color:#7c8399}
+.tw{height:.36in;border-radius:8pt;border:1.3pt dashed #c9cdd8;display:flex;align-items:center;justify-content:center;font:800 8.4pt/1 var(--display);color:#9aa1b2;text-align:center}
+.tw.on{border:0;background:var(--soft);color:var(--ink)}
+.tw.now{background:var(--c);color:#fff}
+.yhome{position:absolute;left:0;right:0;bottom:.24in;display:flex;gap:10pt;align-items:center;border-top:1pt solid #e1e4ec;padding-top:7pt}
+.yhome .qr{width:.7in;height:.7in;flex:none}.yhome .qr svg{width:100%;height:100%;display:block}
+.yhome p{font-size:9pt;line-height:1.45}
+.yhome b{font-family:var(--display);color:var(--c)}
+/* overview */
+.yo{font:400 10pt/1.45 var(--body);--c:var(--ink)}
+.ohero{display:flex;gap:.22in;align-items:center}
+.ohero img{width:2.3in;height:2.9in;object-fit:cover;border-radius:18pt;flex:none}
+.ohero .big{font-size:40pt;color:var(--ink)}
+.owords{list-style:none;margin:.22in 0 0;padding:0;display:grid;gap:5pt}
+.owords li{display:grid;grid-template-columns:.4in 1.35in 1fr 1.25in;gap:8pt;align-items:center;border-radius:10pt;padding:5pt 8pt;background:var(--soft)}
+.owords .on{width:.32in;height:.32in;border-radius:50%;color:#fff;font:800 12pt/.32in var(--display);text-align:center}
+.owords b{font:800 14pt var(--display)}
+.owords small{color:#6b7280;font-size:8.6pt}
+.owords li.green .on{background:var(--green)}.owords li.purple .on{background:var(--purple)}.owords li.night .on{background:var(--night)}.owords li.red .on{background:var(--red)}.owords li.orange .on{background:var(--orange)}.owords li.gold .on{background:var(--gold)}.owords li.sky .on{background:var(--sky)}
+.ohow{display:grid;grid-template-columns:repeat(3,1fr);gap:.18in;margin-top:.24in}
+.ohow h3{font:800 12.5pt var(--display);margin-bottom:3pt}
+.ohow p{font-size:9.4pt}
+.ex h1{font-family:var(--display);font-weight:800;letter-spacing:-.01em}
+
 @media print{
   @page{margin:.4in}
   html,body{background:#fff}
@@ -316,157 +393,140 @@ const WORDS = [['MADE', 'God made me to know Him.', 'Genesis 1:27'], ['BROKEN', 
 
 // Verses: CSB, checked word for word on bible.com (16 Oct 2026)
 const W = [
- { n: 1, col: 'green', title: 'Made on purpose', pages: ['The garden', 'The one rule'], thumbs: [['garden-clip', 40], ['garden-end', 40], ['rule-end', 40]], pic: ['garden-end', 30],
-   bible: 'Genesis 1:26–31; 2:8–17; 3:8', line: 'God made me on purpose, to know Him.',
+ { n: 1, col: 'green', title: 'Made on purpose', pages: ['The garden', 'The one rule'], thumbs: [['garden-clip', 30], ['rule-end', 40]], pic: ['garden-end', 34],
+   line: 'God made me on purpose, to know Him.',
    verse: ['“So God created man in his own image; he created him in the image of God; he created them male and female.”', 'Genesis 1:27'],
    hardQ: 'If God knew they would eat it, why put the tree there at all?',
-   hardA: 'Love needs a real choice. A robot can’t love you back. The tree was how Adam and Eve could show they trusted God. It wasn’t a trap: it was a garden full of yeses with one no.',
-   hook: ['Fingerprints', 'Ink each student’s thumbprint on a card and compare them with a magnifying glass. No two match, not even twins’. Out of 8 billion people, God made exactly one you. Then read Genesis 1:27.'], hookNeed: ['An ink pad, cards, a magnifying glass'],
-   dig: [['Genesis 1:31', 'How did God describe what He made? What was missing in Eden?', 'Very good. No death, no tears, no shame.'],
-     ['Genesis 2:16–17', 'Count the yeses and the noes. Was God stingy?', 'Every tree but one.'],
-     ['Genesis 3:8', 'What did God do in the garden?', 'He walked with them. The best part of Eden was God Himself.']],
-   act: ['Robot or real?', [], 'Two volunteers. One is a “robot friend” who must say “I love you” every time you press their nose. The other is a real friend who can choose. Whose “I love you” means more? God wanted children, not robots, so He gave a real choice.'],
+   hardA: 'Love needs a real choice. A robot can’t love you back. The tree let Adam and Eve show they trusted God. It wasn’t a trap: it was a garden full of yeses with one no.',
+   hook: ['Fingerprints', 'Ink each thumb and compare with a magnifying glass. No two match. Out of 8 billion people, God made one you.'], hookNeed: ['Ink pad, cards, magnifying glass'],
+   dig: [['Genesis 1:31', 'How did God describe what He made?', 'Very good. No death, no tears.'], ['Genesis 2:16–17', 'Count the yeses and the noes. Was God stingy?', 'Every tree but one.'], ['Genesis 3:8', 'What was the best part of Eden?', 'God walked with them.']],
+   act: ['Robot or real?', [], 'One volunteer is a robot that says “I love you” when you press its nose. Another is a real friend who chooses to say it. Whose “I love you” means more? God wanted children, not robots.'],
    real: 'Someone at school says, “We’re just animals that happened by accident. Nothing really matters.” What would you say?',
    challenge: 'Each day, notice one thing God made and thank Him for it.',
-   respond: 'Thank God that you were made on purpose, by Someone who wants to know you.',
-   care: 'Some kids secretly feel worthless or unwanted. This week they hear the truth: you were made on purpose, in God’s image. Say it to each one by name.' },
+   respond: 'Thank God you were made on purpose, by Someone who wants to know you.',
+   care: 'Some kids secretly feel worthless. Tell each one by name: you were made on purpose.' },
 
- { n: 2, col: 'purple', title: 'The bait', pages: ['The serpent', 'The fruit', 'Out of the garden'], thumbs: [['serpent-end', 40], ['fruit-end', 35], ['exile-end', 50]], pic: ['fruit-end', 28],
-   bible: 'Genesis 3:1–24', line: 'Sin always promises more than it pays.',
+ { n: 2, col: 'purple', title: 'The bait', pages: ['The serpent', 'The fruit', 'Out of the garden'], thumbs: [['serpent-end', 40], ['fruit-end', 35]], pic: ['serpent-end', 30],
+   line: 'Sin always promises more than it pays.',
    verse: ['“But each person is tempted when he is drawn away and enticed by his own evil desire. Then after desire has conceived, it gives birth to sin, and when sin is fully grown, it gives birth to death.”', 'James 1:14–15'],
    hardQ: 'It was one bite of fruit. Why was that such a big deal?',
-   hardA: 'It wasn’t about fruit. It was about trust: Adam and Eve decided God was lying and they knew better. Every sin says the same thing. And it broke everything: shame, hiding, blame, pain, and death.',
-   hook: ['The lure', 'Show a fishing lure: shiny, colourful, it looks like food. Ask: “What is the fish thinking?” Then show the hook. Every lure hides a hook. That is exactly how the serpent worked.'], hookNeed: ['A fishing lure (cover the hook)'],
-   dig: [['Genesis 3:1–5', 'Find the serpent’s three moves.', 'Doubt God’s word, deny the danger, dangle a prize.'],
-     ['Genesis 3:6–13', 'What three steps did Eve take? What changed right after?', 'Saw, wanted, took. Then shame, hiding and blame.'],
-     ['Genesis 3:21', 'What did the first clothes cost?', 'An innocent animal’s life. Remember this!']],
-   act: ['Spot the hook', ['Lures written on cards'], 'Read out modern lures. Students shout the hidden hook: “Just one more level.” “Everyone’s doing it.” “Nobody will ever know.” “A little lie to stay out of trouble.” “You deserve it.” Then read James 1:14–15: desire, then sin, then death.'],
-   real: 'A friend posts the answers to tomorrow’s test in the group chat. “Everyone’s using them. Nobody will know.” What’s the bait? What’s the hook?',
-   challenge: 'When you’re tempted this week, name it in your head: “That’s bait.” Then ask: where’s the hook?',
-   respond: 'Ask God to help you see the hook behind the bait, and to trust His word over anything that looks good.',
-   care: 'Don’t let this become “fruit is bad”. The heart of sin is not trusting God. End with hope: God promised Someone would crush the serpent (Genesis 3:15).' },
+   hardA: 'It wasn’t about fruit. It was about trust: they decided God was lying and they knew better. Every sin says that. And it broke everything: shame, hiding, blame, pain and death.',
+   hook: ['The lure', 'Show a fishing lure. Shiny, it looks like food. “What is the fish thinking?” Then show the hook. Every lure hides one.'], hookNeed: ['A fishing lure (hook covered)'],
+   dig: [['Genesis 3:1–5', 'Find the serpent’s three moves.', 'Doubt God’s word, deny the danger, dangle a prize.'], ['Genesis 3:6–13', 'Eve’s three steps? What changed right after?', 'Saw, wanted, took. Then shame and blame.'], ['Genesis 3:21', 'What did the first clothes cost?', 'An innocent animal’s life.']],
+   act: ['Spot the hook', [], 'Read out modern lures; they shout the hook. “Just one more level.” “Everyone’s doing it.” “Nobody will know.” “A little lie keeps you out of trouble.” Then read James 1:14–15.'],
+   real: 'A friend posts tomorrow’s test answers in the group chat. “Everyone’s using them. Nobody will know.” What’s the bait? What’s the hook?',
+   challenge: 'When you’re tempted, say in your head: “That’s bait. Where’s the hook?”',
+   respond: 'Ask God to help you see the hook and trust His word.',
+   care: 'Sin isn’t “fruit is bad”. It’s not trusting God. End with hope: God promised Someone would crush the serpent (Genesis 3:15).' },
 
- { n: 3, col: 'night', title: 'Guilty', pages: ['The long road', 'God’s law'], thumbs: [['road-end', 50], ['test-clip', 40], ['test-2-end', 40]], pic: ['test-2-end', 52],
-   bible: 'Exodus 20:1–17; Matthew 5:21–22; Romans 3:10–23; James 2:10', line: 'Not just them. Me. Guilty.',
+ { n: 3, col: 'night', title: 'Guilty', pages: ['The long road', 'God’s law'], thumbs: [['road-end', 50], ['test-2-end', 40]], pic: ['test-2-end', 50],
+   line: 'Not just them. Me.',
    verse: ['“For whoever keeps the entire law, and yet stumbles at one point, is guilty of breaking it all.”', 'James 2:10'],
    hardQ: 'I’m a pretty good person. Isn’t that enough?',
-   hardA: 'Good compared to whom? We grade ourselves against other people. God measures us against His perfect law, and Jesus said even anger is murder in the heart (Matthew 5:21–22). Nobody passes. That isn’t to crush us; it’s so we stop trusting in being good.',
-   hook: ['The chain', 'Hang a bag of sugar from a chain of 10 large paper clips, each labelled with a commandment. Ask: how many links must break for it to fall? Pull out just one. It drops. Read James 2:10.'], hookNeed: ['10 large paper clips, labels, a bag of sugar'],
-   dig: [['Exodus 20:1–17', 'Which commandments do people break without even noticing?', ''],
-     ['Matthew 5:21–22', 'What does Jesus say about anger?', 'God judges the heart, not only what we do.'],
-     ['Romans 3:10–12, 23', 'How many people are righteous?', 'Not one. All have sinned.']],
-   act: ['The courtroom', ['A “gavel” (any book)'], 'Put “Average Kid”, a made-up person, on trial. The prosecution reads the evidence: lied to his parents, took money from his mom’s purse “just once”, was jealous, hated a classmate in his heart, ignored God. The defence says: “But he’s nicer than most!” The jury decides. Then ask: would a good judge let him go because he’s nicer than most?'],
+   hardA: 'Good compared to whom? We grade ourselves against other people. God measures against His perfect law, and Jesus said anger is murder in the heart (Matthew 5:21–22). Nobody passes. That’s so we stop trusting in being good.',
+   hook: ['The chain', 'Hang a bag of sugar from 10 paper clips, one per commandment. How many must break for it to fall? Pull one. It drops.'], hookNeed: ['10 big paper clips, a bag of sugar'],
+   dig: [['Exodus 20:1–17', 'Which commands do people break without noticing?', ''], ['Matthew 5:21–22', 'What does Jesus say about anger?', 'God judges the heart.'], ['Romans 3:10, 23', 'How many are righteous?', 'Not one.']],
+   act: ['The courtroom', ['A book for a gavel'], 'Put “Average Kid” (made up) on trial: lied to his parents, took money “just once”, hated a classmate in his heart, ignored God. Defence: “He’s nicer than most!” The jury decides. Would a good judge let him go?'],
    real: 'You told your mom you finished your homework. You didn’t. It’s “just a small lie.” Is there such a thing as a small lie to God?',
-   challenge: 'Each night, ask God to show you one way you fell short today. Be honest with Him; He already knows.',
-   respond: 'Quietly admit to God that you are guilty too. Don’t hide like Adam. He already knows, and He still loves you.',
-   care: 'Never ask students to confess sins aloud. Admit your own guilt honestly: “I’m guilty too.” Watch for kids who feel crushed. The bad news is real, but it is not the last word.' },
+   challenge: 'Each night, ask God to show you one way you fell short today.',
+   respond: 'Quietly admit to God that you are guilty too. He already knows, and He still loves you.',
+   care: 'Never ask students to confess aloud. Say “I’m guilty too.” The bad news is real, but not the last word.' },
 
- { n: 4, col: 'red', title: 'The verdict', pages: ['Locked out', 'Can we scrub it off?'], thumbs: [['locked-end', 45], ['locked-2-end', 50], ['scrub-end', 20]], pic: ['locked-end', 40],
-   bible: 'Romans 6:23; Hebrews 9:27; Isaiah 64:6; Luke 16:19–26; Ephesians 2:8–9', line: 'Sin earns death, and I can’t pay it off.',
+ { n: 4, col: 'red', title: 'The verdict', pages: ['Locked out', 'Can we scrub it off?'], thumbs: [['locked-end', 45], ['locked-2-end', 50]], pic: ['scrub-end', 14],
+   line: 'Sin earns death, and I can’t pay it off.',
    verse: ['“For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.”', 'Romans 6:23'],
    hardQ: 'Why can’t God just forgive everyone and forget about it?',
-   hardA: 'Because He is good. A judge who lets a guilty criminal walk free isn’t kind; he’s corrupt. If God ignored evil, He wouldn’t be good. Sin has a price. The question isn’t “Will someone pay?” but “Who?”',
-   hook: ['The debt', 'Hand each student a debt card (extras): “Amount owed to God: everything.” Give them a few paper “good deed” coins (helped mom, went to church, said sorry). Can they pay it? Collect the cards and keep them for next week. Don’t explain yet.'], hookNeed: ['Debt cards (extras), paper coins'],
-   dig: [['Romans 6:23', 'What do we earn? What is free?', 'Wages are earned: death. Life is a gift.'],
-     ['Hebrews 9:27', 'What happens after death?', 'Judgement. Everyone will stand before God.'],
-     ['Luke 16:19–26', 'What does Jesus say about after death?', 'It is real, and there is a gap no one can cross. Jesus spoke about hell more than anyone.']],
-   act: ['The scrub test', ['A white plastic plate (keep it for week 6)', 'A permanent marker, water, soap, a sponge, a timer'], 'Mark the plate with permanent marker. Each student gets 30 seconds to scrub it clean. It stays. What “soaps” do people try with God? Being good, church, “my good outweighs my bad.” None work (Isaiah 64:6).'],
+   hardA: 'Because He is good. A judge who lets a guilty criminal walk free isn’t kind; he’s corrupt. Sin has a price. The question isn’t “Will someone pay?” It’s “Who?”',
+   hook: ['The debt', 'Hand out debt cards: “Amount owed to God: everything.” Give a few paper “good deed” coins. Can they pay? Collect the cards for next week.'], hookNeed: ['Debt cards (extras), paper coins'],
+   dig: [['Romans 6:23', 'What do we earn? What is free?', 'We earn death. Life is a gift.'], ['Hebrews 9:27', 'What happens after we die?', 'Judgement.'], ['Luke 16:19–26', 'What does Jesus say about after death?', 'It’s real, with a gap no one can cross.']],
+   act: ['The scrub test', ['White plastic plate (keep it), permanent marker, soap, sponge'], 'Mark the plate. Each student gets 30 seconds to scrub it clean. It stays. What “soaps” do people try with God? Being good, church, “my good outweighs my bad.” None work.'],
    real: 'Your friend says, “If your good stuff outweighs your bad stuff, you get into heaven.” How would you answer, kindly?',
-   challenge: 'Ask an adult you trust: “What do you think happens after we die?” Listen first, then share what you learned.',
-   respond: 'Tell God honestly that you can’t pay what you owe. Thank Him that the story isn’t over.',
-   care: 'The heaviest week. Speak of hell plainly, as Jesus did, but calmly, without scary detail. Never use fear to push a decision. End with: “Very bad news. But not the end of the story.”' },
+   challenge: 'Ask an adult you trust: “What do you think happens after we die?” Listen first.',
+   respond: 'Tell God you can’t pay what you owe. Thank Him the story isn’t over.',
+   care: 'The heaviest week. Speak of hell plainly, as Jesus did, but calmly. Never use fear to push a decision. End: “Very bad news, but not the end of the story.”' },
 
- { n: 5, col: 'orange', title: 'Paid in full', pages: ['The door', 'The cross'], thumbs: [['door-end', 50], ['clean', 50]], pic: ['clean', 57],
-   bible: 'Isaiah 53:4–6; Mark 15:16–39; John 19:30; 2 Corinthians 5:21; John 10:9', line: 'Jesus paid what I owed.',
+ { n: 5, col: 'orange', title: 'Paid in full', pages: ['The door', 'The cross'], thumbs: [['door-end', 50], ['clean', 55]], pic: ['clean', 57],
+   line: 'Jesus paid what I owed.',
    verse: ['“He made the one who did not know sin to be sin for us, so that in him we might become the righteousness of God.”', '2 Corinthians 5:21'],
    hardQ: 'How can one person’s death pay for the whole world?',
-   hardA: 'Because of who He is. Jesus is God the Son, worth more than all of us together, and He never sinned, so He had no debt of His own. He took our sin; we get His goodness. That is the great exchange (2 Corinthians 5:21).',
-   hook: ['Paid in full', 'Hand back last week’s debt cards, now stamped or written across in red: PAID IN FULL. Let it sink in. Then read John 19:30. Jesus didn’t say “I am finished.” He said “It is finished.” Nothing is left to pay.'], hookNeed: ['Last week’s debt cards and a red marker'],
-   dig: [['Isaiah 53:5–6', 'Written about 700 years before Jesus. Whose sin was put on whom?', 'Ours, on Him.'],
-     ['Mark 15:33–34', 'Why did Jesus cry, “My God, my God, why have you abandoned me?”', 'He was carrying our sin, cut off from His Father in our place. That was the worst part of the cross.'],
-     ['John 10:9', 'Jesus calls Himself the gate. How many ways in?', 'One.']],
-   act: ['The great exchange', ['Dark and white paper squares, a box'], 'Each student secretly writes a few things from their own record on a dark square. Nobody else sees it. On the white square is written: “Perfect. Never sinned. Not even once.” Read 2 Corinthians 5:21 slowly. Then they swap: the dark square goes into the box at the cross, and they keep the white one.'],
+   hardA: 'Because of who He is. Jesus is God the Son, worth more than all of us, and He never sinned, so He had no debt of His own. He took our sin; we get His goodness.',
+   hook: ['Paid in full', 'Hand back the debt cards, now written across in red: PAID IN FULL. Let it sink in. Read John 19:30: “It is finished.”'], hookNeed: ['Last week’s debt cards, red marker'],
+   dig: [['Isaiah 53:5–6', 'Written 700 years before Jesus. Whose sin was put on whom?', 'Ours, on Him.'], ['Mark 15:33–34', 'Why did Jesus cry, “Why have you abandoned me?”', 'He carried our sin, cut off from His Father.'], ['John 10:9', 'Jesus is the gate. How many ways in?', 'One.']],
+   act: ['The great exchange', ['Dark and white paper squares, a box'], 'Each student secretly writes some of their own wrongs on a dark square. The white square says: “Perfect. Never sinned.” Read 2 Corinthians 5:21. They put the dark square in the box at the cross and keep the white one.'],
    real: 'Someone says, “If God really loved His Son, He wouldn’t have let Him die like that.” How would you answer?',
-   challenge: 'Read Mark 15 slowly this week. Write down one thing that surprised you.',
+   challenge: 'Read Mark 15 slowly. Write down one thing that surprised you.',
    respond: 'Thank Jesus, specifically, for taking what you deserved.',
-   care: 'Describe the cross honestly but simply: whipped, mocked, nailed, hours of pain, struggling to breathe. Then go deeper: the worst wasn’t the nails, but being cut off from His Father while carrying our sin. Don’t linger on gore; linger on love. Shred the dark squares afterwards, unread.' },
+   care: 'Describe the cross honestly but simply: whipped, mocked, nailed, hours of pain. The worst part was being cut off from His Father. Don’t linger on gore; linger on love. Shred the dark squares unread.' },
 
- { n: 6, col: 'orange', title: 'The evidence', pages: ['The choice', 'The empty tomb'], thumbs: [['choice-clip', 45], ['tomb-end', 45], ['choice-end', 50]], pic: ['tomb-end', 36],
-   bible: 'Luke 24:1–12; Matthew 28:11–15; 1 Corinthians 15:3–8, 17; Romans 10:9–13', line: 'Jesus is alive. Everything depends on it.',
+ { n: 6, col: 'gold', title: 'The evidence', pages: ['The choice', 'The empty tomb'], thumbs: [['choice-clip', 45], ['tomb-end', 45]], pic: ['tomb-end', 36],
+   line: 'Jesus is alive. Everything depends on it.',
    verse: ['“And if Christ has not been raised, your faith is worthless; you are still in your sins.”', '1 Corinthians 15:17'],
    hardQ: 'How do we know it really happened? Maybe the disciples made it up.',
-   hardA: 'Think like a detective. People don’t die for something they know is a lie, yet the disciples went from hiding in fear to facing prison and death. Hundreds saw Him alive. His enemies never produced the body. The explanation that fits all the evidence is that He really rose.',
-   hook: ['Crime scene', 'Set up a “crime scene”: a box tomb, a rolled-away paper-plate stone, a folded strip of cloth, and tape across it. “Detectives, the body is gone. What happened?”'], hookNeed: ['A box, a paper plate, a cloth strip, tape'],
-   dig: [['1 Corinthians 15:3–8', 'List everyone who saw Jesus alive.', 'Peter, the Twelve, over 500 at once, James, all the apostles, Paul.'],
-     ['Matthew 28:11–15', 'What story did the guards tell? Does it hold up?', 'If they were asleep, how did they know who took Him?'],
-     ['Romans 10:9; John 3:18', 'What are the two responses?', 'Believe and be saved, or refuse. Not choosing is a choice.']],
-   act: ['Evidence board', ['Evidence and theory cards (extras), a set per team', 'The plate from week 4, rubbing alcohol'], 'Teams get 6 evidence cards and 4 theory cards (stolen body, wrong tomb, He didn’t really die, they imagined it). Test each theory against the evidence and knock out the ones that fail. Which explanation is left standing? Then wipe the plate from week 4 clean: “Because He lives, He can make us clean.”'],
+   hardA: 'People don’t die for something they know is a lie. The disciples went from hiding to facing prison and death. Hundreds saw Him alive. His enemies never showed the body. The answer that fits the evidence: He rose.',
+   hook: ['Crime scene', 'A box tomb, a rolled-away paper-plate stone, a folded cloth, tape across it. “Detectives, the body is gone. What happened?”'], hookNeed: ['Box, paper plate, cloth, tape'],
+   dig: [['1 Corinthians 15:3–8', 'List everyone who saw Jesus alive.', 'Over 500 at once!'], ['Matthew 28:11–15', 'What story did the guards tell? Does it hold up?', 'Asleep, yet they knew who took Him?'], ['Romans 10:9', 'What do we do with this?', 'Believe, and be saved.']],
+   act: ['Evidence board', ['Evidence cards (extras), last week’s plate, rubbing alcohol'], 'Teams test 4 theories (stolen body, wrong tomb, He didn’t die, they imagined it) against 6 evidence cards. Which one is left standing? Then wipe the plate clean: “He lives, and He makes us clean.”'],
    real: 'A classmate says, “Dead people don’t come back to life. That’s science.” What’s a fair answer?',
-   challenge: 'Practise the first six words on your fingers. Teach them to someone at home.',
-   respond: 'The book says Jesus lets you choose. Talk to God honestly about where you stand.',
-   care: 'Some students will have real doubts. Welcome them: honest questions are good, and the truth can handle them. Don’t push for decisions this week. Next week includes an invitation.' },
+   challenge: 'Learn the first six words on your fingers. Teach them to someone at home.',
+   respond: 'Jesus lets you choose. Talk to God honestly about where you stand.',
+   care: 'Welcome doubts: honest questions are good, and the truth can handle them. Don’t push for decisions; next week has the invitation.' },
 
- { n: 7, col: 'sky', title: 'Home', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'], thumbs: [['gates-clip', 50], ['gates-end', 35], ['new-earth-end', 40]], pic: ['gates-end', 28],
-   bible: 'John 14:1–6; John 20:27; Revelation 21:1–5; Luke 9:23; Matthew 28:19–20', line: 'Jesus is bringing me home. Who am I bringing?',
+ { n: 7, col: 'sky', title: 'Home', pages: ['Heaven’s gates', 'The new earth', 'Follow Jesus'], thumbs: [['gates-clip', 50], ['new-earth-end', 40]], pic: ['gates-end', 28],
+   line: 'Jesus is bringing me home. Who am I bringing?',
    verse: ['“He will wipe away every tear from their eyes. Death will be no more; grief, crying, and pain will be no more, because the previous things have passed away.”', 'Revelation 21:4'],
    hardQ: 'Isn’t heaven just sitting on clouds forever? Sounds boring.',
-   hardA: 'That’s cartoons, not the Bible. God makes a new heaven and a new earth: real, even better than Eden, with no death and no pain, and God Himself living with us (Revelation 21:1–5). Everything good, nothing broken, forever.',
-   hook: ['Cross it out', 'Ask: “What’s the worst thing about this world?” List the answers on a board (death, sickness, bullying, war, loneliness). Then read Revelation 21:4 and cross each one out with a thick red marker.'], hookNeed: ['A whiteboard and a red marker'],
-   dig: [['John 14:2–3', 'What is Jesus doing right now?', 'Preparing a place for us, and He is coming back.'],
-     ['Luke 9:23', 'What does following Jesus cost?', 'Saying no to yourself, every day. Hard, and worth it.'],
-     ['Matthew 28:19–20', 'What job does Jesus give us?', 'Go and tell.']],
-   act: ['The 60-second challenge', ['A timer', 'Gospel-in-7 bookmarks and response cards (extras)'], 'In pairs, students tell the whole story in 60 seconds, counting the seven words on their fingers: MADE, BROKEN, GUILTY, LOCKED OUT, PAID, ALIVE, HOME. Swap and go again, faster. Then give each one a bookmark to keep and a response card to fill in privately.'],
-   real: 'Your best friend doesn’t believe in God and thinks church is weird. You’re nervous they’ll laugh. What’s one small step you could take?',
-   challenge: 'Tell one friend the seven words this week, or give them a QR card for the book.',
-   respond: 'Read the A, B, C from the book together. Invite anyone who wants to follow Jesus to pray, and to fill in their response card.',
-   care: 'Invite, never pressure. Read the response cards privately and follow up one-on-one. If a student decides to follow Jesus, tell their parents and help them start reading the Bible.' }
+   hardA: 'That’s cartoons, not the Bible. God makes a new heaven and a new earth, better than Eden: no death, no pain, and God living with us (Revelation 21:1–5). Everything good, nothing broken.',
+   hook: ['Cross it out', 'List the worst things about this world on a board (death, sickness, bullying, war). Read Revelation 21:4 and cross each one out in red.'], hookNeed: ['Whiteboard, red marker'],
+   dig: [['John 14:2–3', 'What is Jesus doing right now?', 'Preparing a place, and coming back.'], ['Luke 9:23', 'What does following Jesus cost?', 'Saying no to yourself, every day.'], ['Matthew 28:19–20', 'What job does He give us?', 'Go and tell.']],
+   act: ['The 60-second challenge', ['Timer, bookmarks and response cards (extras)'], 'In pairs, tell the whole story in 60 seconds, counting the seven words on your fingers. Swap and go faster. Give everyone a bookmark, and a response card to fill in privately.'],
+   real: 'Your best friend thinks church is weird. You’re nervous they’ll laugh. What’s one small step you could take?',
+   challenge: 'Tell one friend the seven words, or give them a QR card for the book.',
+   respond: 'Read A, B, C from the book. Invite anyone who wants to follow Jesus to pray, and to fill in a response card.',
+   care: 'Invite, never pressure. Read response cards privately and follow up one-on-one. Tell parents if a child decides to follow Jesus.' }
 ];
 
 const foot = (l, r) => `<div class="foot"><span>${esc(l)}</span><span>${esc(r)}</span></div>`;
 const lines = n => '<div class="ln"></div>'.repeat(n);
 const words = n => `<div class="w7">${WORDS.map(([w], i) => `<span class="${i < n ? 'on' : ''}${i === n - 1 ? ' now' : ''}"><b>${i + 1}</b>${i < n ? esc(w) : ''}</span>`).join('')}</div>`;
 
-const teacher = w => `<div class="page tp dp ${w.col}" data-w="${w.n}" data-p="teacher">
-  <div class="t-head"><div class="tt"><span class="pill">Week ${w.n} of 7 · Ages 8–12</span><h1>${esc(w.title)}</h1>
-    <p class="pg">Book pages: <b>${w.pages.map(esc).join(' · ')}</b><br>Bible: ${esc(w.bible)}</p></div>
-    <div class="thumbs">${w.thumbs.map(([n, y]) => img(n, y)).join('')}</div></div>
-  <div class="kw"><span class="kword">${w.n} · ${esc(WORDS[w.n - 1][0])}</span><span class="kline">${esc(w.line)}</span></div>
-  <div class="two"><div>
-    <div class="sec"><h3>1 · Hook: ${esc(w.hook[0])} <span class="min">5 min</span></h3><p>${esc(w.hook[1])}</p></div>
-    <div class="sec"><h3>2 · The hard question <span class="min">5 min</span></h3><p><b>“${esc(w.hardQ)}”</b> Let them argue it out first. Don’t answer yet.</p></div>
-    <div class="sec"><h3>3 · Listen and dig in <span class="min">15 min</span></h3><p>Play this week’s pages at <b>${SITE}</b>. Then look these up together:</p><ol>${w.dig.map(([r, q, a]) => `<li><b>${esc(r)}:</b> ${esc(q)}${a ? ` <span class="ans">${esc(a)}</span>` : ''}</li>`).join('')}</ol></div>
-    <div class="sec"><h3>4 · ${esc(w.act[0])} <span class="min">15 min</span></h3><p>${esc(w.act[2])}</p></div>
-    <div class="sec"><h3>5 · Real life + respond <span class="min">10 min</span></h3><p>Talk through the real-life case on their sheet. Come back to the hard question. Add word ${w.n} to the seven. ${esc(w.respond)}</p></div>
-  </div><div class="side">
-    <div class="box"><h3>Memory verse</h3><p class="verse">${esc(w.verse[0])}<span class="ref">${esc(w.verse[1])} (CSB)</span></p></div>
-    <div class="box ansbox"><h3>Answering the hard question</h3><p>${esc(w.hardA)}</p></div>
-    <div class="box tip"><h3>Handle with care</h3><p>${esc(w.care)}</p></div>
-    <div class="box need"><h3>You need</h3><ul><li>A screen, Bibles, student sheets</li>${[...w.hookNeed, ...w.act[1]].map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
-  </div></div>
+const STEPS = w => [
+  ['0:00', 'Hook', w.hook[0], esc(w.hook[1])],
+  ['0:05', 'Ask', 'The big question', `<b>“${esc(w.hardQ)}”</b> Let them argue it out. Don’t answer yet.`],
+  ['0:10', 'Watch and read', 'Book + Bible', `Play ${esc(w.pages.join(', '))} at <b>${SITE}</b>. Then look up:<ul>${w.dig.map(([r, q, a]) => `<li><b>${esc(r)}</b> ${esc(q)}${a ? ` <i>${esc(a)}</i>` : ''}</li>`).join('')}</ul>`],
+  ['0:25', 'Do', w.act[0], esc(w.act[2])],
+  ['0:40', 'Live it', 'Real life', `Talk through the case on their sheet. Then answer the big question together (see right).`],
+  ['0:50', 'Pray', 'Respond', `${esc(w.respond)} Add “${esc(WORDS[w.n - 1][0])}” to the seven words.`]];
+
+const teacher = w => `<div class="page yt ${w.col}" data-w="${w.n}" data-p="teacher">
+  <header class="yh"><div class="yhl"><p class="wk">Week ${w.n} of 7 <span>Teacher run-sheet, ages 8–12</span></p><h1 class="big">${esc(WORDS[w.n - 1][0])}</h1><p class="ln1">${esc(w.line)}</p></div>
+    <div class="yth">${w.thumbs.map(([n, y]) => img(n, y)).join('')}</div></header>
+  <div class="ycols"><ol class="run">${STEPS(w).map(([t, v, n, d]) => `<li><span class="t">${t}</span><div><h3>${esc(v)}: ${esc(n)}</h3><div class="d">${d}</div></div></li>`).join('')}<li class="end"><span class="t">0:55</span><div><h3>Done</h3></div></li></ol>
+    <aside class="yside"><div class="yb vb"><h4>Memory verse</h4><p class="vt">${esc(w.verse[0])}</p><p class="vr">${esc(w.verse[1])} (CSB)</p></div>
+      <div class="yb"><h4>Answering the big question</h4><p>${esc(w.hardA)}</p></div>
+      <div class="yb care"><h4>Handle with care</h4><p>${esc(w.care)}</p></div>
+      <div class="yb"><h4>You need</h4><p>${['A screen, Bibles, student sheets', ...w.hookNeed, ...w.act[1]].map(esc).join('<br>')}</p></div></aside></div>
   ${foot('The Way Back Home · Ages 8–12', CSB)}
 </div>`;
 
-const student = w => `<div class="page dk ${w.col}" data-w="${w.n}" data-p="home">
-  <div class="d-pic">${img(w.pic[0], w.pic[1])}<span class="file">CASE FILE 0${w.n}</span><div class="lab"><span class="kbig">${esc(WORDS[w.n - 1][0])}</span><h1>${esc(w.title)}</h1><p>${esc(w.line)}</p></div></div>
-  <div class="mv2"><span class="tag">Memory verse · ${esc(w.verse[1])}</span>${esc(w.verse[0])}</div>
-  <div class="q"><h2>The hard question</h2><p class="hq">“${esc(w.hardQ)}”</p><p class="sm">What do you think? What does the Bible say?</p>${lines(3)}</div>
-  <div class="q"><h2>Dig in</h2><p><b>Look up ${esc(w.dig[1][0])}.</b> ${esc(w.dig[1][1])}</p>${lines(1)}</div>
-  <div class="q"><h2>Real life</h2><p>${esc(w.real)}</p>${lines(2)}</div>
-  <div class="chal"><b>This week’s challenge:</b> ${esc(w.challenge)}</div>
-  <div class="w7wrap"><span class="w7t">The gospel in 7 words</span>${words(w.n)}</div>
-  <div class="home"><div class="qr">${qrSvg}</div><div><p><b>For grown-ups:</b> listen to <i>The Way Back Home</i> together at <b>${SITE}</b>. This week: ${esc(w.pages.join(', '))}.</p>
-    <p><b>Ask:</b> “${esc(w.hardQ)}” Listen to their answer before giving yours.</p></div></div>
+const student = w => `<div class="page ys ${w.col}" data-w="${w.n}" data-p="home">
+  <div class="sp">${img(w.pic[0], w.pic[1])}<span class="snum">${w.n}</span></div>
+  <h1 class="big">${esc(WORDS[w.n - 1][0])}</h1><p class="ln1">${esc(w.line)}</p>
+  <ol class="steps">
+    <li><span class="sn">1</span><div><h2>Think</h2><p class="hq">${esc(w.hardQ)}</p>${lines(3)}</div></li>
+    <li><span class="sn">2</span><div><h2>Read</h2><p>Look up <b>${esc(w.dig[1][0])}</b>. ${esc(w.dig[1][1])}</p>${lines(1)}</div></li>
+    <li><span class="sn">3</span><div><h2>Live it</h2><p>${esc(w.real)}</p>${lines(2)}</div></li></ol>
+  <div class="vband"><p>${esc(w.verse[0])}</p><b>${esc(w.verse[1])}</b></div>
+  <div class="trk"><span class="tl">The gospel in 7 words</span>${WORDS.map(([wd], i) => `<span class="tw${i < w.n ? ' on' : ''}${i === w.n - 1 ? ' now' : ''}">${i < w.n ? esc(wd) : i + 1}</span>`).join('')}</div>
+  <div class="yhome"><div class="qr">${qrSvg}</div><p><b>This week’s challenge:</b> ${esc(w.challenge)}<br><b>Grown-ups:</b> hear the book together at ${SITE}, then ask, “${esc(w.hardQ)}”</p></div>
   ${foot('The Way Back Home · Ages 8–12', CSB)}
 </div>`;
 
-const overview = () => `<div class="page ov dp" data-w="0" data-p="teacher">
-  <h1>The Way Back Home</h1><p class="sub">Going deeper: a 7-week series for ages 8–12</p>
-  <div class="lead">${img('locked-2-end', 40)}<div style="font-size:10.2pt;line-height:1.42"><p>Older kids can smell a watered-down story. This series tells them the truth straight: sin is deadly, hell is real, the cross was brutal, and the resurrection is worth checking like detectives. Then it shows them a love bigger than all of it.</p>
-    <ul style="margin:6pt 0 0;padding-left:14pt"><li><b>The hard question:</b> a real question kids ask, argued out before it’s answered.</li><li><b>Case file:</b> each student sheet has the question, a Bible look-up, and a real-life case.</li><li><b>The gospel in 7 words:</b> one word a week, counted on fingers, until they can tell the whole story in 60 seconds.</li><li><b>Running threads:</b> the debt card (weeks 4–5), the marked plate (4–6), the evidence board (6).</li></ul></div></div>
-  <table><tr><th></th><th>Word</th><th>The hard question</th><th>Verse</th></tr>
-  ${W.map(w => `<tr><td class="w" style="background:var(--${w.col})">${w.n}</td><td><b>${esc(WORDS[w.n - 1][0])}</b></td><td>${esc(w.hardQ)}</td><td>${esc(w.verse[1])}</td></tr>`).join('')}</table>
-  <div class="how"><div><h3>Each week (about 50 minutes)</h3><ul><li>Hook · 5 min</li><li>The hard question · 5 min</li><li>Listen to the book, dig into the Bible · 15 min</li><li>Activity · 15 min</li><li>Real life, respond, pray · 10 min</li></ul></div>
-    <div><h3>Telling hard truths well</h3><ul><li>Say what the Bible says, calmly. Don’t add horror; don’t soften it.</li><li>Let them argue. Questions are welcome.</li><li>Never use fear to push a decision. Invite, don’t pressure.</li><li>Follow up privately with anyone who is struggling.</li></ul></div></div>
+const overview = () => `<div class="page yo" data-w="0" data-p="teacher">
+  <div class="ohero">${img('gates-end', 30)}<div><p class="wk">7 weeks for ages 8–12</p><h1 class="big">The gospel in 7 words</h1><p class="ln1">One word a week. By the end, every student can tell the whole story in 60 seconds.</p></div></div>
+  <ol class="owords">${W.map(w => `<li class="${w.col}"><span class="on">${w.n}</span><b>${esc(WORDS[w.n - 1][0])}</b><p>${esc(w.hardQ)}</p><small>${esc(w.verse[1])}</small></li>`).join('')}</ol>
+  <div class="ohow"><div><h3>Every week, 55 minutes</h3><p>Hook, ask the big question, watch the book and read the Bible, an activity, real life, pray. The run-sheet has the clock times.</p></div>
+    <div><h3>Telling hard truths</h3><p>Say what the Bible says, calmly: no added horror, no softening. Let them argue. Never use fear to push a decision.</p></div>
+    <div><h3>What carries over</h3><p>The debt card (weeks 4 and 5), the marked plate (4 to 6), the seven words (every week).</p></div></div>
   ${foot('The Way Back Home · Ages 8–12', CSB)}
 </div>`;
 
