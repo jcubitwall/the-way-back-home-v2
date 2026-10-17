@@ -59,8 +59,8 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .num b{color:var(--ink)}
 .card{position:absolute;left:.17in;right:.17in;top:3.84in;bottom:.17in;background:var(--cream);border-radius:.14in;
   padding:.2in .18in .1in;display:flex;flex-direction:column;justify-content:center;text-align:center}
-.cap{margin:0;font:400 9.3pt/1.36 var(--body)}
-.ref{margin:.05in 0 0;font:700 6.8pt/1.2 var(--body);color:var(--muted)}
+.cap{margin:0;font:400 9.8pt/1.38 var(--body)}
+.ref{margin:.06in 0 0;font:700 7.2pt/1.2 var(--body);color:var(--muted)}
 .hint{margin:.05in 0 0;font:900 8.2pt/1.2 var(--display);color:var(--blue)}
 
 /* cover */
@@ -114,9 +114,10 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
   // the 12 story panels: picture, which part of it to keep in the frame (vertical %), panel colour
-  const ART = [['garden-clip', 38, 'green'], ['rule-clip', 30, 'green'], ['fruit-end', 30, 'purple'], ['exile-clip', 45, 'purple'],
-    ['test-2-end', 40, 'night'], ['locked-end', 55, 'night'], ['scrub-clip', 35, 'purple'], ['door-end', 35, 'orange'],
-    ['cross-end', 45, 'orange'], ['choice-end', 45, 'orange'], ['tomb-end', 40, 'sky'], ['gates-clip', 50, 'sky']];
+  // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
+  const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 45, 'purple'],
+    ['test-2-end', 35, 'night'], ['locked-end', 42, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
+    ['cross-kneel', 55, 'orange'], ['choice-end', 55, 'orange'], ['tomb-end', 45, 'sky'], ['gates-clip', 45, 'sky']];
   try {
     const langs = await get('content/languages.json');
     const sp = new URLSearchParams(location.search), q = sp.get('lang');
