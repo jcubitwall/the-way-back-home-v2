@@ -27,11 +27,19 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
-.top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+.top{position:relative;z-index:5;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
   padding:12px 16px;background:#fff;border-bottom:1px solid #d8d5e0}
 .top div{flex:1 1 300px;font-size:14.5px;line-height:1.45;color:var(--muted)}
 .top ol{margin:4px 0 0;padding-left:20px}
 .top a{color:var(--blue);font-weight:700;text-decoration:none;font-size:15px}
+.who{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:14px;color:var(--muted);border-top:1px solid #eceaf1;padding-top:10px}
+.who b{color:var(--ink)}.who span{flex:1 1 100%;margin-top:-6px;font-size:13px}
+.who label{display:flex;gap:6px;align-items:center;font-weight:700;color:var(--ink)}
+.who input{font:15px var(--body);padding:7px 10px;border:1.5px solid #cfcbd9;border-radius:8px;width:min(260px,70vw)}
+.giver{margin:.12in 0 0;padding:.1in .14in;border:1.5px dashed #c9c2d4;border-radius:.1in;width:100%;font:400 8.6pt/1.35 var(--body);color:var(--ink)}
+.giver .lab{display:block;font:800 7.4pt var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.03in}
+.giver b{display:block;font:800 10.5pt/1.25 var(--display);color:var(--sky)}
+.giver .wl{display:block;border-bottom:1px solid #9a93a6;height:.24in}
 .btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
 .wrap{padding:20px 16px 40px;overflow:hidden}
 .sheets{transform-origin:top left;width:17.25in;margin:0 auto}
@@ -53,17 +61,16 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
    its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
 .fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000;box-shadow:0 2pt 6pt rgba(0,0,0,.25)}
 .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.fr .soft{position:absolute;inset:0;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.65) 61%,#000 70%);mask-image:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.65) 61%,#000 70%)}
-.fr .soft img{filter:blur(9px) saturate(1.15) brightness(.82);transform:scale(1.08)}
-.fr .tint{position:absolute;inset:0;opacity:.62;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 58%,#000 82%);mask-image:linear-gradient(to bottom,transparent 58%,#000 82%)}
-.green .tint{background:var(--green)}.purple .tint{background:var(--purple)}.night .tint{background:var(--night)}.orange .tint{background:var(--orange)}.sky .tint{background:var(--sky)}
-.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:center;
+/* the blur is baked into the pictures (tools/tract_art.py, blur from 60 %); this only adds the chapter colour on top of it */
+.fr .tint{position:absolute;inset:0;opacity:.5}
+.green .tint{background:linear-gradient(transparent 60%,var(--green) 63.5%)}.purple .tint{background:linear-gradient(transparent 60%,var(--purple) 63.5%)}
+.night .tint{background:linear-gradient(transparent 60%,var(--night) 63.5%)}.orange .tint{background:linear-gradient(transparent 60%,var(--orange) 63.5%)}
+.sky .tint{background:linear-gradient(transparent 60%,var(--sky) 63.5%)}
+.fr .txt{position:absolute;left:.2in;right:.2in;top:62%;bottom:.12in;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;text-align:center;
   text-shadow:0 1px 2.5pt rgba(0,0,0,.55),0 0 10pt rgba(0,0,0,.3)}
 .num{position:absolute;left:.12in;top:.12in;z-index:2;width:.38in;height:.38in;border-radius:50%;
   background:rgba(255,255,255,.92);color:var(--ink);font:900 12.5pt/.38in var(--display);text-align:center;box-shadow:0 1pt 4pt rgba(0,0,0,.3)}
-.cap{margin:0;font:700 10.4pt/1.4 var(--body)}
+.cap{margin:0;font:700 10.2pt/1.38 var(--body)}
 .ref{margin:.07in 0 0;font:700 7.4pt/1.2 var(--body);opacity:.85;letter-spacing:.02em}
 .hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display);text-shadow:none;box-shadow:0 1.5pt 0 var(--gold2)}
 
@@ -77,7 +84,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 
 /* text panels (back, A-B-C, prayer) */
 .sheetcard{position:absolute;inset:.12in;background:rgba(255,250,240,.9);border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
-.blurbg{position:absolute;inset:-.2in;background-size:cover;background-position:center;filter:blur(14px) saturate(1.2) brightness(.85)}
+.blurbg{position:absolute;inset:0;background-size:cover;background-position:center}
 .sheetcard h2{margin:0 0 .08in;font:900 15pt/1.15 var(--display);color:var(--orange)}
 .sky .sheetcard h2{color:var(--sky)}
 .sheetcard .intro{margin:0 0 .14in;font:400 9pt/1.35 var(--body);color:var(--muted)}
@@ -87,7 +94,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .prayer{margin:0;padding:.16in .16in;background:#fdeccb;border-radius:.1in;font:400 10.4pt/1.45 var(--body)}
 .small{margin:.14in 0 0;font:400 7.6pt/1.35 var(--body);color:var(--muted)}
 .back{text-align:center;align-items:center}
-.back .qr{width:1.7in;height:1.7in;margin:.08in 0 .1in}
+.back .qr{width:1.45in;height:1.45in;margin:.04in 0 .06in}
 .back .qr svg{display:block;width:100%;height:100%}
 .back .u{font:700 10pt var(--body);color:var(--sky)}
 .back p{margin:0}
@@ -112,6 +119,12 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     <li>Fold in half along the long middle, with pictures 5–12 inside.</li>
     <li>Zig-zag fold the strip into four, with the cover on top.</li></ol></div>
   <button class="btn" id="print" type="button">Print</button>
+  <form class="who" id="who" onsubmit="return false">
+    <b>Add your name or church to the back</b> <span>(optional: leave empty to get lines people can write on)</span>
+    <label>From <input id="from" maxlength="60" placeholder="e.g. Grace Community Church" autocomplete="organization"></label>
+    <label>Contact <input id="contact" maxlength="80" placeholder="website, phone or email"></label>
+    <label>Extra line <input id="extra" maxlength="80" placeholder="e.g. Sundays 10:30 · 12 Main St"></label>
+  </form>
 </div>
 <div class="wrap" id="wrap"><div class="sheets" id="sheets"></div></div>
 <script>
@@ -119,6 +132,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
   // the 12 story panels: picture, which part of it to keep in the frame (vertical %), panel colour
+  // The pictures (with the blur baked in) are made by tools/tract_art.py from this list: change the picture or framing there.
   // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
   const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 45, 'purple'],
     ['test-2-end', 35, 'night'], ['locked-end', 42, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
@@ -144,16 +158,16 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const story = i => {
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : '';
-      const pic = `<img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
-      return [col, `<div class="fr">${pic}<div class="soft">${pic}</div><div class="tint"></div>` +
+      const pic = `<img src="art/tract/${String(i + 1).padStart(2, '0')}.jpg" alt="">`;
+      return [col, `<div class="fr">${pic}<div class="tint"></div>` +
         `<div class="txt"><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div><div class="num">${i + 1}</div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
-    const backP = ['sky', `<div class="blurbg" style="background-image:url(art/src/gates-end.jpg)"></div><div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
-      `<p class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</p><p class="small">${esc(tr.talk)}</p><p class="small">${esc(tr.gift)}</p></div>`];
+    const backP = ['sky', `<div class="blurbg" style="background-image:url(art/tract/bg-gates-end.jpg)"></div><div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
+      `<p class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</p><div class="giver" id="giver"></div><p class="small" style="margin-top:.08in">${esc(tr.talk)}</p><p class="small" style="margin-top:.04in">${esc(tr.gift)}</p></div>`];
     const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
-    const abcP = ['orange', `<div class="blurbg" style="background-image:url(art/src/choice-end.jpg)"></div><div class="sheetcard"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}<p class="small">${esc(P.ref)}</p></div>`];
-    const prayP = ['orange', `<div class="blurbg" style="background-image:url(art/src/clean.jpg)"></div><div class="sheetcard"><h2>${esc(tr.pray)}</h2><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)}</p></div>`];
+    const abcP = ['orange', `<div class="blurbg" style="background-image:url(art/tract/bg-choice-end.jpg)"></div><div class="sheetcard"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}<p class="small">${esc(P.ref)}</p></div>`];
+    const prayP = ['orange', `<div class="blurbg" style="background-image:url(art/tract/bg-clean.jpg)"></div><div class="sheetcard"><h2>${esc(tr.pray)}</h2><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)}</p></div>`];
 
     const side = (rows) => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
       const [cls, html] = p[0], flip = p[1];
@@ -169,6 +183,19 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
       sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
       document.getElementById('wrap').style.height = k < 1 ? (sheets.offsetHeight * k + 60) + 'px' : '';
     };
+    // "Given to you by": typed in the top bar, or passed in the link (?from=…&contact=…&extra=…), remembered on this device
+    const F = ['from', 'contact', 'extra'], store = (k, v) => { try { v == null ? localStorage.getItem('tract-' + k) : localStorage.setItem('tract-' + k, v); } catch (e) {} };
+    const recall = k => { try { return localStorage.getItem('tract-' + k) || ''; } catch (e) { return ''; } };
+    F.forEach(k => { const el = document.getElementById(k); el.value = sp.has(k) ? sp.get(k) : recall(k); });
+    const given = tr.given || 'Given to you by';
+    const giver = () => {
+      const v = Object.fromEntries(F.map(k => [k, document.getElementById(k).value.trim()]));
+      document.getElementById('giver').innerHTML = v.from || v.contact || v.extra
+        ? `<span class="lab">${esc(given)}</span>${v.from ? `<b>${esc(v.from)}</b>` : ''}${v.contact ? `<span>${esc(v.contact)}</span><br>` : ''}${v.extra ? `<span>${esc(v.extra)}</span>` : ''}`
+        : `<span class="lab">${esc(given)}</span><span class="wl"></span><span class="wl"></span>`;
+    };
+    F.forEach(k => document.getElementById(k).addEventListener('input', e => { store(k, e.target.value); giver(); }));
+    giver();
     fit(); addEventListener('resize', fit);
     document.getElementById('print').onclick = () => window.print();
     // opened from Resources with ?print: print straight away once the pictures have loaded
