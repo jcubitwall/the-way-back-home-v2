@@ -703,9 +703,9 @@ function setupControls() {
 
   setupOffline();
 
-  // a printable sheet of 10 QR business cards for this language (cards.html)
-  const mc = $('#mCards'); mc.href = ROOT + `cards.html?lang=${L}`;
-  mc.addEventListener('click', () => { count('cards'); closeMenus(); });
+  // lessons and printables (resources.html: Sunday school, youth, tracts and QR cards)
+  const mr = $('#mRes'); mr.href = ROOT + `resources.html?lang=${L}`;
+  mr.addEventListener('click', () => { count('resources'); closeMenus(); });
 
   $('#mShare').onclick = async () => {
     closeMenus(); count('share');

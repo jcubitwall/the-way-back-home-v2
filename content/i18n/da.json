@@ -2,6 +2,7 @@
   "about": "Danish text for The Way Back Home (16 Oct 2026). Translated for meaning, not word for word: written the way a Danish children's author would say it, with Danish idioms (\"Vejen hjem\", \"hvide som sne\", \"med åbne arme\", \"banet vejen\"). Bible references use Danish book names and Danish verse numbering (Isaiah 64:6 = Esajas 64,5). Page ids match content/story.json. \"cues\" are written by tools/split.py from the recording.",
   "title": "Vejen hjem",
   "ui": {
+    "resources": "Materialer",
     "offline": "Gem til brug uden internet",
     "saving": "Gemmer…",
     "saved": "Gemt: virker uden internet",
