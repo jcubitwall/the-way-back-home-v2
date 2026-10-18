@@ -1,0 +1,76 @@
+{
+ "about": "Page map for classprint.html. Page numbers count from 1. Built by Claude's generator (17 Oct 2026); if a PDF is rebuilt with a different page order, update this file. 'name' = where the 'My name:' line is (points from the bottom-left of a US Letter page); 'cert' = the certificate's name line.",
+ "name": {
+  "x": 88,
+  "y": 56,
+  "size": 13
+ },
+ "cert": {
+  "y": 324,
+  "size": 20
+ },
+ "series": {
+  "little": {
+   "title": "Little ones",
+   "ages": "Ages 3–5",
+   "weeks": 7,
+   "teacher": "resources/class/little-teacher.pdf",
+   "kids": "resources/class/little-kids.pdf",
+   "teacherIntro": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "teacherEnd": [
+    22,
+    23,
+    24
+   ],
+   "teacherWeekStart": 8,
+   "teacherWeekPages": 2,
+   "kidsWeekStart": 3,
+   "kidsWeekPages": 3,
+   "letter": 1,
+   "chart": 2,
+   "cert": 24,
+   "sheets": null
+  },
+  "sunday": {
+   "title": "Sunday school",
+   "ages": "Ages 6–9",
+   "weeks": 7,
+   "teacher": "resources/class/sunday-teacher.pdf",
+   "kids": "resources/class/sunday-kids.pdf",
+   "teacherIntro": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "teacherEnd": [
+    22,
+    23
+   ],
+   "teacherWeekStart": 8,
+   "teacherWeekPages": 2,
+   "kidsWeekStart": 4,
+   "kidsWeekPages": 3,
+   "letter": 1,
+   "chart": 2,
+   "cert": 25,
+   "sheets": {
+    "page": 3,
+    "week1": 3,
+    "week7": 4,
+    "note": "Bookmarks (3 per sheet) in week 1, invite cards (4 per sheet) in week 7"
+   }
+  }
+ }
+}

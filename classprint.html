@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Way Back Home · Print for your class</title>
+<meta name="description" content="Print a week of The Way Back Home Sunday school for your whole class: one teacher's guide and a set for every child, with their names on.">
+<link rel="icon" href="art/favicon-48.png" sizes="48x48">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+/* Print for your class (17 Oct 2026): pick a series and a week, say how many children (or type their names), and get one
+   PDF with the teacher's pages once and each child's pages as many times as needed, names on the "My name" lines.
+   Pages and positions: resources/class/classes.json. The PDF is put together in the browser with pdf-lib (pdf-lib.min.js). */
+:root{--sky:#2F7FD9;--gold:#FFD166;--gold2:#C99A1E;--paper:#FFFDF8;--ink:#2B2233;--soft:#6B6275;--line:rgba(43,34,51,.14);--card:#fff;--field:#fff;
+  --display:'Grandstander','Trebuchet MS',system-ui,sans-serif;--body:'Andika','Verdana',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1F1A2B;--ink:#F4EEFF;--soft:#B5ACC7;--line:rgba(255,255,255,.16);--card:#2A2438;--field:#1F1A2B}}
+:root[data-theme="dark"]{--paper:#1F1A2B;--ink:#F4EEFF;--soft:#B5ACC7;--line:rgba(255,255,255,.16);--card:#2A2438;--field:#1F1A2B}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--paper)}
+header{background:linear-gradient(160deg,#2F7FD9,#5b9be6);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 34px}
+.wrap{max-width:720px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:rgba(255,255,255,.18);border-radius:999px;padding:8px 14px}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(30px,8vw,46px);line-height:1.02;margin:16px 0 8px}
+.lead{margin:0;font-size:16.5px;line-height:1.5;opacity:.95}
+main{max-width:720px;margin:-18px auto 0;background:var(--paper);border-radius:24px 24px 0 0;position:relative;padding:20px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+.series{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.series label{display:flex;gap:10px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px;cursor:pointer}
+.series input{position:absolute;opacity:0;pointer-events:none}
+.series label:has(input:checked){border-color:var(--sky);box-shadow:0 0 0 3px rgba(47,127,217,.18)}
+.series img{width:54px;height:70px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid var(--line);background:#fff;flex:none}
+.series b{display:block;font-family:var(--display);font-size:17px;line-height:1.15}
+.series span span{display:inline-block;font-size:12.5px;font-weight:700;color:#2B2233;background:var(--gold);border-radius:99px;padding:1px 9px;margin-top:4px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
+.step h2{margin:0 0 8px;font:800 18px var(--display);color:var(--sky);display:flex;gap:8px;align-items:center}
+.step h2 i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--sky);color:#fff;font-size:14px;display:grid;place-items:center;flex:none}
+.weeks{display:flex;flex-wrap:wrap;gap:6px}
+.weeks label{position:relative}
+.weeks input{position:absolute;opacity:0;pointer-events:none}
+.weeks span{display:inline-block;font:700 15px var(--body);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;background:var(--field)}
+.weeks input:checked+span{background:var(--sky);border-color:var(--sky);color:#fff}
+.weeks input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.num{display:flex;align-items:center;gap:8px;font-weight:700}
+.num input{width:76px;font:700 18px var(--body);padding:8px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--field);color:var(--ink);text-align:center}
+.pm{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--field);color:var(--ink);font:800 20px var(--body);cursor:pointer}
+textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--field);color:var(--ink);resize:vertical}
+.hint{font-size:14px;color:var(--soft);margin:6px 0 0;line-height:1.45}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:6px 0;font-size:15.5px;line-height:1.4;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:1px;flex:none;accent-color:var(--sky)}
+.sum{margin-top:14px;background:rgba(47,127,217,.08);border:1px solid rgba(47,127,217,.25);border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.5}
+.sum ul{margin:4px 0 0;padding-left:20px}
+.go{display:block;width:100%;margin-top:14px;font:800 19px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:14px;cursor:pointer;box-shadow:0 4px 0 var(--gold2)}
+.go:disabled{opacity:.6;cursor:wait}
+.msg{margin:12px 2px 0;font-size:15px;line-height:1.5;min-height:1.5em}
+.msg a{color:var(--sky);font-weight:700}
+.full{margin-top:22px;font-size:14.5px;color:var(--soft);line-height:1.7}
+.full a{color:var(--sky);font-weight:700}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="back" id="back" href="resources.html">‹ Resources</a>
+  <h1>Print for your class</h1>
+  <p class="lead">One teacher’s guide, and a set for every child. Pick the week, say how many children you have, and get one PDF ready to print.</p>
+</div></header>
+<main>
+  <div class="series" id="series">
+    <label><input type="radio" name="series" value="little"><img src="resources/class/little.webp" alt=""><span><b>Little ones</b><span>Ages 3–5</span></span></label>
+    <label><input type="radio" name="series" value="sunday"><img src="resources/class/sunday.webp" alt=""><span><b>Sunday school</b><span>Ages 6–9</span></span></label>
+  </div>
+
+  <div class="step"><h2><i>1</i>Which week?</h2>
+    <div class="weeks" id="weeks"></div>
+    <p class="hint" id="weekhint"></p>
+  </div>
+
+  <div class="step"><h2><i>2</i>How many children?</h2>
+    <div class="row">
+      <span class="num">Children <button class="pm" type="button" data-t="kids" data-d="-1" aria-label="One fewer">−</button><input id="kids" type="number" min="0" max="80" value="12" inputmode="numeric"><button class="pm" type="button" data-t="kids" data-d="1" aria-label="One more">+</button></span>
+      <span class="num">Spares <button class="pm" type="button" data-t="spare" data-d="-1" aria-label="One fewer spare">−</button><input id="spare" type="number" min="0" max="20" value="2" inputmode="numeric"><button class="pm" type="button" data-t="spare" data-d="1" aria-label="One more spare">+</button></span>
+    </div>
+    <p class="hint">Spares are for visitors and for mistakes with scissors.</p>
+    <p style="margin:14px 0 6px;font-weight:700">Names on the pages <span style="font-weight:400;color:var(--soft)">(optional)</span></p>
+    <textarea id="names" placeholder="One name per line, for example:&#10;Emma&#10;Noah&#10;Lucas"></textarea>
+    <p class="hint">Each child’s pages come with their name already on the “My name” line (and on the certificate). Spares stay blank. Names stay on this device.</p>
+  </div>
+
+  <div class="step"><h2><i>3</i>For the teacher</h2>
+    <label class="chk"><input type="checkbox" id="tweek" checked><span><b>This week’s teacher pages</b>, 1 copy</span></label>
+    <label class="chk"><input type="checkbox" id="tintro"><span><b>Introduction, answer keys and songs</b>, 1 copy (once, at the start)</span></label>
+    <p style="margin:12px 0 4px;font-weight:700">Order of the children’s pages</p>
+    <label class="chk"><input type="radio" name="order" value="page" checked><span><b>Grouped by page</b>: all the page 1s, then all the page 2s… Easiest to hand out one activity at a time.</span></label>
+    <label class="chk"><input type="radio" name="order" value="child"><span><b>One set per child</b>: each child’s pages together. Easiest for take-home bags.</span></label>
+  </div>
+
+  <div class="sum" id="sum"></div>
+  <button class="go" id="go" type="button">Make the PDF</button>
+  <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  <p class="full">Print single-sided on US Letter (or A4 with “fit to page”). The craft pages are cut up, so don’t print them double-sided.<br>
+    Whole files: <span id="fulllinks"></span></p>
+</main>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const sp = new URLSearchParams(location.search);
+  const L = sp.get('lang'); if (/^[a-z]{2,3}$/.test(L || '')) $('back').href = 'resources.html?lang=' + L;
+  const MAP = await fetch('resources/class/classes.json', { cache: 'no-cache' }).then(r => r.json());
+  const store = (k, v) => { try { localStorage.setItem('class-' + k, v); } catch (e) {} };
+  const recall = k => { try { return localStorage.getItem('class-' + k); } catch (e) { return null; } };
+
+  // ---- state ----
+  let series = sp.get('series') in MAP.series ? sp.get('series') : (recall('series') in MAP.series ? recall('series') : 'little');
+  let week = /^([1-7]|all)$/.test(sp.get('week') || '') ? sp.get('week') : '1';
+  document.querySelector(`#series input[value="${series}"]`).checked = true;
+  ['kids', 'spare'].forEach(k => { const v = recall(k); if (v != null) $(k).value = v; });
+  $('names').value = recall('names-' + series) || '';
+
+  const S = () => MAP.series[series];
+  const weeksUI = () => {
+    $('weeks').innerHTML = [...Array(S().weeks)].map((_, i) => `<label><input type="radio" name="week" value="${i + 1}"><span>Week ${i + 1}</span></label>`).join('') +
+      `<label><input type="radio" name="week" value="all"><span>Whole series</span></label>`;
+    (document.querySelector(`#weeks input[value="${week}"]`) || document.querySelector('#weeks input')).checked = true;
+    document.querySelectorAll('#weeks input').forEach(r => r.onchange = () => { week = r.value; $('tintro').checked = week === '1' || week === 'all'; update(); });
+  };
+  const fullLinks = () => { $('fulllinks').innerHTML = `<a href="${S().teacher}" target="_blank" rel="noopener">${esc(S().title)} teacher’s guide</a> · <a href="${S().kids}" target="_blank" rel="noopener">children’s pages (1 of each)</a>`; };
+  document.querySelectorAll('#series input').forEach(r => r.onchange = () => {
+    series = r.value; store('series', series); $('names').value = recall('names-' + series) || ''; weeksUI(); fullLinks(); update();
+  });
+
+  const names = () => $('names').value.split(/\n/).map(s => s.trim()).filter(Boolean);
+  const num = (id, min, max) => Math.max(min, Math.min(max, parseInt($(id).value, 10) || 0));
+  document.querySelectorAll('.pm').forEach(b => b.onclick = () => { const el = $(b.dataset.t); el.value = Math.max(0, (parseInt(el.value, 10) || 0) + +b.dataset.d); el.dispatchEvent(new Event('input')); });
+  $('kids').oninput = () => { store('kids', $('kids').value); update(); };
+  $('spare').oninput = () => { store('spare', $('spare').value); update(); };
+  $('names').oninput = () => {
+    store('names-' + series, $('names').value);
+    const n = names().length; if (n > num('kids', 0, 80)) { $('kids').value = n; store('kids', n); }
+    update();
+  };
+  ['tweek', 'tintro'].forEach(k => $(k).onchange = update);
+  document.querySelectorAll('input[name=order]').forEach(r => r.onchange = update);
+
+  // ---- what goes in the PDF ----
+  const range = (a, n) => [...Array(n)].map((_, i) => a + i);
+  function plan() {
+    const s = S(), all = week === 'all', w = all ? null : +week, wk = all ? range(1, s.weeks) : [w];
+    const teacher = [];
+    if ($('tintro').checked) teacher.push(...s.teacherIntro);
+    if ($('tweek').checked) wk.forEach(x => teacher.push(...range(s.teacherWeekStart + s.teacherWeekPages * (x - 1), s.teacherWeekPages)));
+    if ($('tintro').checked) teacher.push(...s.teacherEnd);
+    const kidPages = [];   // [page, named?] per child
+    if (all || w === 1) kidPages.push([s.letter, false], [s.chart, true]);
+    wk.forEach(x => range(s.kidsWeekStart + s.kidsWeekPages * (x - 1), s.kidsWeekPages).forEach(p => kidPages.push([p, true])));
+    if (all || w === s.weeks) kidPages.push([s.cert, 'cert']);
+    const kids = num('kids', 0, 80), spare = num('spare', 0, 20), nm = names();
+    let sheets = 0;
+    if (s.sheets && kids + spare > 0) {
+      const per = all ? Math.min(s.sheets.week1, s.sheets.week7) : w === 1 ? s.sheets.week1 : w === s.weeks ? s.sheets.week7 : 0;
+      if (per) sheets = Math.ceil((kids + spare) / per);
+    }
+    return { teacher, kidPages, kids, spare, names: nm, sheets, sheetPage: s.sheets && s.sheets.page };
+  }
+  function update() {
+    const p = plan(), copies = p.kids + p.spare, kidTotal = p.kidPages.length * copies, total = p.teacher.length + kidTotal + p.sheets;
+    const named = Math.min(p.names.length, p.kids);
+    $('sum').innerHTML = `<b>${total} page${total === 1 ? '' : 's'}</b> to print:<ul>` +
+      (p.teacher.length ? `<li>Teacher: ${p.teacher.length} page${p.teacher.length === 1 ? '' : 's'}, 1 copy</li>` : '') +
+      (copies ? `<li>Children: ${p.kidPages.length} page${p.kidPages.length === 1 ? '' : 's'} × ${copies} (${p.kids} children${p.spare ? ` + ${p.spare} spare` : ''})${named ? `, ${named} with names` : ''}</li>` : '') +
+      (p.sheets ? `<li>${week === '1' ? 'Bookmarks' : week === 'all' ? 'Bookmarks and invite cards' : 'Invite cards'}: ${p.sheets} sheet${p.sheets === 1 ? '' : 's'} (cut apart)</li>` : '') +
+      `</ul>` + (week === '1' || week === 'all' ? `<span style="color:var(--soft)">Includes the letter to families and the ${series === 'little' ? 'sticker chart' : 'Road Home map'} for each child${week === 'all' ? ', and the certificates' : ''}.</span>` : week === String(S().weeks) ? `<span style="color:var(--soft)">Includes a certificate for each child.</span>` : '');
+    $('go').disabled = total === 0;
+  }
+
+  // ---- build ----
+  let lib = null;
+  const loadLib = () => lib || (lib = new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'pdf-lib.min.js'; s.onload = ok; s.onerror = no; document.head.appendChild(s); }));
+  const getBytes = u => fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.arrayBuffer(); });
+  $('go').onclick = async () => {
+    const win = window.open('', '_blank'), say = h => { $('msg').innerHTML = h; };
+    $('go').disabled = true; say('Putting the pages together…');
+    try {
+      await loadLib();
+      const s = S(), p = plan(), { PDFDocument, StandardFonts, rgb } = PDFLib;
+      const [tb, kb] = await Promise.all([p.teacher.length ? getBytes(s.teacher) : null, getBytes(s.kids)]);
+      const doc = await PDFDocument.create(), font = await doc.embedFont(StandardFonts.HelveticaBold), ink = rgb(.11, .1, .14);
+      const emb = async (bytes, pages) => { const u = [...new Set(pages)], e = await doc.embedPdf(bytes, u.map(x => x - 1)); return Object.fromEntries(u.map((x, i) => [x, e[i]])); };
+      const T = p.teacher.length ? await emb(tb, p.teacher) : {};
+      const K = await emb(kb, p.kidPages.map(x => x[0]).concat(p.sheets ? [p.sheetPage] : []));
+      const put = (e, name, kind) => {
+        const pg = doc.addPage([e.width, e.height]); pg.drawPage(e, { x: 0, y: 0 });
+        if (!name || !kind) return;
+        if (kind === 'cert') {
+          let z = MAP.cert.size; while (font.widthOfTextAtSize(name, z) > 300 && z > 10) z -= .5;
+          pg.drawText(name, { x: (e.width - font.widthOfTextAtSize(name, z)) / 2, y: MAP.cert.y, size: z, font, color: ink });
+        } else {
+          let z = MAP.name.size; while (font.widthOfTextAtSize(name, z) > 220 && z > 8) z -= .5;
+          pg.drawText(name, { x: MAP.name.x, y: MAP.name.y, size: z, font, color: ink });
+        }
+      };
+      p.teacher.forEach(x => put(T[x]));
+      const people = [...Array(p.kids + p.spare)].map((_, i) => (i < p.kids ? p.names[i] || '' : ''));
+      if (document.querySelector('input[name=order]:checked').value === 'page') p.kidPages.forEach(([x, named]) => people.forEach(n => put(K[x], n, named)));
+      else people.forEach(n => p.kidPages.forEach(([x, named]) => put(K[x], n, named)));
+      for (let i = 0; i < p.sheets; i++) put(K[p.sheetPage]);
+      const url = URL.createObjectURL(new Blob([await doc.save()], { type: 'application/pdf' }));
+      const file = `The-Way-Back-Home-${series}-${week === 'all' ? 'all-weeks' : 'week-' + week}.pdf`;
+      say(`Ready: <a href="${url}" download="${file}" target="_blank">open the PDF</a> (${doc.getPageCount()} pages). Print it single-sided.`);
+      if (win) win.location = url; else location.href = url;
+    } catch (e) { if (win) win.close(); say('Sorry, the PDF could not be made. Please check your connection and try again.'); }
+    $('go').disabled = false;
+  };
+
+  weeksUI(); fullLinks(); $('tintro').checked = week === '1' || week === 'all'; update();
+})();
+</script>
+</body>
+</html>

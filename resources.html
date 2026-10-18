@@ -55,21 +55,21 @@ footer{color:var(--soft);font-size:13px;line-height:1.6;margin:26px 4px 0}
 <main>
   <h2>Sunday school<small>Seven weeks, one story. Both series follow the book week by week, so brothers and sisters learn the same thing on the same Sunday.</small></h2>
   <div class="list">
-    <div class="item" data-kind="pdf" data-title="Little ones">
-      <a class="open" href="resources/TWBH-SundaySchool-ages-3-5.pdf" target="_blank" rel="noopener">
-      <img src="resources/ss-3-5.webp" alt="" loading="lazy">
+    <div class="item" data-kind="page" data-title="Little ones">
+      <a class="open" href="classprint.html?series=little">
+      <img src="resources/class/little.webp" alt="" loading="lazy">
       <span class="txt"><b>Little ones</b><span class="age">Ages 3–5</span>
-        <p>30-minute sessions full of songs, moves and colouring sheets, with a sticker chart for the Road Home.</p><span class="meta">PDF · 17 pages, 5 MB</span></span>
+        <p>Seven 60-minute Sundays full of songs, moves, colouring, mazes and cut-and-glue, with a full teacher’s guide. Print a week for your whole class, with each child’s name on their pages.</p><span class="meta">Teacher’s guide 24 pages · 3 children’s pages a week</span></span>
     </a>
-      <div class="acts"><button class="act print" type="button">🖨️ Print</button><button class="act share" type="button">📤 Share</button></div>
+      <div class="acts"><button class="act print" type="button">🖨️ Print for my class</button><button class="act share" type="button">📤 Share</button></div>
     </div>
-    <div class="item" data-kind="pdf" data-title="Sunday school series">
-      <a class="open" href="resources/TWBH-SundaySchool-ages-6-10.pdf" target="_blank" rel="noopener">
-      <img src="resources/ss-6-10.webp" alt="" loading="lazy">
-      <span class="txt"><b>Sunday school series</b><span class="age">Ages 6–10</span>
-        <p>Teacher pages and take-home sheets: a game, an object lesson and a craft each week, plus story cards and a certificate.</p><span class="meta">PDF · 22 pages, 7 MB</span></span>
+    <div class="item" data-kind="page" data-title="Sunday school">
+      <a class="open" href="classprint.html?series=sunday">
+      <img src="resources/class/sunday.webp" alt="" loading="lazy">
+      <span class="txt"><b>Sunday school</b><span class="age">Ages 6–9</span>
+        <p>Memory verses, finding verses in a real Bible, drama, puzzles and crafts, with a full teacher’s guide. Print a week for your whole class, with each child’s name on their pages.</p><span class="meta">Teacher’s guide 23 pages · 3 children’s pages a week</span></span>
     </a>
-      <div class="acts"><button class="act print" type="button">🖨️ Print</button><button class="act share" type="button">📤 Share</button></div>
+      <div class="acts"><button class="act print" type="button">🖨️ Print for my class</button><button class="act share" type="button">📤 Share</button></div>
     </div>
   </div>
 
@@ -141,6 +141,7 @@ document.querySelectorAll('.item').forEach(function (it) {
   // viewer on a phone (where Print is in its Share or ⋮ menu)
   it.querySelector('.print').onclick = function () {
     var href = a.href;
+    if (/classprint\.html/.test(href)) { location.href = href + (L ? '&lang=' + L : ''); return; }
     if (!pdf) { window.open(href + (href.indexOf('?') < 0 ? '?' : '&') + 'print', '_blank'); return; }
     if (touch) { window.open(href, '_blank'); toast('Tap Share (or ⋮) in the PDF, then Print.'); return; }
     var f = document.createElement('iframe'); f.style.cssText = 'position:fixed;width:0;height:0;border:0;right:0;bottom:0';
