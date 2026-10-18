@@ -59,12 +59,13 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 
 /* story panel (17 Oct 2026, Johnny: "the modern bottom page blur"): like the book itself, the picture fills the panel,
    its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
-.fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000}
-.fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* the blur and the chapter colour are baked into the pictures (tools/tract_art.py), the same look as the book's pages */
-.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:left;}
+/* story panel (Johnny, 17 Oct 2026): the picture, sharp, fills the space above the words; the words sit below it
+   in white on a solid block of the panel's own colour, so each picture is fitted to its own text automatically. */
+.fr{position:absolute;inset:.12in;display:flex;flex-direction:column}
+.fr img{flex:1 1 auto;min-height:0;width:100%;object-fit:cover;display:block;border-radius:.13in}
+.fr .txt{flex:none;padding:.13in .06in .02in;color:#fff;text-align:left}
 [dir=rtl] .fr .txt{text-align:right}
-.fr .no{margin:0 0 .04in;font:800 10pt var(--display);color:var(--gold)}
+.fr .no{margin:0 0 .03in;font:800 10pt var(--display);color:var(--gold)}
 .cap{margin:0;font:400 11pt/1.4 var(--body)}
 .ref{margin:.08in 0 0;font:400 7.6pt/1.2 var(--body);opacity:.8}
 .hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display)}
@@ -129,11 +130,11 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
   // the 12 story panels: picture, which part of it to keep in the frame (vertical %), panel colour
-  // The pictures (with the blur baked in) are made by tools/tract_art.py from this list: change the picture or framing there.
+  // picture (art/src), which part to keep in view (vertical %), panel colour
   // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
-  const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 45, 'purple'],
-    ['test-2-end', 35, 'night'], ['locked-end', 42, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
-    ['cross-kneel', 100, 'orange'], ['choice-end', 95, 'orange'], ['tomb-end', 60, 'sky'], ['gates-run', 55, 'sky'], ['new-earth-hands', 70, 'sky']];
+  const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 15, 'purple'],
+    ['test-2-end', 30, 'night'], ['locked-end', 50, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
+    ['cross-kneel', 70, 'orange'], ['choice-end', 62, 'orange'], ['tomb-end', 50, 'sky'], ['gates-run', 38, 'sky'], ['new-earth-hands', 32, 'sky']];
   try {
     const langs = await get('content/languages.json');
     const sp = new URLSearchParams(location.search), q = sp.get('lang');
@@ -155,7 +156,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const story = i => {
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : i === 12 ? (tr.toabc || '') : '';
-      const pic = `<img src="art/tract/${String(i + 1).padStart(2, '0')}.jpg" alt="">`;
+      const pic = `<img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
       return [col, `<div class="fr" data-p="${i + 1}">${pic}` +
         `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
