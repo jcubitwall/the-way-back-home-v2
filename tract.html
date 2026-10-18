@@ -72,7 +72,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 
 /* cover */
 .cover{background:#7fb3e6}
-.cover .art{position:absolute;inset:-.125in;background:url(art/src/cover.jpg) center 6%/cover no-repeat}
+.cover .art{position:absolute;inset:-.125in;background:url(art/print/cover.jpg) center 6%/cover no-repeat}
 .cover .shade{position:absolute;left:-.125in;right:-.125in;bottom:-.125in;height:3.2in;background:linear-gradient(180deg,rgba(20,14,40,0),rgba(20,14,40,.62) 50%,rgba(20,14,40,.8))}
 .cover .words{position:absolute;left:.3in;right:.3in;bottom:.5in;text-align:center;color:#fff}
 .cover h1{margin:0;font:900 31pt/1 var(--display)}
@@ -130,7 +130,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
   // the 12 story panels: picture, which part of it to keep in the frame (vertical %), panel colour
-  // picture (art/src), which part to keep in view (vertical %), panel colour
+  // picture (art/print: 4x AI-upscaled copies of art/src for print, ~360 dpi; see CLAUDE.md), which part to keep in view (vertical %), panel colour
   // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
   const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 15, 'purple'],
     ['test-2-end', 30, 'night'], ['locked-2-end', 40, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
@@ -156,7 +156,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const story = i => {
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : i === 12 ? (tr.toabc || '') : '';
-      const pic = `<img src="art/src/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
+      const pic = `<img src="art/print/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
       return [col, `<div class="fr" data-p="${i + 1}">${pic}` +
         `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
