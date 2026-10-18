@@ -30,7 +30,7 @@ def glance():
             f'<table class="std"><tr><th></th><th>Week</th><th>Big idea</th><th>Memory verse (CSB) · Bible skill</th><th>Kids’ pages</th></tr>{rows}</table>'
             f'<div class="grid2" style="margin-top:.12in"><div class="box line"><h3>In this guide</h3><ul style="margin:0"><li>How 6–9s learn, and what this series does about it</li><li>A Sunday morning, step by step (60 or 45 minutes)</li>'
             f'<li>Your toolbox: attention cue, class covenant, readers and non-readers, small groups</li><li>The Bible-skills ladder</li><li>Sharing the gospel with 6–9s; the harder pages</li><li>Two pages per week, answer keys, sources</li></ul></div>'
-            f'<div class="box line"><h3>In the kids’ pack</h3><ul style="margin:0"><li>Letter to families; Road Home map; bookmarks and invite cards</li><li>Each week, 3 pages: <b>1</b> arrival puzzle, <b>2</b> memory verse (goes home with the “For grown-ups” box), <b>3</b> make or write</li><li>Certificate</li></ul>'
+            f'<div class="box line"><h3>In the kids’ pack</h3><p style="margin:0 0 4pt"><b>Short on paper or ink?</b> Print only <b>page 2</b> each week (black and white is fine): the memory verse and the box for parents. Puzzles and crafts are optional; many can be done on a board or with scrap paper.</p><ul style="margin:0"><li>Letter to families; Road Home map; bookmarks and invite cards</li><li>Each week, 3 pages: <b>1</b> arrival puzzle, <b>2</b> memory verse (goes home with the “For grown-ups” box), <b>3</b> make or write</li><li>Certificate</li></ul>'
             f'<p class="small" style="margin:4pt 0 0">Pictures are real frames from the book’s clips.</p></div></div>{tfoot("Welcome")}</div>')
 
 def learn():

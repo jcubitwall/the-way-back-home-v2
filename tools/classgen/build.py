@@ -28,6 +28,16 @@ svg { display: block; }
 # ======================================================================
 #                         KIDS ACTIVITY PACK
 # ======================================================================
+BW_CSS = '''
+/* ink-saving black and white: no coloured blocks or photos on the children's pages (pictures inside activities stay) */
+.khead { background: #fff !important; color: #1d1a24 !important; border: 3px solid #1d1a24; }
+.khead .ph { display: none; }
+.khead .wk, .khead .pn b { color: #1d1a24 !important; border: 2px solid #1d1a24; }
+.slot b, .panel .n { background: #fff !important; color: #1d1a24 !important; border: 2px solid #1d1a24; }
+.verse-fill { background: #fff !important; border: 2px solid #1d1a24; }
+.cert { border-color: #1d1a24 !important; }
+.cert img { filter: grayscale(1); }
+'''
 KCSS = BASE_CSS + '''
 .khead { display: flex; align-items: center; gap: .16in; border-radius: .22in; padding: .1in .16in .1in .1in; color: #fff; height: 1.32in; }
 .khead .ph { width: 1.12in; height: 1.12in; border-radius: 50%; object-fit: cover; border: 4px solid #fff; flex: none; }
@@ -99,9 +109,9 @@ TASK1 = {1: 'Colour God’s good garden. Count the fruit!', 2: 'Colour the tree.
 
 def k_page1(w):
     return (f'<div class="page">{khead(w, 1)}<div class="task">{ICON_CRAYON}{esc(TASK1[w["n"]])}</div>'
-            f'<svg viewBox="0 0 600 440" class="colour">{COLOUR[COLOUR_FOR[w["n"]]]()}</svg>'
-            f'<div class="task" style="font-size:13pt;margin:.08in 0 0">{ICON_PENCIL}Trace the words. Say them with the moves!</div>{trace_svg(w["say"], 62 if len(w["say"]) < 22 else 52)}'
-            f'{kfoot(w)}</div>')
+            f'<svg viewBox="0 0 600 440" class="colour" style="height:4.55in;width:6.22in">{COLOUR[COLOUR_FOR[w["n"]]]()}</svg>'
+            f'<div class="task" style="font-size:13pt;margin:.04in 0 0">{ICON_PENCIL}Trace the words. Say them with the moves!</div>{trace_svg(w["say"], 62 if len(w["say"]) < 22 else 52).replace("class=\"trace\"", "class=\"trace\" style=\"height:.8in\"")}'
+            f'{grownups(w)}{kfoot(w)}</div>')
 
 # ---------- page 2 puzzles ----------
 def p2_count():
@@ -339,7 +349,9 @@ def build_kids():
 if __name__ == '__main__':
     import weasyprint
     which = sys.argv[1] if len(sys.argv) > 1 else 'kids'
-    if which == 'kids':
-        open(f'{B}/kids.html', 'w').write(build_kids())
-        weasyprint.HTML(f'{B}/kids.html', base_url=B).write_pdf(f'{B}/kids.pdf')
+    if which in ('kids', 'kidsbw'):
+        h = build_kids()
+        if which == 'kidsbw': h = h.replace('</style>', BW_CSS + '</style>', 1)
+        open(f'{B}/{which}.html', 'w').write(h)
+        weasyprint.HTML(f'{B}/{which}.html', base_url=B).write_pdf(f'{B}/{which}.pdf')
     print('ok')

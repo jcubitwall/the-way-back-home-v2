@@ -460,7 +460,10 @@ def build():
 
 if __name__ == '__main__':
     import weasyprint, json
-    open(f'{B}/kids69.html', 'w').write(build())
-    weasyprint.HTML(f'{B}/kids69.html', base_url=B).write_pdf(f'{B}/kids69.pdf')
+    for name, bw in [('kids69', False), ('kids69bw', True)]:
+        h = build()
+        if bw: h = h.replace('</style>', LB.BW_CSS + '.wb span, .chip { border-width: 2px; }</style>', 1)
+        open(f'{B}/{name}.html', 'w').write(h)
+        weasyprint.HTML(f'{B}/{name}.html', base_url=B).write_pdf(f'{B}/{name}.pdf')
     json.dump({'cw': getattr(w4_p1, 'answer', '')}, open(f'{B}/answers69.json', 'w'))
     print('ok')

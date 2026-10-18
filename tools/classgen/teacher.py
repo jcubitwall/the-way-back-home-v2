@@ -65,7 +65,7 @@ def glance():
             f'<div class="grid2" style="margin-top:.14in"><div class="box line"><h3>What’s in this guide</h3><ul>'
             f'<li>How little ones learn, and how this series uses it</li><li>A Sunday morning, step by step (60 or 45 minutes)</li><li>Your classroom toolbox: attention cue, redirects, scissors by age</li>'
             f'<li>Sharing Jesus with 3–5s, and how to handle the harder pages</li><li>Supplies and prep for all 7 weeks</li><li>Two pages per week, with a timed plan and words to say</li><li>Answer keys, all the songs on one page, and sources</li></ul></div>'
-            f'<div class="box line"><h3>What’s in the kids’ pack</h3><ul><li><b>Letter to families</b> (send home in week 1)</li><li><b>My Road Home</b> sticker chart (one per child, keep it in class)</li>'
+            f'<div class="box line"><h3>What’s in the kids’ pack</h3><p style="margin:0 0 4pt"><b>Short on paper or ink?</b> Print only <b>page 1</b> each week (black and white is fine): it has the colouring, the words to trace and the box for parents. Everything else is optional.</p><ul><li><b>Letter to families</b> (send home in week 1)</li><li><b>My Road Home</b> sticker chart (one per child, keep it in class)</li>'
             f'<li>Each week, <b>3 pages</b>: 1 colour and trace, 2 puzzle or maze (with the “For grown-ups” box), 3 cut and glue or a craft</li><li><b>Certificate</b> for week 7</li></ul>'
             f'<p class="small">The pictures and story cards are real frames from the book’s clips, so children recognise exactly what they saw on screen.</p></div></div>'
             f'{tfoot("Welcome")}</div>')

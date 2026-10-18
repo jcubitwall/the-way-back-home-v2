@@ -37,7 +37,13 @@
    "letter": 1,
    "chart": 2,
    "cert": 24,
-   "sheets": null
+   "sheets": null,
+   "kidsBW": "resources/class/little-kids-bw.pdf",
+   "essential": 0,
+   "puzzle": 1,
+   "craft": 2,
+   "essentialName": "page 1: colouring, words to trace and the parents’ box",
+   "chartName": "Sticker chart"
   },
   "sunday": {
    "title": "Sunday school",
@@ -70,7 +76,13 @@
     "week1": 3,
     "week7": 4,
     "note": "Bookmarks (3 per sheet) in week 1, invite cards (4 per sheet) in week 7"
-   }
+   },
+   "kidsBW": "resources/class/sunday-kids-bw.pdf",
+   "essential": 1,
+   "puzzle": 0,
+   "craft": 2,
+   "essentialName": "page 2: memory verse and the parents’ box",
+   "chartName": "Road Home map"
   }
  }
 }

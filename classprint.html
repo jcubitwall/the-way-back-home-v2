@@ -47,6 +47,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
 .hint{font-size:14px;color:var(--soft);margin:6px 0 0;line-height:1.45}
 .chk{display:flex;gap:10px;align-items:flex-start;margin:6px 0;font-size:15.5px;line-height:1.4;cursor:pointer}
 .chk input{width:20px;height:20px;margin-top:1px;flex:none;accent-color:var(--sky)}
+.more{margin-top:8px}.more summary{cursor:pointer;font-weight:700;color:var(--sky);padding:6px 0}
 .sum{margin-top:14px;background:rgba(47,127,217,.08);border:1px solid rgba(47,127,217,.25);border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.5}
 .sum ul{margin:4px 0 0;padding-left:20px}
 .go{display:block;width:100%;margin-top:14px;font:800 19px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:14px;cursor:pointer;box-shadow:0 4px 0 var(--gold2)}
@@ -61,7 +62,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
 <header><div class="wrap">
   <a class="back" id="back" href="resources.html">‹ Resources</a>
   <h1>Print for your class</h1>
-  <p class="lead">One teacher’s guide, and a set for every child. Pick the week, say how many children you have, and get one PDF ready to print.</p>
+  <p class="lead">One sheet per child per week, in black and white. Pick the week, say how many children you have, and get one PDF ready to print.</p>
 </div></header>
 <main>
   <div class="series" id="series">
@@ -77,7 +78,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
   <div class="step"><h2><i>2</i>How many children?</h2>
     <div class="row">
       <span class="num">Children <button class="pm" type="button" data-t="kids" data-d="-1" aria-label="One fewer">−</button><input id="kids" type="number" min="0" max="80" value="12" inputmode="numeric"><button class="pm" type="button" data-t="kids" data-d="1" aria-label="One more">+</button></span>
-      <span class="num">Spares <button class="pm" type="button" data-t="spare" data-d="-1" aria-label="One fewer spare">−</button><input id="spare" type="number" min="0" max="20" value="2" inputmode="numeric"><button class="pm" type="button" data-t="spare" data-d="1" aria-label="One more spare">+</button></span>
+      <span class="num">Spares <button class="pm" type="button" data-t="spare" data-d="-1" aria-label="One fewer spare">−</button><input id="spare" type="number" min="0" max="20" value="1" inputmode="numeric"><button class="pm" type="button" data-t="spare" data-d="1" aria-label="One more spare">+</button></span>
     </div>
     <p class="hint">Spares are for visitors and for mistakes with scissors.</p>
     <p style="margin:14px 0 6px;font-weight:700">Names on the pages <span style="font-weight:400;color:var(--soft)">(optional)</span></p>
@@ -85,18 +86,31 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     <p class="hint">Each child’s pages come with their name already on the “My name” line (and on the certificate). Spares stay blank. Names stay on this device.</p>
   </div>
 
-  <div class="step"><h2><i>3</i>For the teacher</h2>
-    <label class="chk"><input type="checkbox" id="tweek" checked><span><b>This week’s teacher pages</b>, 1 copy</span></label>
-    <label class="chk"><input type="checkbox" id="tintro"><span><b>Introduction, answer keys and songs</b>, 1 copy (once, at the start)</span></label>
-    <p style="margin:12px 0 4px;font-weight:700">Order of the children’s pages</p>
-    <label class="chk"><input type="radio" name="order" value="page" checked><span><b>Grouped by page</b>: all the page 1s, then all the page 2s… Easiest to hand out one activity at a time.</span></label>
-    <label class="chk"><input type="radio" name="order" value="child"><span><b>One set per child</b>: each child’s pages together. Easiest for take-home bags.</span></label>
+  <div class="step"><h2><i>3</i>What to print</h2>
+    <p style="margin:0 0 8px;line-height:1.5">Each child needs only <b>one sheet a week</b>: <span id="essname"></span>. Everything below is optional.</p>
+    <label class="chk"><input type="checkbox" id="tweek" checked><span><b>This week’s teacher pages</b> (2 pages, 1 copy)</span></label>
+    <details class="more" id="more"><summary>Optional extras</summary>
+      <label class="chk"><input type="checkbox" id="xpuzzle"><span><b>Puzzle page</b> for each child</span></label>
+      <label class="chk"><input type="checkbox" id="xcraft"><span><b>Craft or cut-and-glue page</b> for each child</span></label>
+      <label class="chk"><input type="checkbox" id="xletter"><span><b>Letter to families</b> (week 1). Tip: send it by phone instead.</span></label>
+      <label class="chk"><input type="checkbox" id="xchart"><span><b id="chartname">Chart</b> for each child (week 1). Tip: draw one on the wall for the whole class.</span></label>
+      <label class="chk"><input type="checkbox" id="xcert"><span><b>Certificate</b> for each child (week 7)</span></label>
+      <label class="chk" id="xsheetsrow"><input type="checkbox" id="xsheets"><span><b>Bookmarks and invite cards</b> (weeks 1 and 7)</span></label>
+      <label class="chk"><input type="checkbox" id="tintro"><span><b>Teacher’s introduction, answer keys and songs</b> (10 pages). Tip: read them on screen.</span></label>
+    </details>
+    <p style="margin:14px 0 4px;font-weight:700">Ink</p>
+    <label class="chk"><input type="radio" name="ink" value="bw" checked><span><b>Black and white</b>: saves ink and photocopies well</span></label>
+    <label class="chk"><input type="radio" name="ink" value="colour"><span><b>Colour</b></span></label>
+    <p style="margin:14px 0 4px;font-weight:700">Order of the children’s pages</p>
+    <label class="chk"><input type="radio" name="order" value="page" checked><span><b>Grouped by page</b>: easiest to hand out one activity at a time</span></label>
+    <label class="chk"><input type="radio" name="order" value="child"><span><b>One set per child</b>: easiest for take-home bags</span></label>
+    <p class="hint">Photocopier nearby? Set children to 1 and spares to 0, print that one set, and photocopy it. That is usually the cheapest way.</p>
   </div>
 
   <div class="sum" id="sum"></div>
   <button class="go" id="go" type="button">Make the PDF</button>
   <p class="msg" id="msg" role="status" aria-live="polite"></p>
-  <p class="full">Print single-sided on US Letter (or A4 with “fit to page”). The craft pages are cut up, so don’t print them double-sided.<br>
+  <p class="full">Print single-sided on US Letter (or A4 with “fit to page”).<br>
     Whole files: <span id="fulllinks"></span></p>
 </main>
 <script>
@@ -121,7 +135,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     $('weeks').innerHTML = [...Array(S().weeks)].map((_, i) => `<label><input type="radio" name="week" value="${i + 1}"><span>Week ${i + 1}</span></label>`).join('') +
       `<label><input type="radio" name="week" value="all"><span>Whole series</span></label>`;
     (document.querySelector(`#weeks input[value="${week}"]`) || document.querySelector('#weeks input')).checked = true;
-    document.querySelectorAll('#weeks input').forEach(r => r.onchange = () => { week = r.value; $('tintro').checked = week === '1' || week === 'all'; update(); });
+    document.querySelectorAll('#weeks input').forEach(r => r.onchange = () => { week = r.value; update(); });
   };
   const fullLinks = () => { $('fulllinks').innerHTML = `<a href="${S().teacher}" target="_blank" rel="noopener">${esc(S().title)} teacher’s guide</a> · <a href="${S().kids}" target="_blank" rel="noopener">children’s pages (1 of each)</a>`; };
   document.querySelectorAll('#series input').forEach(r => r.onchange = () => {
@@ -138,7 +152,11 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     const n = names().length; if (n > num('kids', 0, 80)) { $('kids').value = n; store('kids', n); }
     update();
   };
-  ['tweek', 'tintro'].forEach(k => $(k).onchange = update);
+  const OPT = ['tweek', 'tintro', 'xpuzzle', 'xcraft', 'xletter', 'xchart', 'xcert', 'xsheets'];
+  OPT.forEach(k => { const v = recall('opt-' + k); if (v != null) $(k).checked = v === '1'; $(k).onchange = () => { store('opt-' + k, $(k).checked ? '1' : '0'); update(); }; });
+  if (OPT.slice(1).some(k => $(k).checked)) $('more').open = true;
+  const ink = recall('ink'); if (ink) document.querySelector(`input[name=ink][value="${ink}"]`).checked = true;
+  document.querySelectorAll('input[name=ink]').forEach(r => r.onchange = () => { store('ink', r.value); update(); });
   document.querySelectorAll('input[name=order]').forEach(r => r.onchange = update);
 
   // ---- what goes in the PDF ----
@@ -150,25 +168,31 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     if ($('tweek').checked) wk.forEach(x => teacher.push(...range(s.teacherWeekStart + s.teacherWeekPages * (x - 1), s.teacherWeekPages)));
     if ($('tintro').checked) teacher.push(...s.teacherEnd);
     const kidPages = [];   // [page, named?] per child
-    if (all || w === 1) kidPages.push([s.letter, false], [s.chart, true]);
-    wk.forEach(x => range(s.kidsWeekStart + s.kidsWeekPages * (x - 1), s.kidsWeekPages).forEach(p => kidPages.push([p, true])));
-    if (all || w === s.weeks) kidPages.push([s.cert, 'cert']);
+    const on = k => $(k).checked;
+    if ((all || w === 1) && on('xletter')) kidPages.push([s.letter, false]);
+    if ((all || w === 1) && on('xchart')) kidPages.push([s.chart, true]);
+    wk.forEach(x => {
+      const base = s.kidsWeekStart + s.kidsWeekPages * (x - 1);
+      [[s.puzzle, on('xpuzzle')], [s.essential, true], [s.craft, on('xcraft')]].sort((a, b) => a[0] - b[0]).forEach(([o, use]) => { if (use) kidPages.push([base + o, true]); });
+    });
+    if ((all || w === s.weeks) && on('xcert')) kidPages.push([s.cert, 'cert']);
     const kids = num('kids', 0, 80), spare = num('spare', 0, 20), nm = names();
     let sheets = 0;
-    if (s.sheets && kids + spare > 0) {
+    if (s.sheets && kids + spare > 0 && $('xsheets').checked) {
       const per = all ? Math.min(s.sheets.week1, s.sheets.week7) : w === 1 ? s.sheets.week1 : w === s.weeks ? s.sheets.week7 : 0;
       if (per) sheets = Math.ceil((kids + spare) / per);
     }
     return { teacher, kidPages, kids, spare, names: nm, sheets, sheetPage: s.sheets && s.sheets.page };
   }
   function update() {
+    $('essname').textContent = S().essentialName; $('chartname').textContent = S().chartName; $('xsheetsrow').hidden = !S().sheets;
     const p = plan(), copies = p.kids + p.spare, kidTotal = p.kidPages.length * copies, total = p.teacher.length + kidTotal + p.sheets;
     const named = Math.min(p.names.length, p.kids);
     $('sum').innerHTML = `<b>${total} page${total === 1 ? '' : 's'}</b> to print:<ul>` +
       (p.teacher.length ? `<li>Teacher: ${p.teacher.length} page${p.teacher.length === 1 ? '' : 's'}, 1 copy</li>` : '') +
       (copies ? `<li>Children: ${p.kidPages.length} page${p.kidPages.length === 1 ? '' : 's'} × ${copies} (${p.kids} children${p.spare ? ` + ${p.spare} spare` : ''})${named ? `, ${named} with names` : ''}</li>` : '') +
       (p.sheets ? `<li>${week === '1' ? 'Bookmarks' : week === 'all' ? 'Bookmarks and invite cards' : 'Invite cards'}: ${p.sheets} sheet${p.sheets === 1 ? '' : 's'} (cut apart)</li>` : '') +
-      `</ul>` + (week === '1' || week === 'all' ? `<span style="color:var(--soft)">Includes the letter to families and the ${series === 'little' ? 'sticker chart' : 'Road Home map'} for each child${week === 'all' ? ', and the certificates' : ''}.</span>` : week === String(S().weeks) ? `<span style="color:var(--soft)">Includes a certificate for each child.</span>` : '');
+      `</ul>`;
     $('go').disabled = total === 0;
   }
 
@@ -182,7 +206,8 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     try {
       await loadLib();
       const s = S(), p = plan(), { PDFDocument, StandardFonts, rgb } = PDFLib;
-      const [tb, kb] = await Promise.all([p.teacher.length ? getBytes(s.teacher) : null, getBytes(s.kids)]);
+      const bw = document.querySelector('input[name=ink]:checked').value === 'bw';
+      const [tb, kb] = await Promise.all([p.teacher.length ? getBytes(s.teacher) : null, getBytes(bw && s.kidsBW ? s.kidsBW : s.kids)]);
       const doc = await PDFDocument.create(), font = await doc.embedFont(StandardFonts.HelveticaBold), ink = rgb(.11, .1, .14);
       const emb = async (bytes, pages) => { const u = [...new Set(pages)], e = await doc.embedPdf(bytes, u.map(x => x - 1)); return Object.fromEntries(u.map((x, i) => [x, e[i]])); };
       const T = p.teacher.length ? await emb(tb, p.teacher) : {};
@@ -205,13 +230,13 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
       for (let i = 0; i < p.sheets; i++) put(K[p.sheetPage]);
       const url = URL.createObjectURL(new Blob([await doc.save()], { type: 'application/pdf' }));
       const file = `The-Way-Back-Home-${series}-${week === 'all' ? 'all-weeks' : 'week-' + week}.pdf`;
-      say(`Ready: <a href="${url}" download="${file}" target="_blank">open the PDF</a> (${doc.getPageCount()} pages). Print it single-sided.`);
+      say(`Ready: <a href="${url}" download="${file}" target="_blank">open the PDF</a> (${doc.getPageCount()} pages). Print it single-sided${bw ? ', black and white' : ''}.`);
       if (win) win.location = url; else location.href = url;
     } catch (e) { if (win) win.close(); say('Sorry, the PDF could not be made. Please check your connection and try again.'); }
     $('go').disabled = false;
   };
 
-  weeksUI(); fullLinks(); $('tintro').checked = week === '1' || week === 'all'; update();
+  weeksUI(); fullLinks(); update();
 })();
 </script>
 </body>
