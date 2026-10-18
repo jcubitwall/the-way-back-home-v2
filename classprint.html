@@ -89,6 +89,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
   <div class="step"><h2><i>3</i>What to print</h2>
     <p style="margin:0 0 8px;line-height:1.5">Each child needs only <b>one sheet a week</b>: <span id="essname"></span>. Everything below is optional.</p>
     <label class="chk"><input type="checkbox" id="tweek" checked><span><b>This week’s teacher pages</b> (2 pages, 1 copy)</span></label>
+    <label class="chk" id="posterrow"><input type="checkbox" id="xposter" checked><span><b>Classroom poster</b> for the wall: the week’s picture, big idea and memory verse (1 colour sheet for the whole class)</span></label>
     <details class="more" id="more"><summary>Optional extras</summary>
       <label class="chk"><input type="checkbox" id="xpuzzle"><span><b>Puzzle page</b> for each child</span></label>
       <label class="chk"><input type="checkbox" id="xcraft"><span><b>Craft or cut-and-glue page</b> for each child</span></label>
@@ -137,7 +138,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     (document.querySelector(`#weeks input[value="${week}"]`) || document.querySelector('#weeks input')).checked = true;
     document.querySelectorAll('#weeks input').forEach(r => r.onchange = () => { week = r.value; update(); });
   };
-  const fullLinks = () => { $('fulllinks').innerHTML = `<a href="${S().teacher}" target="_blank" rel="noopener">${esc(S().title)} teacher’s guide</a> · <a href="${S().kids}" target="_blank" rel="noopener">children’s pages (1 of each)</a>`; };
+  const fullLinks = () => { $('fulllinks').innerHTML = `<a href="${S().teacher}" target="_blank" rel="noopener">${esc(S().title)} teacher’s guide</a> · <a href="${S().kids}" target="_blank" rel="noopener">children’s pages (1 of each)</a>` + (S().posters ? ` · <a href="${S().posters}" target="_blank" rel="noopener">classroom posters</a>` : ''); };
   document.querySelectorAll('#series input').forEach(r => r.onchange = () => {
     series = r.value; store('series', series); $('names').value = recall('names-' + series) || ''; weeksUI(); fullLinks(); update();
   });
@@ -152,9 +153,9 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
     const n = names().length; if (n > num('kids', 0, 80)) { $('kids').value = n; store('kids', n); }
     update();
   };
-  const OPT = ['tweek', 'tintro', 'xpuzzle', 'xcraft', 'xletter', 'xchart', 'xcert', 'xsheets'];
+  const OPT = ['tweek', 'xposter', 'tintro', 'xpuzzle', 'xcraft', 'xletter', 'xchart', 'xcert', 'xsheets'];
   OPT.forEach(k => { const v = recall('opt-' + k); if (v != null) $(k).checked = v === '1'; $(k).onchange = () => { store('opt-' + k, $(k).checked ? '1' : '0'); update(); }; });
-  if (OPT.slice(1).some(k => $(k).checked)) $('more').open = true;
+  if (OPT.slice(2).some(k => $(k).checked)) $('more').open = true;
   const ink = recall('ink'); if (ink) document.querySelector(`input[name=ink][value="${ink}"]`).checked = true;
   document.querySelectorAll('input[name=ink]').forEach(r => r.onchange = () => { store('ink', r.value); update(); });
   document.querySelectorAll('input[name=order]').forEach(r => r.onchange = update);
@@ -182,14 +183,16 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
       const per = all ? Math.min(s.sheets.week1, s.sheets.week7) : w === 1 ? s.sheets.week1 : w === s.weeks ? s.sheets.week7 : 0;
       if (per) sheets = Math.ceil((kids + spare) / per);
     }
-    return { teacher, kidPages, kids, spare, names: nm, sheets, sheetPage: s.sheets && s.sheets.page };
+    const posters = s.posters && $('xposter').checked ? wk : [];
+    return { teacher, posters, kidPages, kids, spare, names: nm, sheets, sheetPage: s.sheets && s.sheets.page };
   }
   function update() {
-    $('essname').textContent = S().essentialName; $('chartname').textContent = S().chartName; $('xsheetsrow').hidden = !S().sheets;
-    const p = plan(), copies = p.kids + p.spare, kidTotal = p.kidPages.length * copies, total = p.teacher.length + kidTotal + p.sheets;
+    $('essname').textContent = S().essentialName; $('chartname').textContent = S().chartName; $('xsheetsrow').hidden = !S().sheets; $('posterrow').hidden = !S().posters;
+    const p = plan(), copies = p.kids + p.spare, kidTotal = p.kidPages.length * copies, total = p.teacher.length + p.posters.length + kidTotal + p.sheets;
     const named = Math.min(p.names.length, p.kids);
     $('sum').innerHTML = `<b>${total} page${total === 1 ? '' : 's'}</b> to print:<ul>` +
       (p.teacher.length ? `<li>Teacher: ${p.teacher.length} page${p.teacher.length === 1 ? '' : 's'}, 1 copy</li>` : '') +
+      (p.posters.length ? `<li>Classroom poster: ${p.posters.length} colour sheet${p.posters.length === 1 ? '' : 's'}</li>` : '') +
       (copies ? `<li>Children: ${p.kidPages.length} page${p.kidPages.length === 1 ? '' : 's'} × ${copies} (${p.kids} children${p.spare ? ` + ${p.spare} spare` : ''})${named ? `, ${named} with names` : ''}</li>` : '') +
       (p.sheets ? `<li>${week === '1' ? 'Bookmarks' : week === 'all' ? 'Bookmarks and invite cards' : 'Invite cards'}: ${p.sheets} sheet${p.sheets === 1 ? '' : 's'} (cut apart)</li>` : '') +
       `</ul>`;
@@ -211,6 +214,7 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
       const doc = await PDFDocument.create(), font = await doc.embedFont(StandardFonts.HelveticaBold), ink = rgb(.11, .1, .14);
       const emb = async (bytes, pages) => { const u = [...new Set(pages)], e = await doc.embedPdf(bytes, u.map(x => x - 1)); return Object.fromEntries(u.map((x, i) => [x, e[i]])); };
       const T = p.teacher.length ? await emb(tb, p.teacher) : {};
+      const P = p.posters.length ? await emb(await getBytes(s.posters), p.posters) : {};
       const K = await emb(kb, p.kidPages.map(x => x[0]).concat(p.sheets ? [p.sheetPage] : []));
       const put = (e, name, kind) => {
         const pg = doc.addPage([e.width, e.height]); pg.drawPage(e, { x: 0, y: 0 });
@@ -224,13 +228,14 @@ textarea{width:100%;min-height:120px;font:16px/1.45 var(--body);padding:10px 12p
         }
       };
       p.teacher.forEach(x => put(T[x]));
+      p.posters.forEach(x => put(P[x]));
       const people = [...Array(p.kids + p.spare)].map((_, i) => (i < p.kids ? p.names[i] || '' : ''));
       if (document.querySelector('input[name=order]:checked').value === 'page') p.kidPages.forEach(([x, named]) => people.forEach(n => put(K[x], n, named)));
       else people.forEach(n => p.kidPages.forEach(([x, named]) => put(K[x], n, named)));
       for (let i = 0; i < p.sheets; i++) put(K[p.sheetPage]);
       const url = URL.createObjectURL(new Blob([await doc.save()], { type: 'application/pdf' }));
       const file = `The-Way-Back-Home-${series}-${week === 'all' ? 'all-weeks' : 'week-' + week}.pdf`;
-      say(`Ready: <a href="${url}" download="${file}" target="_blank">open the PDF</a> (${doc.getPageCount()} pages). Print it single-sided${bw ? ', black and white' : ''}.`);
+      say(`Ready: <a href="${url}" download="${file}" target="_blank">open the PDF</a> (${doc.getPageCount()} pages). Print it single-sided${bw ? ', black and white' : ''}${p.posters.length ? ` (page ${p.teacher.length + 1}${p.posters.length > 1 ? '–' + (p.teacher.length + p.posters.length) : ''} is the colour poster: print it in colour if you can)` : ''}.`);
       if (win) win.location = url; else location.href = url;
     } catch (e) { if (win) win.close(); say('Sorry, the PDF could not be made. Please check your connection and try again.'); }
     $('go').disabled = false;

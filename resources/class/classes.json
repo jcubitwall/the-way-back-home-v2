@@ -81,7 +81,8 @@
    "puzzle": 0,
    "craft": 2,
    "essentialName": "page 2: memory verse and the parents’ box",
-   "chartName": "Road Home map"
+   "chartName": "Road Home map",
+   "posters": "resources/class/sunday-posters.pdf"
   }
  }
 }
