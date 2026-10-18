@@ -78,10 +78,12 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .cover .tag{display:inline-block;margin:.12in 0 0;padding:.05in .16in;border-radius:999px;background:var(--gold);color:#2B2233;font:800 9pt var(--display)}
 
 /* text panels (back, A-B-C, prayer) */
-.sheetcard{position:absolute;inset:.12in;background:rgba(255,250,240,.9);border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
-.blurbg{position:absolute;inset:0;background-size:cover;background-position:center}
+.sheetcard{position:absolute;inset:.12in;background:#fff7ec;border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
 .sheetcard h2{margin:0 0 .08in;font:900 15pt/1.15 var(--display);color:var(--orange)}
 .sky .sheetcard h2{color:var(--sky)}
+.sky .sheetcard{background:#eef5fd}.orange .sheetcard{background:#fdf1e4}
+.abc{padding:.24in .24in}.abc h2{font-size:14pt}.abc .intro{margin-bottom:.1in}.abc .step{margin-bottom:.08in;font-size:9.2pt}
+.abc h3{margin:.08in 0 .06in;font:900 11.5pt/1.15 var(--display);color:var(--orange)}.abc .prayer{font-size:9.4pt;padding:.11in .13in;background:#fbe0c2}.abc .small{margin-top:.08in}
 .sheetcard .intro{margin:0 0 .14in;font:400 9pt/1.35 var(--body);color:var(--muted)}
 .step{display:flex;gap:.1in;align-items:flex-start;margin:0 0 .12in;font:400 9.6pt/1.35 var(--body)}
 .step b.k{flex:none;width:.3in;height:.3in;border-radius:.07in;background:var(--orange);color:#fff;font:900 11pt/.3in var(--display);text-align:center}
@@ -131,7 +133,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   // Picture rule (Johnny): never use cross-clip/cross-end where the message is "He took my place" (Chase turns away there).
   const ART = [['garden-end', 45, 'green'], ['rule-point', 40, 'green'], ['fruit-end', 32, 'purple'], ['exile-end', 45, 'purple'],
     ['test-2-end', 35, 'night'], ['locked-end', 42, 'night'], ['scrub-clip', 30, 'purple'], ['door-end', 35, 'orange'],
-    ['cross-kneel', 100, 'orange'], ['choice-end', 95, 'orange'], ['tomb-end', 60, 'sky'], ['gates-arrive', 75, 'sky']];
+    ['cross-kneel', 100, 'orange'], ['choice-end', 95, 'orange'], ['tomb-end', 60, 'sky'], ['gates-run', 55, 'sky'], ['new-earth-hands', 70, 'sky']];
   try {
     const langs = await get('content/languages.json');
     const sp = new URLSearchParams(location.search), q = sp.get('lang');
@@ -152,24 +154,23 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     // each panel: [colour class, inner html]
     const story = i => {
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
-      const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : '';
+      const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : i === 12 ? (tr.toabc || '') : '';
       const pic = `<img src="art/tract/${String(i + 1).padStart(2, '0')}.jpg" alt="">`;
       return [col, `<div class="fr" data-p="${i + 1}">${pic}` +
         `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
-    const backP = ['sky', `<div class="blurbg" style="background-image:url(art/tract/bg-gates-end.jpg)"></div><div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
+    const backP = ['sky', `<div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
       `<p class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</p><div class="giver" id="giver"></div><p class="small" style="margin-top:.08in">${esc(tr.talk)}</p><p class="small" style="margin-top:.04in">${esc(tr.gift)}</p></div>`];
     const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
-    const abcP = ['orange', `<div class="blurbg" style="background-image:url(art/tract/bg-choice-end.jpg)"></div><div class="sheetcard"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}<p class="small">${esc(P.ref)}</p></div>`];
-    const prayP = ['orange', `<div class="blurbg" style="background-image:url(art/tract/bg-clean.jpg)"></div><div class="sheetcard"><h2>${esc(tr.pray)}</h2><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)}</p></div>`];
-
+    const abcP = ['orange', `<div class="sheetcard abc"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}` +
+      `<h3>${esc(tr.pray)}</h3><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)} · ${esc(P.ref)}</p></div>`];
     const side = (rows) => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
       const [cls, html] = p[0], flip = p[1];
       return `<div class="cell ${cls} c${c} r${r}${flip ? ' flip' : ''}"><div class="pn">${html}</div></div>`;
     }).join('')).join('')}</div>`;
     const S = i => [story(i), false], U = i => [story(i), true];
-    const side1 = side([[[backP, false], [abcP, false], [prayP, false], [coverP, false]], [U(3), U(2), U(1), U(0)]]);
+    const side1 = side([[[backP, false], [abcP, false], S(12), [coverP, false]], [U(3), U(2), U(1), U(0)]]);
     const side2 = side([[S(4), S(5), S(6), S(7)], [S(8), S(9), S(10), S(11)]]);
     const sheets = document.getElementById('sheets');
     sheets.innerHTML = `<p class="label">Side 1 (cover side)</p>${side1}<p class="label">Side 2 (inside)</p>${side2}`;

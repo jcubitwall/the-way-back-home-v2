@@ -15,9 +15,9 @@ import numpy as np
 # same order as the tract's panels 1–12
 PANELS = [('garden-end', 45, 'garden'), ('rule-point', 40, 'rule'), ('fruit-end', 32, 'fruit'), ('exile-end', 45, 'exile'),
           ('test-2-end', 60, 'test'), ('locked-end', 62, 'locked'), ('scrub-clip', 30, 'scrub'), ('door-end', 35, 'door'),
-          ('cross-kneel', 100, 'cross'), ('choice-end', 95, 'choice'), ('tomb-end', 60, 'gates'), ('gates-arrive', 75, 'gates')]
+          ('cross-kneel', 100, 'cross'), ('choice-end', 95, 'choice'), ('tomb-end', 60, 'gates'), ('gates-run', 55, 'gates'), ('new-earth-hands', 70, 'new-earth')]
 
-BACKS = ['gates-end', 'choice-end', 'clean']
+BACKS = []
 
 W, H = 802, 1052          # 4.01 × 5.26 in at 200 dpi (the picture frame inside each panel)
 MARGIN = 0.012            # the blur is full just this far above the words (share of the height)
