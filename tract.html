@@ -46,7 +46,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .label{font:800 15px var(--display);color:var(--muted);margin:0 0 8px}
 /* the sheet: 4 × 2 panels, the outer ones 1/8 in bigger for bleed */
 .sheet{width:17.25in;height:11.25in;display:grid;grid-template-columns:4.375in 4.25in 4.25in 4.375in;grid-template-rows:5.625in 5.625in;
-  background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.18);margin-bottom:.35in;overflow:hidden}
+  background:#fff;outline:1px solid #cfcbd9;margin-bottom:.35in;overflow:hidden}
 .cell{position:relative;overflow:hidden;
   background-image:radial-gradient(rgba(255,255,255,.12) 1.1px,transparent 1.3px);background-size:.16in .16in}
 .cell .pn{position:absolute;width:4.25in;height:5.5in}
@@ -59,24 +59,23 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 
 /* story panel (17 Oct 2026, Johnny: "the modern bottom page blur"): like the book itself, the picture fills the panel,
    its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
-.fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000;box-shadow:0 2pt 6pt rgba(0,0,0,.25)}
+.fr{position:absolute;inset:.12in;border-radius:.13in;overflow:hidden;background:#000}
 .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 /* the blur and the chapter colour are baked into the pictures (tools/tract_art.py), the same look as the book's pages */
-.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:left;
-  text-shadow:0 1px 2.5pt rgba(0,0,0,.55),0 0 10pt rgba(0,0,0,.25)}
+.fr .txt{position:absolute;left:.22in;right:.22in;bottom:.2in;color:#fff;text-align:left;}
 [dir=rtl] .fr .txt{text-align:right}
 .fr .no{margin:0 0 .04in;font:800 10pt var(--display);color:var(--gold)}
 .cap{margin:0;font:400 11pt/1.4 var(--body)}
 .ref{margin:.08in 0 0;font:400 7.6pt/1.2 var(--body);opacity:.8}
-.hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display);text-shadow:none;box-shadow:0 1.5pt 0 var(--gold2)}
+.hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display)}
 
 /* cover */
 .cover{background:#7fb3e6}
 .cover .art{position:absolute;inset:-.125in;background:url(art/src/cover.jpg) center 6%/cover no-repeat}
-.cover .shade{position:absolute;left:-.125in;right:-.125in;bottom:-.125in;height:3in;background:linear-gradient(180deg,rgba(20,14,40,0),rgba(20,14,40,.55) 55%,rgba(20,14,40,.72))}
+.cover .shade{position:absolute;left:-.125in;right:-.125in;bottom:-.125in;height:3.2in;background:linear-gradient(180deg,rgba(20,14,40,0),rgba(20,14,40,.62) 50%,rgba(20,14,40,.8))}
 .cover .words{position:absolute;left:.3in;right:.3in;bottom:.5in;text-align:center;color:#fff}
-.cover h1{margin:0;font:900 31pt/1 var(--display);text-shadow:0 2pt 8pt rgba(0,0,0,.45)}
-.cover .tag{display:inline-block;margin:.12in 0 0;padding:.05in .16in;border-radius:999px;background:var(--gold);color:#2B2233;font:800 9pt var(--display);box-shadow:0 1.5pt 0 var(--gold2)}
+.cover h1{margin:0;font:900 31pt/1 var(--display)}
+.cover .tag{display:inline-block;margin:.12in 0 0;padding:.05in .16in;border-radius:999px;background:var(--gold);color:#2B2233;font:800 9pt var(--display)}
 
 /* text panels (back, A-B-C, prayer) */
 .sheetcard{position:absolute;inset:.12in;background:rgba(255,250,240,.9);border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
@@ -102,7 +101,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   .top,.label{display:none}
   .wrap{padding:0;overflow:visible}
   .sheets{transform:none!important;margin:0}
-  .sheet{box-shadow:none;margin:0;break-after:page}
+  .sheet{outline:none;margin:0;break-after:page}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>

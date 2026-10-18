@@ -15,7 +15,7 @@ import numpy as np
 # same order as the tract's panels 1–12
 PANELS = [('garden-end', 45, 'garden'), ('rule-point', 40, 'rule'), ('fruit-end', 32, 'fruit'), ('exile-end', 45, 'exile'),
           ('test-2-end', 35, 'test'), ('locked-end', 42, 'locked'), ('scrub-clip', 30, 'scrub'), ('door-end', 35, 'door'),
-          ('cross-kneel', 100, 'cross'), ('choice-end', 95, 'choice'), ('tomb-end', 60, 'tomb'), ('gates-arrive', 75, 'gates')]
+          ('cross-kneel', 100, 'cross'), ('choice-end', 95, 'choice'), ('tomb-end', 60, 'gates'), ('gates-arrive', 75, 'gates')]
 
 BACKS = ['gates-end', 'choice-end', 'clean']
 
@@ -54,9 +54,9 @@ def page(sharp, tint):
     for i, yy in enumerate(y):
         if yy <= top: continue
         if yy <= TEXT_TOP + 0.01:
-            k = (yy - top) / (TEXT_TOP + 0.01 - top); a[i] = 0.5 * k; c[i] = mid
+            k = (yy - top) / (TEXT_TOP + 0.01 - top); a[i] = 0.64 * k; c[i] = mid
         else:
-            k = (yy - TEXT_TOP - 0.01) / (1 - TEXT_TOP - 0.01); a[i] = 0.5 + 0.22 * k; c[i] = mid * (1 - k) + deep * k
+            k = (yy - TEXT_TOP - 0.01) / (1 - TEXT_TOP - 0.01); a[i] = 0.64 + 0.18 * k; c[i] = mid * (1 - k) + deep * k
     out = out * (1 - a[:, None, None]) + c[:, None, :] * a[:, None, None]
     return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
 
