@@ -200,7 +200,7 @@ b,strong{font-weight:600}
 
 <!-- ============ STOP 1: MADE ============ -->
 <section class="page opener onpic" data-c="1" data-stop="1" data-anchor="s1">
-  <img class="full" src="art/hd/garden-a.jpg" style="object-position:50% 30%">
+  <img class="full" src="art/hd/garden-stop1.jpg" style="object-position:30% 25%">
   <div class="shade"></div>
   <div class="stop">Stop <b>1</b></div>
   <div class="ob">
@@ -739,7 +739,7 @@ if (P.has('trim')) document.documentElement.classList.add('trim');
 const SITE = 'https://thewaybackhome.net/';
 const C = ['', '#1e9e5a', '#7b3fe4', '#3d3a8c', '#e0453a', '#f07b1e', '#e8a200', '#1e88e5'];
 const STOPS = [null,
-  {w:'Made', l:'God made everything, and it was very good.', img:'art/hd/garden-a.jpg', pos:'50% 35%'},
+  {w:'Made', l:'God made everything, and it was very good.', img:'art/hd/garden-stop1.jpg', pos:'30% 35%'},
   {w:'Broken', l:'Adam and Eve disobeyed, and sin broke everything.', img:'art/hd/fruit-end.jpg', pos:'55% 25%'},
   {w:'Guilty', l:'We have all sinned. Me too.', img:'art/hd/road-crowd.jpg', pos:'50% 45%'},
   {w:'Locked out', l:'Sin locks us out of God’s home.', img:'art/hd/locked-bars.jpg', pos:'50% 25%'},
@@ -829,7 +829,7 @@ document.getElementById('passages').innerHTML = PASS.map(([s, t]) => `<div style
 const MAPW = 1250, MAPH = 925;
 const PTS = [[190,750,'r'],[450,530,'l'],[190,320,'r'],[790,205,'r'],[1085,405,'l'],[790,605,'r'],[1085,795,'l']];
 // face position in each stop picture (fraction of width/height) and zoom, so faces sit in the middle of the circle
-const FOCUS = [[.38,.33,1.25],[.45,.27,1.3],[.5,.5,1],[.5,.38,1.05],[.42,.66,1.2],[.5,.48,1.1],[.5,.38,1.15]];
+const FOCUS = [[.3,.38,1.3],[.45,.27,1.3],[.5,.5,1],[.5,.38,1.05],[.42,.66,1.2],[.5,.48,1.1],[.5,.38,1.15]];
 const ROAD = 'M -30 880 C 60 840, 120 790, 190 750 S 390 610, 450 530 S 330 370, 190 320 S 330 175, 520 185 S 700 165, 790 205 S 1010 300, 1085 405 S 880 520, 790 605 S 990 760, 1085 795 S 1220 860, 1290 905';
 function mapSvg(side) {
   const vx = side === 'left' ? 0 : 625, R = 74;
