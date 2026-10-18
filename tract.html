@@ -154,7 +154,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
       const [img, y, col] = ART[i], [cap, ref] = tr.panels[i];
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : '';
       const pic = `<img src="art/tract/${String(i + 1).padStart(2, '0')}.jpg" alt="">`;
-      return [col, `<div class="fr">${pic}` +
+      return [col, `<div class="fr" data-p="${i + 1}">${pic}` +
         `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
