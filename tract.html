@@ -64,14 +64,14 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
    its bottom melts into a blurred, chapter-tinted copy of the same picture, and the words sit on the blur in white. */
 /* story panel (Johnny, 17 Oct 2026): the picture, sharp, fills the space above the words; the words sit below it
    in white on a solid block of the panel's own colour, so each picture is fitted to its own text automatically. */
-.fr{position:absolute;inset:.12in;display:flex;flex-direction:column}
+.fr{position:absolute;inset:.08in;display:flex;flex-direction:column}
 .fr img{flex:1 1 auto;min-height:0;width:100%;object-fit:cover;display:block;border-radius:.13in}
-.fr .txt{flex:none;padding:.13in .06in .02in;color:#fff;text-align:left}
+.fr .txt{flex:none;padding:.09in .05in 0;color:#fff;text-align:left}
 [dir=rtl] .fr .txt{text-align:right}
-.fr .no{margin:0 0 .03in;font:800 10pt var(--display);color:var(--gold)}
-.cap{margin:0;font:400 11pt/1.4 var(--body)}
-.ref{margin:.08in 0 0;font:400 7.6pt/1.2 var(--body);opacity:.8}
-.hint{display:inline-block;margin:.09in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display)}
+.fr .no{font:800 10.5pt var(--display);color:var(--gold);margin-right:.05in}
+.cap{margin:0;font:400 11pt/1.34 var(--body)}
+.ref{margin:.05in 0 0;font:400 7.6pt/1.2 var(--body);opacity:.8}
+.hint{display:inline-block;margin:.06in 0 0;padding:.04in .14in;border-radius:999px;background:var(--gold);color:#2B2233;font:900 8.2pt/1.2 var(--display)}
 
 /* cover */
 .cover{background:#7fb3e6}
@@ -82,7 +82,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .cover .tag{display:inline-block;margin:.12in 0 0;padding:.05in .16in;border-radius:999px;background:var(--gold);color:#2B2233;font:800 9pt var(--display)}
 
 /* text panels (back, A-B-C, prayer) */
-.sheetcard{position:absolute;inset:.12in;background:#fff7ec;border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
+.sheetcard{position:absolute;inset:.08in;background:#fff7ec;border-radius:.13in;padding:.3in .28in;display:flex;flex-direction:column;justify-content:center}
 .sheetcard h2{margin:0 0 .08in;font:900 15pt/1.15 var(--display);color:var(--orange)}
 .sky .sheetcard h2{color:var(--sky)}
 .sky .sheetcard{background:#eef5fd}.orange .sheetcard{background:#fdf1e4}
@@ -176,7 +176,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
       const hint = i === 3 ? tr.unfold : i === 11 ? tr.turn : i === 12 ? (tr.toabc || '') : '';
       const pic = `<img src="art/print/${img}.jpg" alt="" style="object-position:50% ${y}%">`;
       return [col, `<div class="fr" data-p="${i + 1}">${pic}` +
-        `<div class="txt"><p class="no">${i + 1}</p><p class="cap">${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
+        `<div class="txt"><p class="cap"><b class="no">${i + 1}</b>${esc(cap)}</p><p class="ref">${esc(ref)}</p>${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div></div>`];
     };
     const coverP = ['cover', `<div class="art"></div><div class="shade"></div><div class="words"><h1>${esc(cover.title)}</h1><span class="tag">${esc(tr.tag)}</span></div>`];
     const backP = ['sky', `<div class="sheetcard back"><h2>${esc(tr.home)}</h2><p class="intro">${esc(tr.free)}</p><div class="qr">${svg}</div>` +
