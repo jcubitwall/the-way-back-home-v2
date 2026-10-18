@@ -34,3 +34,16 @@ with sync_playwright() as p:
             print('pngs in', png)
     b.close()
 srv.shutdown()
+
+# Print-shop files for "48 pages plus cover": the cover sheet (heavier stock) is 4 pages
+# (outside front = p1, inside front = p2 welcome, inside back = p47 QR page, outside back = p48),
+# and the inside is p3-p46 (44 pages, a multiple of 4). Page numbers printed on the pages stay as they are.
+from pypdf import PdfReader, PdfWriter
+src = PdfReader(str(root / 'resources' / 'TWBH-Book-6x9-bleed.pdf'))
+n = len(src.pages)
+cov, ins = PdfWriter(), PdfWriter()
+for i in (0, 1, n - 2, n - 1): cov.add_page(src.pages[i])
+for i in range(2, n - 2): ins.add_page(src.pages[i])
+cov.write(str(root / 'resources' / 'TWBH-Book-6x9-cover-bleed.pdf'))
+ins.write(str(root / 'resources' / 'TWBH-Book-6x9-interior-bleed.pdf'))
+print('wrote cover (4 pages) and interior (%d pages) print files' % (n - 4))
