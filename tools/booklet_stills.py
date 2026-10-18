@@ -20,10 +20,13 @@ STILLS = {
     'road-family':('road', 3.5),      # children and grandchildren
     'road-crowd': ('road', 8.0),      # the crowd through history
     'locked-heaven':('locked', 2.0),  # heaven seen in the mirror
+    'locked-bars':('locked', 5.8),    # heaven behind the shut golden bars, stains showing (mirror page)
+    'locked-fire':('locked-2', 2.0),  # the fire up around the reflections (very bad news page)
     'scrub-hard': ('scrub', 0.5),     # scrubbing hard
     'scrub-upset':('scrub', 5.0),     # it won't come off
     'door-point': ('door', 2.0),      # the preacher points to the door
     'choice-walk':('choice', 1.0),    # one walks away, two kneel
+    'choice-no':  ('choice', 0.4),    # Chase holds his hand out: no thanks
     'choice-move':('choice', 4.5),    # the stains move onto the cross
     'tomb-burst': ('tomb', 2.0),      # light bursts from the tomb
     'gates-open': ('gates', 3.5),     # Jesus with arms open wide
