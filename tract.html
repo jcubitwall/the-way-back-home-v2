@@ -165,7 +165,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
       `<p class="u">${esc(link.replace(/^https:\/\//, '').replace(/\/$/, ''))}</p><div class="giver" id="giver"></div><p class="small" style="margin-top:.08in">${esc(tr.talk)}</p><p class="small" style="margin-top:.04in">${esc(tr.gift)}</p></div>`];
     const steps = P.steps.map(s => `<div class="step"><b class="k">${esc(s.key)}</b><span><b class="w">${esc(s.word)}</b> ${esc(s.rest)}</span></div>`).join('');
     const abcP = ['orange', `<div class="sheetcard abc"><h2>${esc(P.title)}</h2><p class="intro">${esc(tr.easy)}</p>${steps}` +
-      `<h3>${esc(tr.pray)}</h3><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(P.note)} · ${esc(P.ref)}</p></div>`];
+      `<h3>${esc(tr.pray)}</h3><p class="prayer">${esc(P.prayer)}</p><p class="small">${esc(tr.after || P.note)}</p><p class="small" style="margin-top:.03in">${esc(P.ref)}</p></div>`];
     const side = (rows) => `<div class="sheet">${rows.map((row, r) => row.map((p, c) => {
       const [cls, html] = p[0], flip = p[1];
       return `<div class="cell ${cls} c${c} r${r}${flip ? ' flip' : ''}"><div class="pn">${html}</div></div>`;
