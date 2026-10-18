@@ -24,7 +24,7 @@ dict(n=1, col='#1e9e5a', soft='#e3f5ea', title='God made it good!', pages=['The 
   pray='“Thank You, God, for making ___.” Let each child fill in the blank: puppies, Mummy, rain, me.',
   three='Name things as they colour: “God made that bird!” One sentence of truth, said many times, is the lesson.',
   five='Ask them to tell you the one rule in their own words, and to find the six things God made on page 3 before cutting.',
-  tip='Short and happy. Three- and four-year-olds learn by doing: let them touch, stick, sing and shout. Joy is the point this week.',
+  tip='Short and happy. Three- and four-year-olds learn by doing: let them touch, stick, move and shout. Joy is the point this week.',
   care=None,
   ask='Who made the trees and the flowers? Who made you?',
   extra_need=['Glue sticks', 'Child-safe scissors']),

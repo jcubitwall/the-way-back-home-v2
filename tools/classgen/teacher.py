@@ -58,13 +58,13 @@ def glance():
                    f'<td class="small">{" · ".join(esc(x) for x in w["pages_kid"])}</td></tr>' for w in WEEKS)
     return (f'<div class="page tight"><h2>Welcome, teacher!</h2>'
             f'<p>Thank you for teaching our youngest. For seven Sundays, your class will walk the whole Bible story in <i>The Way Back Home</i>: God made a good home, sin locked us out, nothing we do can wash it away, '
-            f'and Jesus, the door, died and rose to bring us home. Each week takes two or three pages of the book and boils them down to <b>one tiny truth</b> a three-year-old can say, sing and do with their hands.</p>'
+            f'and Jesus, the door, died and rose to bring us home. Each week takes two or three pages of the book and boils them down to <b>one tiny truth</b> a three-year-old can say and do with their hands.</p>'
             f'<p>This series runs alongside the ages 6–10 and 8–12 series on the same book, week by week, so brothers and sisters learn the same story on the same Sunday and can tell it to each other at home.</p>'
             f'<h3 style="margin-top:.12in">The series at a glance</h3>'
             f'<table class="std"><tr><th></th><th>Week</th><th>Say it!</th><th>Bible words (CSB)</th><th>Kids’ pages</th></tr>{rows}</table>'
             f'<div class="grid2" style="margin-top:.14in"><div class="box line"><h3>What’s in this guide</h3><ul>'
             f'<li>How little ones learn, and how this series uses it</li><li>A Sunday morning, step by step (60 or 45 minutes)</li><li>Your classroom toolbox: attention cue, redirects, scissors by age</li>'
-            f'<li>Sharing Jesus with 3–5s, and how to handle the harder pages</li><li>Supplies and prep for all 7 weeks</li><li>Two pages per week, with a timed plan and words to say</li><li>Answer keys, all the songs on one page, and sources</li></ul></div>'
+            f'<li>Sharing Jesus with 3–5s, and how to handle the harder pages</li><li>Supplies and prep for all 7 weeks</li><li>Two pages per week, with a timed plan and words to say</li><li>Answer keys and sources</li></ul></div>'
             f'<div class="box line"><h3>What’s in the kids’ pack</h3><p style="margin:0 0 4pt"><b>Short on paper or ink?</b> Print only <b>page 1</b> each week (black and white is fine): it has the colouring, the words to trace and the box for parents. Everything else is optional.</p><ul><li><b>Letter to families</b> (send home in week 1)</li><li><b>My Road Home</b> sticker chart (one per child, keep it in class)</li>'
             f'<li>Each week, <b>3 pages</b>: 1 colour and trace, 2 puzzle or maze (with the “For grown-ups” box), 3 cut and glue or a craft</li><li><b>Certificate</b> for week 7</li></ul>'
             f'<p class="small">The pictures and story cards are real frames from the book’s clips, so children recognise exactly what they saw on screen.</p></div></div>'
@@ -88,7 +88,7 @@ def learn():
             f'Numbers in brackets point to the sources at the back of this guide.</p>'
             f'<table class="std"><tr><th>What we know about 3–5s</th><th>What this series does about it</th></tr>{rows}</table>'
             f'<div class="box" style="background:#e3f5ea;margin-top:.14in"><h3>The one-truth rule</h3><p style="margin:0">A three-year-old will take home one sentence, not five. Every week has exactly one: the <b>Say it!</b> line. '
-            f'Hook, story, game, verse, craft, snack and song all point at that same sentence. If the morning goes sideways and you only manage one thing, make it the Say it! with the moves, three times.</p></div>'
+            f'Hook, story, game, verse, craft and snack all point at that same sentence. If the morning goes sideways and you only manage one thing, make it the Say it! with the moves, three times.</p></div>'
             f'<div class="box" style="background:#fdf3d6"><h3>Threes and fives are different</h3><p style="margin:0">A three-year-old is just learning to snip forward on a line; a five-year-old can cut shapes and retell a story in order. '
             f'Each week gives you a line for each. Mixed classes work best with one table for “helpers needed” and one for “I can do it myself”.</p></div>'
             f'{tfoot("How little ones learn")}</div>')
@@ -103,7 +103,7 @@ def rhythm():
         ('0:32', 'Bible words', 'The short CSB phrase, with motions, said several ways (loud, quiet, fast, slow).'),
         ('0:35', 'Table time', 'Kids’ pages 2 and 3: puzzle or maze, then cut and glue or craft. Talk while they work.'),
         ('0:47', 'Snack and talk', 'A snack that ties to the story, with the talk questions.'),
-        ('0:53', 'Sing, sticker, pray', 'The song, a sticker on the Road Home chart, a short prayer, pages into bags.'),
+        ('0:53', 'Say it, sticker, pray', 'The Say it! with the moves one last time (or a song you know), a sticker on the Road Home chart, a short prayer, pages into bags.'),
         ('0:60', 'Goodbye', 'Say it! one last time with each parent at the door.'),
     ]
     tr = ''.join(f'<tr><td class="t">{a}</td><td class="what">{b}</td><td>{esc(c)}</td></tr>' for a, b, c in rows)
@@ -112,7 +112,7 @@ def rhythm():
             f'<table class="plan">{tr}</table>'
             f'<div class="grid2" style="margin-top:.14in"><div class="box line"><h3>Only 45 minutes?</h3><ul><li>Arrival table: 5 minutes</li><li>Drop the separate Bible words slot; say the verse during the wiggle game</li>'
             f'<li>Snack only if your church normally has one</li><li>Send page 1 home unfinished if needed; pages 2 and 3 are the ones to do in class</li></ul></div>'
-            f'<div class="box line"><h3>Only 30 minutes (e.g. during the sermon)?</h3><ul><li>Hook 5 · Story 7 · Wiggle 6 · Page 3 craft 8 · Sing and pray 4</li><li>Send pages 1 and 2 home</li></ul></div></div>'
+            f'<div class="box line"><h3>Only 30 minutes (e.g. during the sermon)?</h3><ul><li>Hook 5 · Story 7 · Wiggle 6 · Page 3 craft 8 · Say it and pray 4</li><li>Send pages 1 and 2 home</li></ul></div></div>'
             f'<div class="grid2"><div class="box line"><h3>Set up the room</h3><ul><li><b>Story rug</b> facing the screen, away from the door and the craft table</li><li><b>Craft table</b> with pages, crayons, glue sticks and scissors in a tub per table</li>'
             f'<li><b>Open floor</b> for games (push chairs back)</li><li><b>Road Home charts</b> on the wall at child height</li><li>Screen: a TV, laptop or tablet. Download the book for offline use from the site’s menu in case the Wi-Fi fails</li></ul></div>'
             f'<div class="box line"><h3>Helpers</h3><ul><li>Aim for one adult per 4–5 threes, or 6–8 fives</li><li>Two screened adults in the room at all times, following your church’s child-safety policy</li>'
@@ -212,16 +212,15 @@ def week_b(w):
         ('0:32', 'Bible words', f'{w["verse"][0]} ({w["verse"][1]}). Break it into tiny pieces; children echo each one, then add the motions.'),
         ('0:35', 'Table time', f'Kids’ pages 2 and 3: {" and ".join(w["pages_kid"][1:])}. {w["table"]}'),
         ('0:47', f'Snack: {w["snack"][0]}', w['snack'][1] + ' Then the talk questions (page 1).'),
-        ('0:53', 'Sing, sticker, pray', f'Song (tune: {w["song"][0]}). Sticker on stop {n} of the Road Home chart. Pray: {w["pray"]}'),
+        ('0:53', 'Say it, sticker, pray', f'The Say it! with the moves once more (add a song you know if you like). Sticker on stop {n} of the Road Home chart. Pray: {w["pray"]}'),
         ('0:60', 'Goodbye', f'Pages 1–3 into bags. Do the Say it! with each parent at the door. Page 2’s grown-ups box asks: “{w["ask"]}”'),
     ]
     tr = ''.join(f'<tr><td class="t" style="color:{w["col"]}">{a}</td><td class="what">{esc(b)}</td><td>{esc(c)}</td></tr>' for a, b, c in plan)
-    song = '<br>'.join(esc(x) for x in w['song'][1])
     care = (f'<div class="box" style="background:#fde7e5"><h3>Handle with care</h3><p style="margin:0">{esc(w["care"])}</p></div>' if w['care'] else '')
     return (f'<div class="page"><h2 style="color:{w["col"]};font-size:17pt">Week {n} · The plan</h2><table class="plan">{tr}</table>'
             f'<div class="grid2" style="margin-top:.1in"><div><div class="box line"><h3>Threes</h3><p style="margin:0">{esc(w["three"])}</p></div>'
             f'<div class="box line"><h3>Fives</h3><p style="margin:0">{esc(w["five"])}</p></div></div>'
-            f'<div><div class="box" style="background:{w["soft"]}"><h3>Song <span class="small" style="font-family:Lexend;font-weight:400">tune: {esc(w["song"][0])}</span></h3><p style="margin:0">{song}</p></div>'
+            f'<div>'
             f'<div class="box line"><h3>Teacher tip</h3><p style="margin:0">{esc(w["tip"])}</p></div></div></div>{care}'
             f'{tfoot(f"Week {n} · page 2 of 2")}</div>')
 
@@ -264,7 +263,7 @@ def sources():
 def build_teacher():
     pages = [cover(), glance(), learn(), rhythm(), toolbox(), gospel(), supplies()]
     for w in WEEKS: pages += [week_a(w), week_b(w)]
-    pages += [answers(), songs(), sources()]
+    pages += [answers(), sources()]
     return f'<!doctype html><html><head><meta charset="utf-8">{FONTS}<style>{TCSS}</style></head><body>{"".join(pages)}</body></html>'
 
 if __name__ == '__main__':

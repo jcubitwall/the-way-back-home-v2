@@ -100,7 +100,7 @@ def trace_svg(text, size=64):
 def grownups(w):
     tune, lines = w['song']
     return (f'<div class="grownups"><div class="q">{qr_svg()}</div><div><b>For grown-ups:</b> listen to <i>The Way Back Home</i> together at <b>{SITE}</b> '
-            f'(this week: {esc(w["book"])}). <b>Ask:</b> {esc(w["ask"])}<br><b>Sing it</b> (tune: {esc(tune)}): {esc(" ".join(lines))}</div></div>')
+            f'(this week: {esc(w["book"])}). <b>Ask:</b> {esc(w["ask"])}<br><b>Say it together:</b> “{esc(w["say"])}” {esc(w["moves"])}</div></div>')
 
 COLOUR_FOR = {1: 'garden', 2: 'snake', 3: 'mirror', 4: 'hands', 5: 'door', 6: 'tomb', 7: 'gates'}
 TASK1 = {1: 'Colour God’s good garden. Count the fruit!', 2: 'Colour the tree. Can you see the sneaky snake?', 3: 'Draw your face in the mirror. God sees your heart!',
@@ -328,7 +328,7 @@ def letter():
     return (f'<div class="page letter"><div style="display:flex;gap:.25in;align-items:center">{img("cover", style="width:1.7in;height:2.3in;object-fit:cover;border-radius:.15in")}'
             f'<div><h1>Dear families,</h1><p style="margin:.06in 0 0">For the next seven Sundays, our little ones (ages 3–5) are walking through <b><i>The Way Back Home</i></b>, '
             f'a true story from the Bible: from God’s good garden, to the sin that locked us out, to Jesus, who made the way back home.</p></div></div>'
-            f'<p>Each week your child brings home three pages: a colouring page, a puzzle and a cut-and-glue page. The puzzle page has a short <b>“For grown-ups”</b> box: a question to ask and the week’s song.</p>'
+            f'<p>Each week your child brings home three pages: a colouring page, a puzzle and a cut-and-glue page. The puzzle page has a short <b>“For grown-ups”</b> box: a question to ask and the week’s “Say it!” line with its hand moves.</p>'
             f'<h2 style="font-size:16pt;margin-top:.12in">Three easy ways to help at home</h2>'
             f'<ol><li><b>Listen together.</b> The whole book is free to read and hear at <b>{SITE}</b> (scan the code below). Little ones love hearing the same story again and again, and that repetition is how they learn.</li>'
             f'<li><b>Say it with the moves.</b> Each week has one short sentence with hand movements. Ask your child to show you!</li>'
