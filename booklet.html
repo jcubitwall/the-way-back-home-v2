@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Way Back Home: printed book</title>
+<!--
+  Printed picture book, 6 x 9 in (fits flat in an Operation Christmas Child shoebox: 12 x 7 in inside).
+  Pages carry 0.125 in bleed (6.25 x 9.25 in). ?trim shows the trimmed 6 x 9 pages instead.
+  PDF: python3 tools/booklet_pdf.py  (writes resources/TWBH-Book-6x9-bleed.pdf and -trim.pdf)
+  Pictures: art/src (original stills) and art/booklet (stills taken from the clips, tools/booklet_stills.py).
+  48 pages (a multiple of 4, for saddle stitch). Keep it that way when adding or removing pages.
+-->
+<style>
+@font-face{font-family:'Bricolage Grotesque';font-weight:700;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-weight:800;src:url(fonts/bricolage-grotesque-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Lexend';font-weight:400;src:url(fonts/lexend-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Lexend';font-weight:600;src:url(fonts/lexend-latin-600-normal.woff2) format('woff2')}
+
+:root{
+  --b:.125in;                 /* bleed */
+  --pw:calc(6in + 2*var(--b));
+  --ph:calc(9in + 2*var(--b));
+  --m:calc(var(--b) + .42in); /* safe margin from the page edge */
+  --ink:#16131f; --paper:#fffaf1; --soft:#6b6478;
+  --c1:#1e9e5a; --c2:#7b3fe4; --c3:#3d3a8c; --c4:#e0453a; --c5:#f07b1e; --c6:#e8a200; --c7:#1e88e5;
+  --gold:#f5b400;
+}
+html.trim{--b:0in}
+@page{size:6.25in 9.25in;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lexend',system-ui,sans-serif;color:var(--ink);background:#d9d4cc;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media screen{ .page{margin:24px auto;box-shadow:0 4px 20px rgba(0,0,0,.25)} }
+@media print{ body{background:none} }
+.page:last-of-type{break-after:auto;page-break-after:auto}
+
+.page{width:var(--pw);height:var(--ph);position:relative;overflow:hidden;background:var(--paper);break-after:page;page-break-after:always;
+  font-size:11.6pt;line-height:1.42}
+.page[data-c="1"]{--c:var(--c1)} .page[data-c="2"]{--c:var(--c2)} .page[data-c="3"]{--c:var(--c3)} .page[data-c="4"]{--c:var(--c4)}
+.page[data-c="5"]{--c:var(--c5)} .page[data-c="6"]{--c:var(--c6)} .page[data-c="7"]{--c:var(--c7)}
+
+/* type */
+h1,h2,h3,.disp{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1.02}
+h2{font-size:24pt;margin-bottom:.1in}
+h3{font-size:14pt;margin-bottom:.05in}
+p{margin-bottom:.09in}
+p:last-child{margin-bottom:0}
+b,strong{font-weight:600}
+.big{font-size:12.4pt}
+.ref{display:inline-block;font-family:'Bricolage Grotesque';font-weight:700;font-size:8.6pt;letter-spacing:.02em;color:var(--c);
+  border:1.4px solid var(--c);border-radius:99px;padding:.01in .1in;margin-top:.06in}
+.refs{font-size:8.2pt;color:var(--soft);margin-top:.08in}
+
+/* pictures */
+.pic{position:absolute;left:0;right:0;top:0;width:100%;object-fit:cover}
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* sheet: rounded text panel over a picture */
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:.32in .32in 0 0;
+  padding:.3in var(--m) calc(var(--m) + .32in)}
+.tag{display:inline-flex;align-items:center;gap:.06in;background:var(--c);color:#fff;border-radius:99px;
+  font-family:'Bricolage Grotesque';font-weight:800;font-size:8.6pt;letter-spacing:.08em;text-transform:uppercase;padding:.03in .13in .03in .04in;margin-bottom:.1in}
+.tag i{font-style:normal;background:#fff;color:var(--c);width:.2in;height:.2in;border-radius:50%;display:grid;place-items:center;font-size:8.5pt;letter-spacing:0}
+
+/* card on a full picture */
+.card{position:absolute;left:var(--m);right:var(--m);bottom:calc(var(--m) + .28in);background:var(--paper);border-radius:.22in;padding:.2in .24in;
+  box-shadow:0 .04in .18in rgba(0,0,0,.25)}
+.card.dark{background:var(--c);color:#fff}
+.card.dark .ref{color:#fff;border-color:rgba(255,255,255,.8)}
+
+/* verse */
+.verse{background:var(--c);color:#fff;border-radius:.2in;padding:.16in .2in .14in .2in;position:relative;margin:.12in 0 .04in}
+.verse q{display:block;font-family:'Bricolage Grotesque';font-weight:700;font-size:12.6pt;line-height:1.22;quotes:none}
+.verse cite{display:block;font-style:normal;font-family:'Lexend';font-weight:600;font-size:8.4pt;letter-spacing:.06em;text-transform:uppercase;margin-top:.07in;opacity:.92}
+.verse:before{content:'“';position:absolute;right:.12in;top:-.12in;font-family:'Bricolage Grotesque';font-weight:800;font-size:54pt;line-height:1;color:var(--gold)}
+.verse.light{background:#fff;color:var(--ink);border:2px solid var(--c)}
+.verse.light cite{color:var(--c)}
+
+/* boxes */
+.box{border-radius:.18in;padding:.13in .17in;margin:.1in 0;background:color-mix(in srgb,var(--c) 12%,#fff)}
+.box h3{color:var(--c);font-size:11pt;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:.06in}
+.box h3 svg{width:.2in;height:.2in;flex:none}
+.box.gold{background:#fff3cf;border:2px solid var(--gold)}
+.box.gold h3{color:#a86e00}
+
+/* comic strip of stills */
+.strip{display:grid;gap:.07in;margin:.06in 0 .12in;grid-template-rows:100%}
+.strip .f{height:100%;min-height:0;overflow:hidden;border-radius:.14in}
+.strip img{width:100%;height:100%;object-fit:cover;border-radius:.14in;display:block}
+.strip .f{position:relative}
+.strip .f span{position:absolute;left:.06in;top:.06in;background:var(--c);color:#fff;font-family:'Bricolage Grotesque';font-weight:800;font-size:8pt;border-radius:99px;padding:.01in .08in}
+
+/* speech bubbles */
+.bubble{position:absolute;background:#fff;border-radius:.22in;padding:.1in .16in;font-family:'Bricolage Grotesque';font-weight:800;font-size:13pt;line-height:1.1;box-shadow:0 .03in .1in rgba(0,0,0,.25)}
+.bubble:after{content:'';position:absolute;width:.22in;height:.22in;background:#fff;transform:rotate(45deg)}
+.bubble.bl:after{left:.3in;bottom:-.09in} .bubble.br:after{right:.3in;bottom:-.09in}
+.bubble.red{background:#c62828;color:#fff} .bubble.red:after{background:#c62828}
+
+/* chapter opener */
+.opener .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 38%,color-mix(in srgb,var(--c) 70%,#000) 82%)}
+.opener .stop{position:absolute;left:var(--m);top:var(--m);background:#fff;color:var(--c);font-family:'Bricolage Grotesque';font-weight:800;
+  border-radius:.2in;padding:.06in .14in;font-size:10pt;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.08in}
+.opener .stop b{font-size:20pt;letter-spacing:0;font-weight:800}
+.opener .ob{position:absolute;left:var(--m);right:var(--m);bottom:calc(var(--m) + .2in)}
+.opener .word{color:#fff;font-family:'Bricolage Grotesque';font-weight:800;
+  font-size:66pt;line-height:.86;letter-spacing:-.03em;text-transform:uppercase}
+.opener .word.two{font-size:56pt}
+.opener .line{margin:.08in 0 .14in;color:#fff;font-family:'Bricolage Grotesque';font-weight:700;font-size:15pt;line-height:1.15}
+.opener .verse{margin:0;background:rgba(255,255,255,.95);color:var(--ink)}
+.opener .verse cite{color:var(--c)}
+
+/* road progress footer */
+.foot{position:absolute;left:var(--m);right:var(--m);bottom:calc(var(--b) + .2in);height:.22in;display:flex;align-items:center;gap:.1in;
+  font-family:'Bricolage Grotesque';font-weight:800;font-size:9pt;color:var(--soft)}
+.foot svg{flex:1;height:.22in}
+.foot .pn{min-width:.24in;text-align:center}
+.page.even .foot{flex-direction:row} .page.odd .foot{flex-direction:row-reverse}
+.page.onpic .foot{color:#fff}
+
+/* misc */
+.center{text-align:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:.14in}
+.pill{display:inline-block;background:var(--c);color:#fff;border-radius:99px;padding:.02in .12in;font-family:'Bricolage Grotesque';font-weight:800;font-size:9pt}
+.qr svg{width:100%;height:100%;display:block}
+.x{color:#c62828;font-weight:800}
+.ok{color:var(--c1);font-weight:800}
+.check{list-style:none}
+.check li{display:flex;gap:.1in;align-items:flex-start;padding:.045in 0;border-bottom:1px dashed color-mix(in srgb,var(--c) 40%,#fff);font-size:10.4pt;line-height:1.25}
+.check li:last-child{border-bottom:0}
+.check li .n{flex:none;width:.24in;height:.24in;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:9pt}
+.check li .bx{flex:none;margin-left:auto;width:.2in;height:.2in;border:2px solid var(--c);border-radius:.05in}
+.write{border-bottom:2px solid var(--ink);height:.34in;margin:.04in 0 .1in}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="lamb" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#f5b400"/>
+    <g fill="#fff"><circle cx="15" cy="20" r="5"/><circle cx="21" cy="17" r="5.5"/><circle cx="26" cy="21" r="5"/><circle cx="20" cy="23" r="5"/></g>
+    <ellipse cx="30" cy="16" rx="3.6" ry="3" fill="#3b2a1a"/><path d="M15 27v5M19 27v5M23 27v5M27 26v5" stroke="#3b2a1a" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ============ 1. COVER ============ -->
+<section class="page onpic" data-c="7" data-nofoot>
+  <img class="full" src="art/src/cover.jpg" style="object-position:50% 40%">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,50,.55) 0%,rgba(10,20,50,0) 30%,rgba(10,20,50,0) 58%,rgba(10,20,50,.85) 100%)"></div>
+  <div style="position:absolute;left:var(--m);right:var(--m);top:calc(var(--m) - .05in);color:#fff">
+    <div class="disp" style="font-size:11pt;letter-spacing:.2em;text-transform:uppercase;opacity:.95">From Eden to the New Earth</div>
+    <h1 style="font-size:52pt;line-height:.9;margin-top:.08in;letter-spacing:-.03em">The Way<br>Back Home</h1>
+  </div>
+  <div style="position:absolute;left:var(--m);right:calc(var(--m) + 1.1in);bottom:calc(var(--m) + .05in);color:#fff">
+    <div class="disp" style="font-size:15pt;line-height:1.12">The true story of the biggest rescue ever</div>
+    <div style="font-size:9.5pt;margin-top:.06in;opacity:.95">7 stops · 1 road · straight from the Bible</div>
+  </div>
+  <div style="position:absolute;right:var(--m);bottom:var(--m);width:.95in;text-align:center;color:#fff;font-family:'Bricolage Grotesque';font-weight:800;font-size:7.5pt;letter-spacing:.06em">
+    <div class="qr" data-qr style="width:.95in;height:.95in;border-radius:.1in;overflow:hidden;border:.05in solid #fff"></div>
+    <div style="margin-top:.04in">SCAN TO LISTEN</div>
+  </div>
+</section>
+
+<!-- ============ 2. WELCOME ============ -->
+<section class="page" data-c="7">
+  <div style="position:absolute;inset:var(--m);">
+    <div style="background:var(--c7);color:#fff;border-radius:.24in;padding:.22in .26in">
+      <div class="disp" style="font-size:10pt;letter-spacing:.14em;text-transform:uppercase;opacity:.9">This book belongs to</div>
+      <div style="border-bottom:2px solid rgba(255,255,255,.85);height:.42in"></div>
+    </div>
+    <h2 style="margin-top:.3in;font-size:27pt">Hey, you! Ready for a journey?</h2>
+    <p class="big">This road starts in a perfect garden and ends in a brand-new world. In between is the biggest rescue story ever told.</p>
+    <p class="big">It is not made up. It is all from the Bible, God’s true book. And it is about <b>you</b>.</p>
+    <h3 style="margin-top:.24in;color:var(--c7)">How to use this book</h3>
+    <div style="display:grid;gap:.12in;margin-top:.08in">
+      <div style="display:flex;gap:.14in;align-items:center"><svg viewBox="0 0 40 40" style="width:.5in;flex:none"><circle cx="20" cy="20" r="20" fill="#1e9e5a"/><path d="M8 30c6-2 6-10 12-10s6-8 12-10" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-dasharray="1 5"/><circle cx="8" cy="30" r="3" fill="#fff"/><circle cx="32" cy="10" r="3" fill="#fff"/></svg><div><b>Follow the road.</b> There are 7 stops. The map is on the next pages.</div></div>
+      <div style="display:flex;gap:.14in;align-items:center"><svg viewBox="0 0 40 40" style="width:.5in;flex:none"><circle cx="20" cy="20" r="20" fill="#7b3fe4"/><path d="M10 12h9c1 0 1 1 1 1v16s0-1-1-1h-9zM30 12h-9c-1 0-1 1-1 1v16s0-1 1-1h9z" fill="#fff"/></svg><div><b>Look up the verses.</b> Every page tells you where to find it in the Bible.</div></div>
+      <div style="display:flex;gap:.14in;align-items:center"><svg viewBox="0 0 40 40" style="width:.5in;flex:none"><use href="#lamb"/></svg><div><b>Spot the lamb.</b> When you see this sign, a lamb is part of the story. Watch where it leads!</div></div>
+      <div style="display:flex;gap:.14in;align-items:center"><div class="qr" data-qr style="width:.7in;height:.7in;flex:none"></div><div><b>Scan me!</b> Hear the story read aloud and watch it move, in many languages.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. CONTENTS ============ -->
+<section class="page" data-c="3">
+  <div style="position:absolute;inset:var(--m)">
+    <div class="disp" style="font-size:10pt;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)">The Way Back Home</div>
+    <h2 style="font-size:34pt;margin-top:.04in">7 stops.<br>1 road home.</h2>
+    <p class="big" style="margin-top:.12in">Here is the whole Bible story in seven words. By the end, you’ll be able to tell it on your fingers!</p>
+    <div id="toc" style="display:grid;gap:.09in;margin-top:.2in"></div>
+    <div style="margin-top:.2in;display:grid;grid-template-columns:auto 1fr;gap:.12in;align-items:center;font-size:10pt">
+      <span class="pill" style="background:var(--ink)">The long road</span><span>From Noah to Bethlehem · page <b data-ref="longroad"></b></span>
+      <span class="pill" style="background:var(--ink)">Follow Jesus</span><span>A, B, C · page <b data-ref="abc"></b></span>
+      <span class="pill" style="background:var(--ink)">Grown-ups</span><span>Questions to talk about · page <b data-ref="grownups"></b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4-5. ROAD MAP SPREAD ============ -->
+<section class="page" data-c="3" data-nofoot data-map="left"></section>
+<section class="page" data-c="3" data-nofoot data-map="right"></section>
+
+<!-- ============ STOP 1: MADE ============ -->
+<section class="page opener onpic" data-c="1" data-stop="1" data-anchor="s1">
+  <img class="full" src="art/booklet/garden-a.jpg" style="object-position:50% 30%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>1</b></div>
+  <div class="ob">
+    <div class="word">Made</div>
+    <div class="line">God made everything. And it was very good.</div>
+    <div class="verse"><q>God saw all that he had made, and it was very good indeed.</q><cite>Genesis 1:31</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="1" data-stop="1">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>1</i>Made</span>
+    <h2>In the beginning…</h2>
+    <p class="big">Before there was anything, there was God. No sky, no ground, no time. Just God. Then God spoke, and everything began!</p>
+    <div id="days" style="display:grid;grid-template-columns:1fr 1fr;gap:.09in;margin:.16in 0"></div>
+    <div class="verse light" style="margin-top:.1in"><q>In the beginning God created the heavens and the earth.</q><cite>Genesis 1:1</cite></div>
+    <div class="box"><h3>Did you know?</h3><p style="font-size:10.4pt">God didn’t need any bricks or paint. He made the whole universe out of nothing, just by speaking! Light, planets, puppies, pineapples… all of it.</p><span class="ref">Hebrews 11:3</span></div>
+  </div>
+</section>
+
+<section class="page" data-c="1" data-stop="1">
+  <img class="pic" src="art/src/garden-end.jpg" style="height:52%;object-position:50% 30%">
+  <div class="sheet" style="top:48%">
+    <span class="tag"><i>1</i>Made</span>
+    <h2>Made like God</h2>
+    <p>On day six, God made the first man, Adam, from the dust of the ground. He breathed life into him. Then He made the first woman, Eve. They were made <b>in God’s image</b>: made to think, to love, to create, and most of all to know God.</p>
+    <p>That’s true of you too. You are not an accident. God made you on purpose.</p>
+    <div class="verse"><q>So God created man in his own image; he created him in the image of God; he created them male and female.</q><cite>Genesis 1:27</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="1" data-stop="1">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>1</i>Made</span>
+    <h2>A garden home called Eden</h2>
+    <p>God planted a garden in a place called Eden and gave it to Adam and Eve as their home. Rivers ran through it. Every kind of tree grew there, full of fruit. Adam even got to name all the animals!</p>
+    <p>Best of all, <b>God was with them.</b> They loved being with Him, and He loved them. There was no fear, no shame, no sickness and no death. Everything was perfect.</p>
+    <div class="box"><h3><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="currentColor"/><path d="M10 5v6M10 14v1" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>Two special trees</h3>
+      <p style="font-size:10.4pt">In the middle of the garden stood <b>the tree of life</b> and <b>the tree of the knowledge of good and evil</b>. Remember the tree of life. You’ll see it again at the very end of the road!</p></div>
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:2.9in"><div class="f"><img src="art/src/garden-clip.jpg" style="object-position:50% 30%"></div><div class="f"><img src="art/booklet/rule-look.jpg" style="object-position:50% 35%"></div></div>
+    <div class="refs">Genesis 2:7–25</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="1" data-stop="1">
+  <img class="full" src="art/src/rule-point.jpg" style="object-position:50% 40%">
+  <div class="bubble bl" style="left:var(--m);top:calc(var(--m) + .1in);max-width:3.2in">“Do not eat from that tree. If you do, you will die.”</div>
+  <div class="card">
+    <span class="tag"><i>1</i>Made</span>
+    <h2 style="font-size:21pt">One simple rule</h2>
+    <p>God gave Adam and Eve every tree in the garden to enjoy, except one: the tree of the knowledge of good and evil. Adam pointed to the tree so Eve would remember.</p>
+    <p>Was God being mean? No way! He gave them a whole garden full of <b>yes</b> and only one <b>no</b>. That one rule was a chance to trust Him: “God knows best.”</p>
+    <span class="ref">Genesis 2:16–17</span>
+  </div>
+</section>
+
+<!-- ============ STOP 2: BROKEN ============ -->
+<section class="page opener onpic" data-c="2" data-stop="2" data-anchor="s2">
+  <img class="full" src="art/src/serpent-end.jpg" style="object-position:50% 30%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>2</b></div>
+  <div class="ob">
+    <div class="word">Broken</div>
+    <div class="line">One choice broke everything.</div>
+    <div class="verse"><q>…when sin is fully grown, it gives birth to death.</q><cite>James 1:15</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="2" data-stop="2">
+  <img class="pic" src="art/booklet/serpent-a.jpg" style="height:50%;object-position:50% 28%">
+  <div class="bubble red br" style="right:var(--m);top:calc(var(--m) + .05in);max-width:2.6in">“Did God really say that?”</div>
+  <div class="sheet" style="top:46%">
+    <span class="tag"><i>2</i>Broken</span>
+    <h2>The sneaky serpent</h2>
+    <p>One day, a serpent slid up beside Eve. This was no ordinary snake. It was Satan, God’s enemy, the one the Bible calls “the father of lies.”</p>
+    <p>“Did God really say that?” he hissed. “You won’t die! That fruit will make you like God!” He wanted Eve to stop trusting God.</p>
+    <div class="box"><h3>Spot the lie</h3>
+      <div class="cols" style="font-size:10pt;line-height:1.3"><div><b class="ok">God said:</b><br>“If you eat it, you will die.”</div><div><b class="x">The serpent said:</b><br>“You won’t die!”</div></div>
+      <p style="font-size:10pt;margin-top:.06in">Who was telling the truth? <b>God never lies.</b> Not ever.</p></div>
+    <div class="refs">Genesis 3:1–5 · John 8:44 · Revelation 12:9 · Titus 1:2</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="2" data-stop="2">
+  <img class="full" src="art/booklet/fruit-bite.jpg" style="object-position:50% 25%">
+  <div class="card">
+    <span class="tag"><i>2</i>Broken</span>
+    <h2 style="font-size:21pt">Just one bite</h2>
+    <p>Eve looked at the fruit. It looked so good. She wanted it. So she reached out and took a bite.</p>
+    <p>Then she gave some to Adam, who was right there with her. And he ate it too.</p>
+    <span class="ref">Genesis 3:6</span>
+  </div>
+</section>
+
+<section class="page" data-c="2" data-stop="2">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:3.7in;margin-top:0"><div class="f"><img src="art/booklet/fruit-adam.jpg" style="object-position:40% 25%"><span>Crunch…</span></div><div class="f"><img src="art/src/fruit-end.jpg" style="object-position:55% 25%"><span>Uh-oh.</span></div></div>
+    <div class="disp" style="font-size:44pt;color:var(--c2);letter-spacing:-.03em;margin:.06in 0 .06in">Uh-oh.</div>
+    <p class="big">For the very first time, people had disobeyed God. The Bible calls this <b>sin</b>.</p>
+    <p>Sin is when we go our own way instead of God’s way, in what we think, say or do. And the serpent grinned. His trick had worked.</p>
+    <div class="box"><h3>What happened next?</h3>
+      <p style="font-size:10.2pt">Adam and Eve <b>hid</b> from God among the trees. When God asked what they had done, Adam blamed Eve, and Eve blamed the serpent. Sound familiar?</p></div>
+    <div class="refs">Genesis 3:6–13</div>
+  </div>
+</section>
+
+<section class="page" data-c="2" data-stop="2">
+  <img class="pic" src="art/booklet/exile-kneel.jpg" style="height:52%;object-position:50% 40%">
+  <div class="sheet" style="top:48%">
+    <span class="tag"><i>2</i>Broken</span>
+    <h2>Sin changed everything</h2>
+    <p>Now Adam and Eve felt afraid and ashamed. Sin had brought pain, sadness and death into God’s perfect world.</p>
+    <p>But God still came looking for them. “Where are you?” He called. And God made them clothes from animal skins. To make them, <b>innocent animals had to die</b>. That’s how serious sin is.</p>
+    <div style="display:flex;gap:.1in;align-items:center;background:#fff3cf;border-radius:.16in;padding:.08in .12in;font-size:9.8pt;line-height:1.3">
+      <svg viewBox="0 0 40 40" style="width:.42in;flex:none"><use href="#lamb"/></svg>
+      <div><b>Spot the lamb!</b> The first time anything died, it died to cover people’s shame. Keep watching for this on the road.</div></div>
+    <div class="refs">Genesis 3:8–21</div>
+  </div>
+</section>
+
+<section class="page" data-c="2" data-stop="2">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <div class="box gold" style="margin-top:0;padding:.2in .2in">
+      <h3 style="font-size:13pt">★ God made a promise</h3>
+      <p class="big" style="font-family:'Bricolage Grotesque';font-weight:700;line-height:1.2">One day, a child of Eve will come. The serpent will strike His heel, but He will <span style="color:#a86e00">crush the serpent’s head</span>.</p>
+      <p style="font-size:10pt">Someone was coming to beat the enemy and open the way back home. The whole road leads to Him!</p>
+      <span class="ref" style="color:#a86e00;border-color:#a86e00">Genesis 3:15</span>
+    </div>
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:3.5in"><div class="f"><img src="art/booklet/exile-shame.jpg" style="object-position:50% 40%"></div><div class="f"><img src="art/src/exile-end.jpg" style="object-position:50% 45%"></div></div>
+    <h3 style="color:var(--c2)">Locked out of the garden</h3>
+    <p>Then God sent Adam and Eve out of Eden. A mighty angel with a flaming sword guarded the way back to the tree of life. They could not go home.</p>
+    <div class="refs">Genesis 3:22–24</div>
+  </div>
+</section>
+
+<!-- ============ STOP 3: GUILTY ============ -->
+<section class="page opener onpic" data-c="3" data-stop="3" data-anchor="s3">
+  <img class="full" src="art/booklet/road-crowd.jpg" style="object-position:50% 40%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>3</b></div>
+  <div class="ob">
+    <div class="word">Guilty</div>
+    <div class="line">Everybody sins. Me too.</div>
+    <div class="verse"><q>For all have sinned and fall short of the glory of God.</q><cite>Romans 3:23</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="3" data-stop="3">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>3</i>Guilty</span>
+    <h2>All these people!</h2>
+    <div class="strip" style="grid-template-columns:1fr 1fr 1fr;height:3.4in"><div class="f"><img src="art/booklet/road-two.jpg" style="object-position:40% 40%"><span>2</span></div><div class="f"><img src="art/booklet/road-family.jpg" style="object-position:50% 40%"><span>20</span></div><div class="f"><img src="art/booklet/road-crowd.jpg" style="object-position:50% 50%"><span>billions</span></div></div>
+    <p>Adam and Eve had children, and their children had children, all the way down to you and me.</p>
+    <p>But sin came along too. Their son Cain got so angry with his brother Abel that he killed him. Sin spread from one person to the next, until it reached every single one of us.</p>
+    <p>Look at all these people! Every one of them has sin marks, just like Adam and Eve. And our sin keeps us far from God.</p>
+    <div class="refs">Genesis 4:1–8 · Romans 5:12 · Isaiah 59:2</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="3" data-stop="3">
+  <img class="full" src="art/src/road-end.jpg" style="object-position:50% 100%">
+  <div class="card" style="bottom:auto;top:var(--m)">
+    <span class="tag"><i>3</i>Guilty</span>
+    <h2 style="font-size:21pt">There we are!</h2>
+    <p>Look closely. Three kids, just like you, walking the same road as everyone else. Same road, same sin marks.</p>
+    <p>And look where the road is heading: to a wall with ten words carved in stone…</p>
+    <span class="ref">Romans 5:12</span>
+  </div>
+</section>
+
+<!-- the long road spread (must be an even + odd page pair) -->
+<section class="page" data-c="3" data-stop="3" data-anchor="longroad" data-long="left"></section>
+<section class="page" data-c="3" data-stop="3" data-long="right"></section>
+
+<section class="page" data-c="3" data-stop="3">
+  <img class="pic" src="art/src/test-clip.jpg" style="height:44%;object-position:50% 20%">
+  <div class="sheet" style="top:40%">
+    <span class="tag"><i>3</i>Guilty</span>
+    <h2>Ten good rules</h2>
+    <p>God gave His people ten good rules, called the <b>Ten Commandments</b>. They show us what God is like, and how He made us to live. Try the mirror test. Be honest!</p>
+    <ul class="check" id="ten"></ul>
+    <div class="refs">Exodus 20:1–17 · Matthew 5:21–22, 27–28</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="3" data-stop="3">
+  <img class="full" src="art/src/test-2-end.jpg" style="object-position:50% 30%">
+  <div class="card">
+    <span class="tag"><i>3</i>Guilty</span>
+    <h2 style="font-size:21pt">Crack!</h2>
+    <p>Have you ever told a lie? Even once? Have you ever taken something that wasn’t yours? That makes you a liar and a thief. That doesn’t feel very good, does it?</p>
+    <p>And that’s only two of the ten! Like Adam and Eve, we have all broken God’s law, and our sin leaves marks we can’t hide.</p>
+    <div class="verse" style="margin-bottom:0"><q>For whoever keeps the entire law, and yet stumbles at one point, is guilty of breaking it all.</q><cite>James 2:10</cite></div>
+  </div>
+</section>
+
+<!-- ============ STOP 4: LOCKED OUT ============ -->
+<section class="page opener onpic" data-c="4" data-stop="4" data-anchor="s4">
+  <img class="full" src="art/src/locked-end.jpg" style="object-position:50% 30%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>4</b></div>
+  <div class="ob">
+    <div class="word two">Locked<br>out</div>
+    <div class="line">Sin locks us out of God’s home.</div>
+    <div class="verse"><q>For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.</q><cite>Romans 6:23</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="4" data-stop="4">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>4</i>Locked out</span>
+    <h2>The mirror</h2>
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:4.3in"><div class="f"><img src="art/src/locked-clip.jpg" style="object-position:50% 30%"><span>The mirror shows…</span></div><div class="f"><img src="art/booklet/locked-heaven.jpg" style="object-position:50% 30%"><span>…where we belong</span></div></div>
+    <p>God’s law is like a mirror. A mirror can show you the dirt on your face, but it can’t wash it off. God’s law shows us our sin, but it can’t take it away.</p>
+    <p>We were made for God’s home. But sin locks us out, just like Adam and Eve were locked out of the garden.</p>
+    <div class="refs">Romans 3:20 · James 1:23–24</div>
+  </div>
+</section>
+
+<section class="page" data-c="4" data-stop="4">
+  <img class="pic" src="art/src/locked-2-end.jpg" style="height:48%;object-position:50% 35%">
+  <div class="sheet" style="top:44%">
+    <span class="tag"><i>4</i>Locked out</span>
+    <h2>Very bad news</h2>
+    <p>God is good and fair. Think about it: if a judge let every robber go free, would he be a good judge? No! God can’t just pretend our sin never happened.</p>
+    <p>The Bible says that if we die with our sin, we will be punished in a place called <b>hell</b>, far away from God forever.</p>
+    <p class="big"><b>That is very bad news.</b></p>
+    <div class="box"><h3>But wait…</h3><p style="font-size:10.2pt">Did you notice the end of the verse at the start of this stop? <i>“…but the gift of God is eternal life.”</i> Keep going. The road doesn’t end here!</p></div>
+    <div class="refs">Habakkuk 1:13 · Romans 6:23 · Hebrews 9:27</div>
+  </div>
+</section>
+
+<section class="page" data-c="4" data-stop="4">
+  <img class="pic" src="art/booklet/scrub-hard.jpg" style="height:56%;object-position:50% 30%">
+  <div class="sheet" style="top:52%">
+    <span class="tag"><i>4</i>Locked out</span>
+    <h2>Can we wash it off?</h2>
+    <p>So how can we get rid of our sin? We might try to scrub it off:</p>
+    <ul class="check" style="margin:.05in 0 .1in">
+      <li><span class="n">1</span><div>Being extra good</div><span class="x" style="margin-left:auto">✗</span></li>
+      <li><span class="n">2</span><div>Saying sorry</div><span class="x" style="margin-left:auto">✗</span></li>
+      <li><span class="n">3</span><div>Going to church</div><span class="x" style="margin-left:auto">✗</span></li>
+    </ul>
+    <p>Those are all good things! But no matter how hard we scrub, the marks won’t come off.</p>
+    <div class="refs">Isaiah 64:6 · Jeremiah 2:22</div>
+  </div>
+</section>
+
+<section class="page" data-c="4" data-stop="4">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:3.5in;margin-top:0"><div class="f"><img src="art/booklet/scrub-upset.jpg" style="object-position:45% 25%"></div><div class="f"><img src="art/src/scrub-end.jpg" style="object-position:50% 25%"></div></div>
+    <p>Being good tomorrow can’t erase the wrong things we did today.</p>
+    <p>Remember the animals that died to cover Adam and Eve? And the lambs on the long road? <b>Someone has to take our place too.</b></p>
+    <div class="verse light"><q>For you are saved by grace through faith, and this is not from yourselves; it is God’s gift.</q><cite>Ephesians 2:8</cite></div>
+    <div class="disp" style="font-size:48pt;color:var(--c4);letter-spacing:-.03em;text-align:center;margin-top:.1in">But who?</div>
+    <div class="refs center">Hebrews 9:22 · Ephesians 2:8–9</div>
+  </div>
+</section>
+
+<!-- ============ STOP 5: PAID ============ -->
+<section class="page opener onpic" data-c="5" data-stop="5" data-anchor="s5">
+  <img class="full" src="art/src/door-end.jpg" style="object-position:30% 30%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>5</b></div>
+  <div class="ob">
+    <div class="word">Paid</div>
+    <div class="line">Jesus took my place.</div>
+    <div class="verse"><q>For God loved the world in this way: He gave his one and only Son, so that everyone who believes in him will not perish but have eternal life.</q><cite>John 3:16</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="5" data-stop="5">
+  <img class="pic" src="art/booklet/door-point.jpg" style="height:47%;object-position:40% 30%">
+  <div class="sheet" style="top:43%">
+    <span class="tag"><i>5</i>Paid</span>
+    <h2>The good news!</h2>
+    <p>That Someone is <b>Jesus</b>, God’s own Son. He was there in the garden with Adam and Eve, and He is the One God promised.</p>
+    <p>God loved the world so much that He sent Jesus to bring us home. Jesus was born as a baby in Bethlehem, just as the prophets said. He grew up and never sinned, not even once. He healed the sick, loved the lonely and taught about God.</p>
+    <p>When John the Baptist saw Jesus, he shouted, “Here is the Lamb of God, who takes away the sin of the world!”</p>
+    <p>Jesus said, “I am the door. Whoever comes in through Me will be saved.”</p>
+    <div class="refs">John 1:1–3, 29 · Luke 2:1–11 · John 10:9 · John 14:6</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="5" data-stop="5">
+  <img class="full" src="art/booklet/choice-move.jpg" style="object-position:30% 100%">
+  <div class="card" style="bottom:auto;top:var(--m)">
+    <span class="tag"><i>5</i>Paid</span>
+    <h2 style="font-size:21pt">In our place</h2>
+    <p>Jesus never sinned. But He died on a cross in our place, like the animals that died for Adam and Eve, like the lamb on the long road.</p>
+    <p>All our sin was put on Him, and He took the punishment we deserved. Before He died, He cried out, <b>“It is finished!”</b> Jesus did this because He loves us.</p>
+    <span class="ref">Isaiah 53:5–6 · 1 Peter 2:24 · John 19:30</span>
+  </div>
+</section>
+
+<section class="page" data-c="5" data-stop="5">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>5</i>Paid</span>
+    <h2>The great swap</h2>
+    <p>On the cross, Jesus made the best trade in history:</p>
+    <svg id="swap" viewBox="0 0 500 430" style="width:100%;margin:.08in 0"></svg>
+    <div class="verse"><q>He made the one who did not know sin to be sin for us, so that in him we might become the righteousness of God.</q><cite>2 Corinthians 5:21</cite></div>
+  </div>
+</section>
+
+<!-- ============ STOP 6: ALIVE ============ -->
+<section class="page opener onpic" data-c="6" data-stop="6" data-anchor="s6">
+  <img class="full" src="art/booklet/tomb-burst.jpg" style="object-position:40% 30%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>6</b></div>
+  <div class="ob">
+    <div class="word">Alive</div>
+    <div class="line">Jesus beat sin and death!</div>
+    <div class="verse"><q>He is not here, but he has risen!</q><cite>Luke 24:6</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="6" data-stop="6">
+  <img class="pic" src="art/booklet/choice-walk.jpg" style="height:46%;object-position:50% 30%">
+  <div class="sheet" style="top:42%">
+    <span class="tag"><i>6</i>Alive</span>
+    <h2>Everyone has a choice</h2>
+    <p>Jesus loves you, and He lets you choose. Some people say, “No thanks,” and walk away.</p>
+    <p>Others tell God, “I’m sorry for my sin. I believe Jesus died in my place. Please forgive me and save me!” That means <b>turning away from sin</b> and <b>trusting Jesus</b>.</p>
+    <div class="verse"><q>If you confess with your mouth, ‘Jesus is Lord,’ and believe in your heart that God raised him from the dead, you will be saved.</q><cite>Romans 10:9</cite></div>
+    <div class="refs">Mark 1:15 · John 3:18 · Romans 10:13</div>
+  </div>
+</section>
+
+<section class="page" data-c="6" data-stop="6">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:4.7in;margin-top:0"><div class="f"><img src="art/src/cross-kneel.jpg" style="object-position:50% 45%"><span>Before</span></div><div class="f"><img src="art/src/choice-end.jpg" style="object-position:55% 60%"><span>After</span></div></div>
+    <h2>White as snow</h2>
+    <p>When we turn to Jesus, God takes our sin away and covers us with Jesus’ goodness, like a brand-new set of clean white clothes.</p>
+    <p>The marks we could never scrub off? <b>Gone.</b> God says that even if our sins are as red as scarlet, He will make them as white as snow.</p>
+    <div class="refs">Isaiah 1:18 · Isaiah 61:10 · 1 John 1:9</div>
+  </div>
+</section>
+
+<section class="page" data-c="6" data-stop="6">
+  <img class="pic" src="art/src/tomb-end.jpg" style="height:53%;object-position:50% 40%">
+  <div class="sheet" style="top:49%">
+    <span class="tag"><i>6</i>Alive</span>
+    <h2>The empty tomb</h2>
+    <p>After Jesus died, His friends laid His body in a tomb and rolled a huge stone across the door. Soldiers guarded it.</p>
+    <p>But three days later, some women came to the tomb early in the morning. The stone was rolled away! An angel said, “He is not here, but He has risen!”</p>
+    <p><b>Jesus was alive again!</b> His friends saw Him, ate with Him and touched Him. More than 500 people saw Him at once. He had beaten sin and death!</p>
+    <div class="refs">Matthew 27:57–28:10 · Luke 24:1–8 · 1 Corinthians 15:3–6</div>
+  </div>
+</section>
+
+<!-- ============ STOP 7: HOME ============ -->
+<section class="page opener onpic" data-c="7" data-stop="7" data-anchor="s7">
+  <img class="full" src="art/src/gates-run.jpg" style="object-position:50% 40%">
+  <div class="shade"></div>
+  <div class="stop">Stop <b>7</b></div>
+  <div class="ob">
+    <div class="word">Home</div>
+    <div class="line">The gate is open. Welcome home!</div>
+    <div class="verse"><q>We love because he first loved us.</q><cite>1 John 4:19</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="7" data-stop="7">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>7</i>Home</span>
+    <h2>Arms open wide</h2>
+    <div class="strip" style="grid-template-columns:1fr 1fr;height:3.9in"><div class="f"><img src="art/booklet/gates-open.jpg" style="object-position:60% 35%"></div><div class="f"><img src="art/src/gates-end.jpg" style="object-position:50% 35%"></div></div>
+    <p>After Jesus rose, He went back to heaven. He promised to get a place ready for us, and to come back for us.</p>
+    <p>One day, everyone who trusts Jesus will run through heaven’s open gates. And Jesus will be right there, with His arms open wide.</p>
+    <p>The same Jesus who sent Adam and Eve out of the garden will welcome His children home. You can still see the scars in His hands: <b>the scars of His love.</b></p>
+    <div class="refs">John 14:2–3 · Acts 1:9–11 · John 20:27</div>
+  </div>
+</section>
+
+<section class="page onpic" data-c="7" data-stop="7">
+  <img class="full" src="art/booklet/new-earth-hands.jpg" style="object-position:50% 35%">
+  <div class="card">
+    <span class="tag"><i>7</i>Home</span>
+    <h2 style="font-size:21pt">Everything new!</h2>
+    <p>And guess what? God will make everything new: a new heaven and a new earth, even better than Eden! And God Himself will live with His people.</p>
+    <div class="verse" style="margin-bottom:0"><q>Look, I am making everything new.</q><cite>Revelation 21:5</cite></div>
+  </div>
+</section>
+
+<section class="page" data-c="7" data-stop="7">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <span class="tag"><i>7</i>Home</span>
+    <h2>What will it be like?</h2>
+    <div class="verse"><q>He will wipe away every tear from their eyes. Death will be no more; grief, crying, and pain will be no more, because the previous things have passed away.</q><cite>Revelation 21:4</cite></div>
+    <ul class="check" style="margin:.08in 0">
+      <li><span class="n">✓</span><div>No more tears, sickness or death</div></li>
+      <li><span class="n">✓</span><div>No more sin, and no more night</div></li>
+      <li><span class="n">✓</span><div>God lives right there with His people</div></li>
+      <li><span class="n">✓</span><div>And the <b>tree of life</b> is back!</div></li>
+    </ul>
+    <div class="box gold"><h3>The road comes full circle</h3>
+      <p style="font-size:10.2pt">The road began at a tree in a garden, where people were locked out. It ends at the tree of life, with the gates wide open forever.</p></div>
+    <p><b>Until that day,</b> Jesus asks you to tell others the good news, so they can find the way back home too.</p>
+    <div class="refs">Revelation 21:1–5 · Revelation 22:1–5 · Matthew 28:19–20</div>
+  </div>
+</section>
+
+<!-- ============ YOU MADE IT ============ -->
+<section class="page" data-c="3" data-anchor="recap">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <img src="art/src/new-earth-end.jpg" style="width:100%;height:2.2in;object-fit:cover;object-position:50% 30%;border-radius:.2in">
+    <h2 style="margin-top:.16in">You made it!</h2>
+    <p>Now tell the whole story in 7 words. Count them on your fingers!</p>
+    <div id="recap" style="display:grid;gap:.06in;margin-top:.1in"></div>
+  </div>
+</section>
+
+<!-- ============ A B C ============ -->
+<section class="page" data-c="5" data-anchor="abc">
+  <img class="pic" src="art/src/clean.jpg" style="height:30%;object-position:50% 55%">
+  <div class="sheet" style="top:26%">
+    <h2>Would you like to follow Jesus?</h2>
+    <p>Here is what it means: A, B, C.</p>
+    <div style="display:grid;gap:.08in;margin:.08in 0 .12in">
+      <div style="display:flex;gap:.12in;align-items:center"><span class="disp" style="flex:none;width:.5in;height:.5in;border-radius:.14in;background:var(--c1);color:#fff;display:grid;place-items:center;font-size:24pt">A</span><div><b>Admit</b> to God that you have sinned, and say you are sorry.</div></div>
+      <div style="display:flex;gap:.12in;align-items:center"><span class="disp" style="flex:none;width:.5in;height:.5in;border-radius:.14in;background:var(--c5);color:#fff;display:grid;place-items:center;font-size:24pt">B</span><div><b>Believe</b> that Jesus is God’s Son, that He died for you, and that He rose again.</div></div>
+      <div style="display:flex;gap:.12in;align-items:center"><span class="disp" style="flex:none;width:.5in;height:.5in;border-radius:.14in;background:var(--c7);color:#fff;display:grid;place-items:center;font-size:24pt">C</span><div><b>Choose</b> to trust Jesus and follow Him every day.</div></div>
+    </div>
+    <div class="box gold" style="padding:.14in .18in"><h3>You can pray like this</h3>
+      <p style="font-family:'Bricolage Grotesque';font-weight:700;font-size:11.6pt;line-height:1.28">“Dear God, I know I have sinned, and I am sorry. Thank You for sending Jesus to die for me and rise again. Please forgive me and make me clean. I want to follow You. In Jesus’ name, amen.”</p></div>
+    <p style="font-size:9.8pt">Talk with a parent, pastor, or grown-up you trust about what you prayed.</p>
+    <div class="refs">Romans 10:9–10</div>
+  </div>
+</section>
+
+<!-- ============ YOUR NEW ROAD ============ -->
+<section class="page" data-c="1">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <h2>Your new road</h2>
+    <p>Following Jesus is like walking a road with your best Friend. Here’s how to keep walking:</p>
+    <ul class="check" style="margin:.06in 0 .14in">
+      <li><span class="n">1</span><div><b>Talk to God</b> every day. He loves to hear from you.</div></li>
+      <li><span class="n">2</span><div><b>Read the Bible.</b> Start with the book of Mark or John.</div></li>
+      <li><span class="n">3</span><div><b>Find a church</b> where people love Jesus.</div></li>
+      <li><span class="n">4</span><div><b>Tell a friend</b> the way back home.</div></li>
+    </ul>
+    <div style="background:color-mix(in srgb,var(--c1) 12%,#fff);border-radius:.2in;padding:.18in .2in">
+      <div class="disp" style="font-size:15pt;color:var(--c1)">I chose to follow Jesus</div>
+      <div style="font-size:9pt;color:var(--soft);margin-top:.08in">My name</div><div class="write"></div>
+      <div style="font-size:9pt;color:var(--soft)">Date</div><div class="write"></div>
+    </div>
+    <div style="display:flex;gap:.16in;align-items:center;margin-top:.2in">
+      <div class="qr" data-qr style="width:1in;height:1in;flex:none"></div>
+      <div><b>Want to hear it again?</b> Scan to listen to the whole story, read aloud with music and moving pictures. Share it with a friend!</div>
+    </div>
+    <div class="refs">Psalm 119:105 · Hebrews 10:24–25 · Matthew 28:19–20</div>
+  </div>
+</section>
+
+<!-- ============ PASS IT ON ============ -->
+<section class="page" data-c="5">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <h2>Pass it on!</h2>
+    <p>The people who know Jesus love to tell others, “Come and see! There is a way back to God!” Who will you tell?</p>
+    <div style="display:grid;gap:.1in;margin:.14in 0 .2in">
+      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">1</span><div class="write" style="flex:1;margin:0"></div></div>
+      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">2</span><div class="write" style="flex:1;margin:0"></div></div>
+      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">3</span><div class="write" style="flex:1;margin:0"></div></div>
+    </div>
+    <div style="border:2.5px dashed var(--c5);border-radius:.2in;height:3.1in;position:relative;padding:.14in">
+      <div class="disp" style="font-size:13pt;color:var(--c5)">Draw it!</div>
+      <div style="font-size:9.6pt;color:var(--soft)">Draw yourself on the road home, with a friend you want to bring along.</div>
+    </div>
+    <div class="refs">John 1:46 · John 4:28–30 · Matthew 28:19–20</div>
+  </div>
+</section>
+
+<!-- ============ MEMORY VERSES ============ -->
+<section class="page" data-c="3">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <h2>Hide it in your heart</h2>
+    <p>One verse for each stop. Learn one a week!</p>
+    <div id="memory" style="display:grid;gap:.07in;margin-top:.1in"></div>
+  </div>
+</section>
+
+<!-- ============ GROWN-UPS ============ -->
+<section class="page" data-c="1" data-anchor="grownups">
+  <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
+    <h2>For grown-ups</h2>
+    <p>Try these questions after reading together.</p>
+    <ul class="check" style="margin:.06in 0 .14in" id="qs"></ul>
+    <h3 style="color:var(--c1)">Read the whole account</h3>
+    <div style="font-size:8.8pt;line-height:1.45;columns:2;column-gap:.2in" id="passages"></div>
+  </div>
+</section>
+
+<!-- ============ INSIDE BACK ============ -->
+<section class="page onpic" data-c="7" data-nofoot>
+  <img class="full" src="art/src/gates-arrive.jpg" style="object-position:50% 30%">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,40,90,.0) 30%,rgba(13,40,90,.92) 70%)"></div>
+  <div style="position:absolute;left:var(--m);right:var(--m);bottom:var(--m);color:#fff;text-align:center">
+    <div class="qr" data-qr style="width:1.7in;height:1.7in;margin:0 auto .14in;border:.07in solid #fff;border-radius:.14in;overflow:hidden"></div>
+    <div class="disp" style="font-size:24pt">Hear it. Watch it.</div>
+    <p style="margin-top:.06in">Scan to listen to the story read aloud, with music and moving pictures, in many languages. Free, on any phone.</p>
+    <div class="disp" style="font-size:13pt;margin-top:.08in;letter-spacing:.02em">thewaybackhome.net</div>
+  </div>
+</section>
+
+<!-- ============ BACK COVER ============ -->
+<section class="page" data-c="3" data-nofoot style="background:#14112b;color:#fff">
+  <div style="position:absolute;inset:var(--m)">
+    <div class="disp" style="font-size:10pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">The Way Back Home</div>
+    <h2 style="font-size:30pt;margin-top:.08in">The biggest rescue story ever told.</h2>
+    <p class="big" style="margin-top:.12in;opacity:.95">It starts in a perfect garden. It ends in a brand-new world. In between, a promise, a long road, a door, a cross and an empty tomb.</p>
+    <p style="opacity:.9">Follow the road through 7 stops, straight from the Bible, and find the way back home.</p>
+    <div id="backroad" style="margin:.16in 0"></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.06in;height:2.1in;margin-bottom:.2in">
+      <img src="art/booklet/garden-a.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:.12in;object-position:50% 30%">
+      <img src="art/src/fruit-end.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:.12in;object-position:55% 25%">
+      <img src="art/src/choice-end.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:.12in;object-position:55% 60%">
+      <img src="art/booklet/new-earth-hands.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:.12in;object-position:50% 40%">
+    </div>
+    <div style="display:flex;gap:.18in;align-items:center">
+      <div class="qr" data-qr style="width:1.05in;height:1.05in;flex:none;border:.05in solid #fff;border-radius:.1in;overflow:hidden"></div>
+      <div style="font-size:9.6pt;opacity:.95"><b>Read, listen and watch for free</b><br>thewaybackhome.net</div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;font-size:7.4pt;line-height:1.4;opacity:.75">
+      Story by Johnny Wall · © 2026 · Ages 5–12<br>
+      Scripture quotations are from the Christian Standard Bible®, © 2017 by Holman Bible Publishers. Used by permission.
+    </div>
+  </div>
+</section>
+
+
+<script src="qr.js"></script>
+<script>
+const P = new URLSearchParams(location.search);
+if (P.has('trim')) document.documentElement.classList.add('trim');
+const SITE = 'https://thewaybackhome.net/';
+const C = ['', '#1e9e5a', '#7b3fe4', '#3d3a8c', '#e0453a', '#f07b1e', '#e8a200', '#1e88e5'];
+const STOPS = [null,
+  {w:'Made', l:'God made everything, and it was very good.', img:'art/booklet/garden-a.jpg', pos:'50% 35%'},
+  {w:'Broken', l:'Adam and Eve disobeyed, and sin broke everything.', img:'art/src/fruit-end.jpg', pos:'55% 25%'},
+  {w:'Guilty', l:'We have all sinned. Me too.', img:'art/booklet/road-crowd.jpg', pos:'50% 45%'},
+  {w:'Locked out', l:'Sin locks us out of God’s home.', img:'art/src/locked-end.jpg', pos:'50% 25%'},
+  {w:'Paid', l:'Jesus died in my place.', img:'art/booklet/choice-move.jpg', pos:'40% 45%'},
+  {w:'Alive', l:'Jesus rose again! Turn and trust Him.', img:'art/booklet/tomb-burst.jpg', pos:'40% 30%'},
+  {w:'Home', l:'Jesus welcomes His children home.', img:'art/src/gates-end.jpg', pos:'50% 30%'},
+];
+
+function qrSvg(link, dark) {
+  const q = qrcode(0, 'M'); q.addData(link); q.make();
+  const n = q.getModuleCount(), m = 2; let d = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (q.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${n + 2*m} ${n + 2*m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="${dark || '#16131f'}"/></svg>`;
+}
+document.querySelectorAll('[data-qr]').forEach(e => e.innerHTML = qrSvg(SITE));
+
+/* ---------- creation days ---------- */
+const DAYS = [
+  ['1','Light','<circle cx="20" cy="20" r="7" fill="#fff"/><g stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M20 5v5M20 30v5M5 20h5M30 20h5M9 9l3.5 3.5M27.5 27.5L31 31M9 31l3.5-3.5M27.5 12.5L31 9"/></g>'],
+  ['2','Sky and water','<path d="M9 17a6 6 0 0 1 11-3 5 5 0 0 1 9 3z" fill="#fff"/><path d="M6 26c3-3 6 3 9 0s6 3 9 0 6 3 9 0M6 32c3-3 6 3 9 0s6 3 9 0 6 3 9 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>'],
+  ['3','Land, seas and plants','<path d="M4 34c6-10 12-12 18-8s10 2 14 0v8z" fill="#fff"/><path d="M14 27V15" stroke="#fff" stroke-width="2.6"/><circle cx="14" cy="13" r="6" fill="#fff"/><circle cx="27" cy="22" r="3" fill="#fff"/>'],
+  ['4','Sun, moon and stars','<circle cx="14" cy="15" r="7" fill="#fff"/><path d="M30 22a7 7 0 1 1-7-9 5.5 5.5 0 0 0 7 9z" fill="#fff"/><path d="M28 6l1 2.5 2.5 1-2.5 1L28 13l-1-2.5-2.5-1 2.5-1zM12 28l.8 2 2 .8-2 .8L12 34l-.8-2.4-2-.8 2-.8z" fill="#fff"/>'],
+  ['5','Fish and birds','<path d="M6 27c5-6 13-6 18 0-5 6-13 6-18 0zM24 27l6-4v8z" fill="#fff"/><circle cx="11" cy="26" r="1.3" fill="#1e9e5a"/><path d="M14 13c3-4 6-4 8 0 2-4 5-4 8 0" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/>'],
+  ['6','Animals and people','<circle cx="14" cy="11" r="4" fill="#fff"/><path d="M8 33v-9a6 6 0 0 1 12 0v9z" fill="#fff"/><circle cx="27" cy="13" r="3.4" fill="#fff"/><path d="M22 33v-8a5 5 0 0 1 10 0v8z" fill="#fff"/>'],
+  ['7','God rested','<path d="M8 22c0-7 6-12 12-12s12 5 12 12" stroke="#fff" stroke-width="2.6" fill="none"/><path d="M6 24h28v4H6z" fill="#fff"/><path d="M20 30c-5-3-8-6-8-9a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 3-3 6-8 9z" fill="#fff" transform="translate(0,-8) scale(1)" opacity="0"/>'],
+];
+DAYS[6][2] = '<path d="M20 31c-7-4.5-11-8.5-11-13a5.5 5.5 0 0 1 11-1.5 5.5 5.5 0 0 1 11 1.5c0 4.5-4 8.5-11 13z" fill="#fff"/>';
+document.getElementById('days').innerHTML = DAYS.map(([n, t, s], i) =>
+  `<div style="display:flex;gap:.1in;align-items:center;background:color-mix(in srgb,var(--c1) ${i==6?24:12}%,#fff);border-radius:.14in;padding:.07in .1in${i==6?';grid-column:1/-1':''}">
+     <svg viewBox="0 0 40 40" style="width:.46in;flex:none"><circle cx="20" cy="20" r="20" fill="#1e9e5a"/>${s}</svg>
+     <div style="line-height:1.15"><div class="disp" style="font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--c1)">Day ${n}</div><div style="font-weight:600;font-size:10.4pt">${t}</div></div></div>`).join('');
+
+/* ---------- ten commandments ---------- */
+const TEN = ['Love God more than anything','Don’t make anything else your god','Use God’s name with respect','Keep a day to rest and worship God','Honour your father and mother',
+  'Don’t murder (even hate in your heart counts!)','Keep your promises in marriage','Don’t steal','Don’t lie','Don’t be jealous of what others have'];
+document.getElementById('ten').innerHTML = TEN.map((t, i) => `<li style="font-size:9.8pt;padding:.03in 0"><span class="n" style="width:.21in;height:.21in;font-size:8pt">${i + 1}</span>${t}<span class="bx"></span></li>`).join('');
+
+/* ---------- great swap ---------- */
+document.getElementById('swap').innerHTML = `
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5 0 10z" fill="#16131f"/></marker></defs>
+  <g font-family="Bricolage Grotesque" font-weight="800" text-anchor="middle">
+    <rect x="10" y="10" width="200" height="200" rx="28" fill="#fde4d0"/>
+    <rect x="290" y="10" width="200" height="200" rx="28" fill="#fde4d0"/>
+    <text x="110" y="48" font-size="22" fill="#f07b1e">ME</text>
+    <text x="390" y="48" font-size="22" fill="#f07b1e">JESUS</text>
+    <circle cx="110" cy="95" r="26" fill="#6b6478"/><path d="M62 190v-30a48 48 0 0 1 96 0v30z" fill="#6b6478"/>
+    <g fill="#16131f"><circle cx="90" cy="160" r="6"/><circle cx="122" cy="172" r="5"/><circle cx="105" cy="140" r="4"/><circle cx="135" cy="150" r="6"/><circle cx="80" cy="180" r="4"/><circle cx="118" cy="98" r="4"/></g>
+    <circle cx="390" cy="95" r="26" fill="#fff"/><path d="M342 190v-30a48 48 0 0 1 96 0v30z" fill="#fff"/>
+    <g fill="none" stroke="#e8a200" stroke-width="3"><circle cx="390" cy="95" r="26"/><path d="M342 190v-30a48 48 0 0 1 96 0v30z"/></g>
+    <path d="M140 222 C 200 262, 300 262, 360 224" stroke="#16131f" stroke-width="5" fill="none" marker-end="url(#ah)"/>
+    <path d="M360 300 C 300 262, 200 262, 140 300" stroke="#e8a200" stroke-width="5" fill="none" marker-end="url(#ah)"/>
+    <text x="250" y="232" font-size="17" fill="#16131f">MY SIN goes on Him</text>
+    <text x="250" y="322" font-size="17" fill="#a86e00">HIS GOODNESS comes on me</text>
+    <g transform="translate(250 382) rotate(-6)"><rect x="-150" y="-34" width="300" height="64" rx="10" fill="none" stroke="#e0453a" stroke-width="6"/>
+      <text y="13" font-size="36" fill="#e0453a" letter-spacing="3">PAID IN FULL</text></g>
+  </g>`;
+
+/* ---------- memory verses ---------- */
+const MEM = [
+  [1,'God saw all that he had made, and it was very good indeed.','Genesis 1:31'],
+  [2,'…when sin is fully grown, it gives birth to death.','James 1:15'],
+  [3,'For all have sinned and fall short of the glory of God.','Romans 3:23'],
+  [4,'For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.','Romans 6:23'],
+  [5,'He made the one who did not know sin to be sin for us, so that in him we might become the righteousness of God.','2 Corinthians 5:21'],
+  [6,'He is not here, but he has risen!','Luke 24:6'],
+  [7,'Look, I am making everything new.','Revelation 21:5'],
+];
+document.getElementById('memory').innerHTML = MEM.map(([s, v, r]) =>
+  `<div style="display:flex;gap:.12in;align-items:center;border:2px solid ${C[s]};border-radius:.16in;padding:.08in .12in">
+     <div class="disp" style="flex:none;width:.42in;height:.42in;border-radius:50%;background:${C[s]};color:#fff;display:grid;place-items:center;font-size:16pt">${s}</div>
+     <div><div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:10.6pt;line-height:1.2">${v}</div>
+     <div style="font-size:8pt;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:${C[s]};margin-top:.03in">${STOPS[s].w} · ${r}</div></div>
+     <span class="bx" style="flex:none;margin-left:auto;width:.2in;height:.2in;border:2px solid ${C[s]};border-radius:.05in"></span></div>`).join('');
+
+/* ---------- grown-ups ---------- */
+const QS = ['What was the one rule God gave Adam and Eve? Why do you think He gave it?','Why couldn’t the children scrub their marks away?',
+  'Where did you spot the lamb on the road? Who is the Lamb of God?','What did Jesus do so we could come back to God?','How do we know Jesus is alive?',
+  'What does it mean to trust Jesus? Is that something you want to do?','Who is someone you could tell the good news to this week?'];
+document.getElementById('qs').innerHTML = QS.map((q, i) => `<li style="font-size:9.8pt"><span class="n">${i + 1}</span>${q}</li>`).join('');
+const PASS = [[1,'Genesis 1–2'],[2,'Genesis 3; John 8:44'],[3,'Genesis 4–9, 12, 22; Exodus 12, 20; 2 Samuel 7; Isaiah 53; Micah 5:2; Romans 3:9–23; James 2:10'],
+  [4,'Romans 3:20; 6:23; James 1:23–24; Habakkuk 1:13; Hebrews 9:22, 27; Isaiah 64:6; Jeremiah 2:22; Ephesians 2:8–9'],
+  [5,'Luke 2; John 1:1–29; 3:16; 10:9; 14:6; 19; Isaiah 53:5–6; 2 Corinthians 5:21; 1 Peter 2:24'],
+  [6,'Mark 1:15; Romans 10:9–13; Isaiah 1:18; 61:10; Luke 24; 1 Corinthians 15:3–6'],[7,'John 14:2–3; 20:27; Acts 1:9–11; Revelation 21–22; Matthew 28:19–20']];
+document.getElementById('passages').innerHTML = PASS.map(([s, t]) => `<div style="break-inside:avoid;margin-bottom:.06in"><b style="color:${C[s]}">${s} ${STOPS[s].w}:</b> ${t}</div>`).join('');
+
+/* ---------- road map spread (12.5 x 9.25 in, viewBox in 1/100 in) ---------- */
+const MAPW = 1250, MAPH = 925;
+const PTS = [[190,750,'r'],[450,530,'l'],[190,320,'r'],[790,205,'r'],[1085,405,'l'],[790,605,'r'],[1085,795,'l']];
+const ROAD = 'M -30 880 C 60 840, 120 790, 190 750 S 390 610, 450 530 S 330 370, 190 320 S 330 175, 520 185 S 700 165, 790 205 S 1010 300, 1085 405 S 880 520, 790 605 S 990 760, 1085 795 S 1220 860, 1290 905';
+function mapSvg(side) {
+  const vx = side === 'left' ? 0 : 625, R = 74;
+  let g = `<defs><linearGradient id="bg${side}" x1="0" x2="${MAPW}" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d3f0dc"/><stop offset=".28" stop-color="#e6dbfb"/><stop offset=".48" stop-color="#d8d7f0"/><stop offset=".64" stop-color="#fbd9d5"/><stop offset=".8" stop-color="#fde4cc"/><stop offset="1" stop-color="#d2e7fb"/></linearGradient>`;
+  PTS.forEach((p, i) => g += `<clipPath id="cp${side}${i}"><circle cx="${p[0]}" cy="${p[1]}" r="${R}"/></clipPath>`);
+  g += `</defs><rect x="-20" y="-20" width="${MAPW + 40}" height="${MAPH + 40}" fill="url(#bg${side})"/>`;
+  for (let y = 30; y < MAPH; y += 44) for (let x = (y / 44 % 2) * 22; x < MAPW; x += 44) g += `<circle cx="${x}" cy="${y}" r="2.2" fill="#16131f" opacity=".06"/>`;
+  g += `<path d="${ROAD}" stroke="#16131f" stroke-width="62" fill="none" stroke-linecap="round" opacity=".12" transform="translate(0 8)"/>
+        <path d="${ROAD}" stroke="#ead5ab" stroke-width="56" fill="none" stroke-linecap="round"/>
+        <path d="${ROAD}" stroke="#fff" stroke-width="5" fill="none" stroke-dasharray="20 18" stroke-linecap="round"/>`;
+  PTS.forEach(([x, y, sd], i) => {
+    const s = STOPS[i + 1], c = C[i + 1];
+    g += `<circle cx="${x}" cy="${y}" r="${R + 10}" fill="#fff"/><image href="${s.img}" x="${x - R}" y="${y - R * 1.78}" width="${2 * R}" height="${3.56 * R}" preserveAspectRatio="xMidYMid slice" clip-path="url(#cp${side}${i})"/>
+      <circle cx="${x}" cy="${y}" r="${R + 5}" fill="none" stroke="${c}" stroke-width="11"/>
+      <circle cx="${x - 56}" cy="${y - 56}" r="27" fill="${c}" stroke="#fff" stroke-width="6"/>
+      <text x="${x - 56}" y="${y - 46}" font-family="Bricolage Grotesque" font-weight="800" font-size="29" fill="#fff" text-anchor="middle">${i + 1}</text>`;
+    const bw = 250, bx = sd === 'r' ? x + R + 18 : x - R - 18 - bw, by = y - 58, tx = bx + 16;
+    g += `<rect x="${bx}" y="${by}" width="${bw}" height="118" rx="20" fill="#fff" opacity=".93"/>
+      <g font-family="Bricolage Grotesque">
+      <text x="${tx}" y="${by + 40}" font-weight="800" font-size="${s.w.length > 7 ? 30 : 36}" fill="${c}" letter-spacing="-.5">${s.w.toUpperCase()}</text>
+      <text x="${tx}" y="${by + 64}" font-family="Lexend" font-size="14.5" fill="#16131f">${wrapLine(s.l, 30, tx)}</text>
+      <text x="${tx}" y="${by + 106}" font-weight="800" font-size="12.5" fill="#6b6478" letter-spacing="1" class="mpg" data-stop="${i + 1}">PAGE</text></g>`;
+  });
+  if (side === 'left') g += `<g font-family="Bricolage Grotesque" font-weight="800"><text x="67" y="${80}" font-size="15" letter-spacing="4" fill="#6b6478">FROM EDEN TO THE NEW EARTH</text>
+     <text x="64" y="${142}" font-size="62" fill="#16131f" letter-spacing="-2">The road map</text></g>`;
+  return `<svg viewBox="${vx} 0 625 ${MAPH}" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">${g}</svg>`;
+}
+function wrapLine(t, n, x) {
+  const w = t.split(' '), lines = ['']; w.forEach(s => { if ((lines[lines.length - 1] + ' ' + s).trim().length > n) lines.push(s); else lines[lines.length - 1] = (lines[lines.length - 1] + ' ' + s).trim(); });
+  return lines.map((l, i) => `<tspan x="${x}" dy="${i ? 18 : 0}">${l}</tspan>`).join('');
+}
+document.querySelectorAll('[data-map]').forEach(e => e.innerHTML = mapSvg(e.dataset.map));
+
+/* ---------- the long road spread ---------- */
+const LONG = [
+  {t:'Noah', y:'Genesis 6–9', ic:'ark', x:'The whole world filled up with evil. God saved Noah’s family and the animals in a huge boat. Then He put a rainbow in the sky as a promise.'},
+  {t:'Abraham', y:'Genesis 12:3; 15:5; 22', ic:'stars', lamb:1, x:'God promised Abraham a family as many as the stars, and that through it all nations would be blessed. On a mountain, God gave a ram to die in Isaac’s place. Abraham said God would provide the lamb.'},
+  {t:'Moses', y:'Exodus 12; 20', ic:'tablets', lamb:1, x:'In Egypt, God’s people put a lamb’s blood on their doors, and death passed over them. Then God gave the Ten Commandments.'},
+  {t:'King David', y:'2 Samuel 7:12–16', ic:'crown', x:'God promised David that a King from his family would rule forever.'},
+  {t:'The prophets', y:'Isaiah 53; Micah 5:2', ic:'scroll', lamb:1, x:'Isaiah said Someone would be led like a lamb and wounded for our sins. Micah said He would be born in Bethlehem. That was 700 years before it happened!'},
+  {t:'Bethlehem', y:'Luke 2:1–20', ic:'star', x:'Then one night, a baby was born. The promise was coming true… Find out who at Stop 5!'},
+];
+const IC = {
+  ark:'<path d="M8 25h24l-4 7H12z" fill="#fff"/><path d="M13 25v-6h14v6" fill="#fff"/><path d="M12 15a8 8 0 0 1 16 0" stroke="#fff" stroke-width="2.4" fill="none"/>',
+  stars:'<path d="M20 7l2.4 5 5.4.6-4 3.8 1 5.4-4.8-2.6-4.8 2.6 1-5.4-4-3.8 5.4-.6z" fill="#fff"/><path d="M9 25l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4zM31 24l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z" fill="#fff"/>',
+  tablets:'<path d="M9 33V15a5 5 0 0 1 10 0v18zM21 33V15a5 5 0 0 1 10 0v18z" fill="#fff"/><path d="M12 19h4M12 23h4M12 27h4M24 19h4M24 23h4M24 27h4" stroke="#3d3a8c" stroke-width="1.6"/>',
+  crown:'<path d="M8 28l-1-14 7 6 6-10 6 10 7-6-1 14z" fill="#fff"/><path d="M8 31h24" stroke="#fff" stroke-width="3"/>',
+  scroll:'<rect x="11" y="9" width="18" height="22" rx="2" fill="#fff"/><circle cx="11" cy="10" r="3" fill="#fff"/><circle cx="29" cy="30" r="3" fill="#fff"/><path d="M15 15h10M15 19h10M15 23h7" stroke="#3d3a8c" stroke-width="1.6"/>',
+  star:'<path d="M20 5l3 10 10 1-8 6 3 10-8-6-8 6 3-10-8-6 10-1z" fill="#fff"/>',
+};
+function longSide(side) {
+  const items = side === 'left' ? LONG.slice(0, 3) : LONG.slice(3);
+  const head = side === 'left' ? `<span class="tag"><i>3</i>Guilty</span><h2 style="font-size:28pt">The long road</h2>
+     <p>Thousands of years went by. People kept sinning. But God never forgot His promise. Watch it grow along the road…</p>` :
+    `<div class="disp" style="font-size:10pt;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-top:.12in">…and the promise keeps growing</div>`;
+  const rows = items.map((it, i) => `
+    <div style="display:grid;grid-template-columns:.9in 1fr;gap:.16in;align-items:start;position:relative;padding:.16in 0">
+      <div style="position:relative;z-index:1"><svg viewBox="0 0 40 40" style="width:.9in"><circle cx="20" cy="20" r="20" fill="#3d3a8c"/>${IC[it.ic]}</svg>
+        ${it.lamb ? '<svg viewBox="0 0 40 40" style="width:.38in;position:absolute;right:-.1in;bottom:-.06in"><use href="#lamb"/></svg>' : ''}</div>
+      <div><div class="disp" style="font-size:16pt;color:var(--c3)">${it.t}</div><p style="font-size:11pt;line-height:1.38;margin:.04in 0">${it.x}</p><span class="ref">${it.y}</span></div>
+    </div>`).join('');
+  return `<div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">${head}
+    <div style="position:relative;margin-top:.1in"><div style="position:absolute;left:.42in;top:.4in;bottom:.4in;border-left:.06in dashed #c9c4e6"></div>${rows}</div>
+    ${side === 'right' ? `<div style="display:flex;gap:.12in;align-items:center;background:#fff3cf;border-radius:.16in;padding:.1in .14in;margin-top:.1in;font-size:9.8pt;line-height:1.3">
+      <svg viewBox="0 0 40 40" style="width:.5in;flex:none"><use href="#lamb"/></svg><div><b>Did you spot the lambs?</b> Eden, Abraham’s mountain, the Passover doors, Isaiah’s scroll… They all point to Someone. Keep reading!</div></div>` : ''}
+  </div>`;
+}
+document.querySelectorAll('[data-long]').forEach(e => e.innerHTML = longSide(e.dataset.long));
+
+/* ---------- page numbers, sides, footers ---------- */
+const pages = [...document.querySelectorAll('.page')];
+const anchors = {};
+pages.forEach((p, i) => {
+  const n = i + 1; p.classList.add(n % 2 ? 'odd' : 'even'); p.dataset.n = n;
+  if (p.dataset.anchor) anchors[p.dataset.anchor] = n;
+});
+document.querySelectorAll('[data-ref]').forEach(e => e.textContent = anchors[e.dataset.ref] || '?');
+document.querySelectorAll('.mpg').forEach(e => e.textContent = 'PAGE ' + anchors['s' + e.dataset.stop]);
+
+function roadFoot(stop, onpic) {
+  const W = 300, gap = W / 6; let s = `<svg viewBox="-12 -12 ${W + 24} 24" preserveAspectRatio="xMidYMid meet">`;
+  s += `<line x1="0" y1="0" x2="${W}" y2="0" stroke="${onpic ? 'rgba(255,255,255,.7)' : '#cfc8bd'}" stroke-width="2.4" stroke-dasharray="4 4"/>`;
+  for (let i = 1; i <= 7; i++) {
+    const x = (i - 1) * gap, on = i === stop, done = i < stop;
+    s += on ? `<circle cx="${x}" cy="0" r="10" fill="${C[i]}" stroke="#fff" stroke-width="2"/><text x="${x}" y="4" font-size="11" font-family="Bricolage Grotesque" font-weight="800" fill="#fff" text-anchor="middle">${i}</text>`
+            : `<circle cx="${x}" cy="0" r="5" fill="${done ? C[i] : (onpic ? '#fff' : '#e7e1d6')}" ${done ? '' : `stroke="${C[i]}" stroke-width="1.6"`}/>`;
+  }
+  return s + '</svg>';
+}
+pages.forEach((p, i) => {
+  if (p.hasAttribute('data-nofoot') || i === 0) return;
+  const f = document.createElement('div'); f.className = 'foot';
+  const stop = +p.dataset.stop || 0;
+  f.innerHTML = `<span class="pn">${i + 1}</span>` + (stop ? roadFoot(stop, p.classList.contains('onpic')) : '<span style="flex:1"></span>');
+  p.appendChild(f);
+});
+
+/* ---------- table of contents, recap, back road ---------- */
+document.getElementById('toc').innerHTML = STOPS.slice(1).map((s, i) =>
+  `<div style="display:flex;align-items:center;gap:.12in"><span class="disp" style="flex:none;width:.4in;height:.4in;border-radius:50%;background:${C[i + 1]};color:#fff;display:grid;place-items:center;font-size:15pt">${i + 1}</span>
+   <div style="flex:1;line-height:1.15"><div class="disp" style="font-size:15pt;color:${C[i + 1]}">${s.w}</div><div style="font-size:9.4pt;color:var(--soft)">${s.l}</div></div>
+   <span class="disp" style="font-size:12pt">${anchors['s' + (i + 1)]}</span></div>`).join('');
+document.getElementById('recap').innerHTML = STOPS.slice(1).map((s, i) =>
+  `<div style="display:flex;align-items:center;gap:.12in;background:color-mix(in srgb,${C[i + 1]} 13%,#fff);border-radius:.14in;padding:.06in .1in">
+    <span class="disp" style="flex:none;width:.42in;height:.42in;border-radius:50%;background:${C[i + 1]};color:#fff;display:grid;place-items:center;font-size:16pt">${i + 1}</span>
+    <div style="line-height:1.15"><div class="disp" style="font-size:16pt;color:${C[i + 1]}">${s.w}</div><div style="font-size:9.6pt">${s.l}</div></div></div>`).join('');
+document.getElementById('backroad').innerHTML = `<div style="display:flex;gap:.06in;flex-wrap:wrap">${STOPS.slice(1).map((s, i) =>
+  `<span class="disp" style="background:${C[i + 1]};border-radius:99px;padding:.04in .12in;font-size:10pt">${i + 1} ${s.w}</span>`).join('')}</div>`;
+
+// signal for the PDF tool
+Promise.all([document.fonts.ready, ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; }))])
+  .then(() => { document.body.dataset.ready = 1; });
+</script>
+</body>
+</html>
