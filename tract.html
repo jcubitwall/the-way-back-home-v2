@@ -40,6 +40,9 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .giver .lab{display:block;font:800 7.4pt var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.03in}
 .giver b{display:block;font:800 10.5pt/1.25 var(--display);color:var(--sky)}
 .giver .wl{display:block;border-bottom:1px solid #9a93a6;height:.24in}
+.pdfbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.btn2{font:700 14px var(--body);background:#fff;color:var(--ink);border:1.5px solid #cfcbd9;border-radius:999px;padding:9px 16px;cursor:pointer}
+#pdfmsg{font-size:14px;color:var(--muted)}#pdfmsg a{color:var(--blue);font-weight:700}
 .btn{font:800 17px var(--display);background:var(--gold);color:#2B2233;border:0;border-radius:999px;padding:11px 26px;cursor:pointer;box-shadow:0 3px 0 var(--gold2)}
 .wrap{padding:20px 16px 40px;overflow:hidden}
 .sheets{transform-origin:top left;width:17.25in;margin:0 auto}
@@ -98,13 +101,22 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 .back p{margin:0}
 
 .err{padding:24px;font-size:16px}
-@page{size:17.25in 11.25in;margin:0}
+/* default: exactly tabloid (17 × 11 in, no bleed). ?bleed=1 (print-shop PDF only) adds 1/8 in all round. */
+.trim .sheet{width:17in;height:11in;grid-template-columns:repeat(4,4.25in);grid-template-rows:5.5in 5.5in}
+.trim .c0,.trim .c3{padding:0}
+.trim .cell .pn{left:0;top:0}
+.trim .cover .art{inset:0}
+/* ?base=1: the empty template the Print button fills in (QR code, link and "given by" are added into the PDF) */
+.base .back .qr,.base .back .u{visibility:hidden}
+@page{size:17in 11in;margin:0}
 @media print{
   html,body{background:#fff}
   .top,.label{display:none}
   .wrap{padding:0;overflow:visible}
   .sheets{transform:none!important;margin:0}
-  .sheet{outline:none;margin:0;break-after:page}
+  .sheet{outline:none;margin:0;break-after:page;break-inside:avoid}
+  .sheet:last-child{break-after:auto}
+  .pdfbar{display:none!important}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -112,11 +124,13 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 <body>
 <div class="top" id="top">
   <a id="back" href="./">‹ The Way Back Home</a>
-  <div>A fold-out tract from one 11 × 17 sheet (with 1/8 in bleed for a print shop).
+  <div>A fold-out tract from one 11 × 17 (tabloid) sheet.
     <ol><li>Print double-sided, “flip on short edge”.</li>
     <li>Fold in half along the long middle, with pictures 5–12 inside.</li>
     <li>Zig-zag fold the strip into four, with the cover on top.</li></ol></div>
-  <button class="btn" id="print" type="button">Print</button>
+  <div class="pdfbar"><button class="btn" id="print" type="button">Print</button>
+    <button class="btn2" id="shop" type="button">PDF for a print shop (with bleed)</button>
+    <span id="pdfmsg"></span></div>
   <form class="who" id="who" onsubmit="return false">
     <b>Add your name or church to the back</b> <span>(optional: leave empty to get lines people can write on)</span>
     <label>From <input id="from" maxlength="60" placeholder="e.g. Grace Community Church" autocomplete="organization"></label>
@@ -138,6 +152,10 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
   try {
     const langs = await get('content/languages.json');
     const sp = new URLSearchParams(location.search), q = sp.get('lang');
+    const BLEED = sp.has('bleed'), B = BLEED ? 0.125 : 0;
+    document.documentElement.classList.toggle('trim', !BLEED);
+    if (BLEED) document.head.insertAdjacentHTML('beforeend', '<style>@page{size:17.25in 11.25in;margin:0}</style>');
+    document.documentElement.classList.toggle('base', sp.has('base'));
     let L = langs.langs[q] ? q : 'en';
     let T = await get(`content/i18n/${L}.json`);
     if (!T.tract) { L = 'en'; T = await get('content/i18n/en.json'); }
@@ -176,7 +194,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     const sheets = document.getElementById('sheets');
     sheets.innerHTML = `<p class="label">Side 1 (cover side)</p>${side1}<p class="label">Side 2 (inside)</p>${side2}`;
     const fit = () => {
-      const avail = document.getElementById('wrap').clientWidth - 32, w = 17.25 * 96, k = Math.min(1, avail / w);
+      const avail = document.getElementById('wrap').clientWidth - 32, w = (17 + 2 * B) * 96, k = Math.min(1, avail / w);
       sheets.style.transform = k < 1 ? `scale(${k})` : ''; sheets.style.marginLeft = k < 1 ? '0' : '';
       document.getElementById('wrap').style.height = k < 1 ? (sheets.offsetHeight * k + 60) + 'px' : '';
     };
@@ -194,9 +212,57 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     F.forEach(k => document.getElementById(k).addEventListener('input', e => { store(k, e.target.value); giver(); }));
     giver();
     fit(); addEventListener('resize', fit);
-    document.getElementById('print').onclick = () => window.print();
-    // opened from Resources with ?print: print straight away once the pictures have loaded
-    if (new URLSearchParams(location.search).has('print')) (document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r))).then(() => setTimeout(() => window.print(), 500));
+    // Print = a real PDF of the exact sheet size, so it prints the same from every browser and phone (Safari ignores the
+    // page size of web pages). tools/tract_pdf.py makes the template PDFs (resources/tract-<size>.pdf) and where things go
+    // (resources/tract-boxes.json); here the reader's QR code, link and "given by" details are drawn into it with pdf-lib.
+    const msg = document.getElementById('pdfmsg');
+    const say = h => { msg.innerHTML = h; };
+    let lib = null;
+    const loadLib = () => lib || (lib = new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'pdf-lib.min.js'; s.onload = ok; s.onerror = no; document.head.appendChild(s); }));
+    const hexRGB = h => { const n = parseInt(h.slice(1), 16); return PDFLib.rgb((n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255); };
+    const makePdf = async size => {
+      await loadLib();
+      const [boxes, bytes] = await Promise.all([get('resources/tract-boxes.json'), fetch(`resources/tract-${size}.pdf`).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })]);
+      const bx = boxes[size], doc = await PDFLib.PDFDocument.load(bytes), pg = doc.getPage(0), H = pg.getHeight();
+      const reg = await doc.embedFont(PDFLib.StandardFonts.Helvetica), bold = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      const R = (b, k) => ({ x: b.x * 72, y: H - (b.y + b.h) * 72, w: b.w * 72, h: b.h * 72 });   // inches from top-left -> PDF points
+      // QR code
+      const q = R(bx.qr), n = qr.getModuleCount(), m = q.w / (n + 2);
+      pg.drawRectangle({ x: q.x, y: q.y, width: q.w, height: q.h, color: PDFLib.rgb(1, 1, 1) });
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x))
+        pg.drawRectangle({ x: q.x + (x + 1) * m, y: q.y + q.h - (y + 2) * m, width: m + .05, height: m + .05, color: hexRGB('#1d1a24') });
+      // the link under it
+      const u = R(bx.u), ut = link.replace(/^https:\/\//, '').replace(/\/$/, ''), us = 10, uw = bold.widthOfTextAtSize(ut, us);
+      pg.drawText(ut, { x: u.x + (u.w - uw) / 2, y: u.y + (u.h - us * .72) / 2, size: us, font: bold, color: hexRGB('#2f7fd9') });
+      // "Given to you by"
+      const v = Object.fromEntries(F.map(k => [k, document.getElementById(k).value.trim()]));
+      if (v.from || v.contact || v.extra) {
+        const g = R(bx.lines);
+        pg.drawRectangle({ x: g.x, y: g.y, width: g.w, height: g.h, color: hexRGB(bx.card) });
+        const rows = [[v.from, bold, 10.5, '#2f7fd9'], [v.contact, reg, 8.6, '#1d1a24'], [v.extra, reg, 8.6, '#1d1a24']].filter(r => r[0]);
+        const lh = r => r[2] * 1.3, total = rows.reduce((a, r) => a + lh(r), 0);
+        let y = g.y + (g.h + total) / 2;
+        for (const [s, f, z, c] of rows) {
+          let size = z; while (f.widthOfTextAtSize(s, size) > g.w - 6 && size > 6) size -= .25;
+          y -= lh([s, f, z]);
+          pg.drawText(s, { x: g.x + (g.w - f.widthOfTextAtSize(s, size)) / 2, y: y + (lh([s, f, z]) - size * .72) / 2, size, font: f, color: hexRGB(c) });
+        }
+      }
+      return URL.createObjectURL(new Blob([await doc.save()], { type: 'application/pdf' }));
+    };
+    const go = async (size, label, win) => {
+      say('Making the PDF…');
+      try {
+        const url = await makePdf(size), name = `The-Way-Back-Home-tract-${L}-${size}.pdf`;
+        say(`Ready: <a href="${url}" download="${name}" target="_blank">${esc(label)}</a>. Print it at <b>100 % (actual size)</b> on 11 × 17 paper, double-sided, flip on the short edge.`);
+        if (win) win.location = url; else location.href = url;
+      } catch (e) { if (win) win.close(); say('Could not make the PDF. Check your connection, or use your browser’s Print (11 × 17, landscape, no margins).'); }
+    };
+    // open the tab during the click, so it isn't blocked as a pop-up
+    document.getElementById('print').onclick = () => go('tabloid', 'Open the tract PDF', window.open('', '_blank'));
+    document.getElementById('shop').onclick = () => go('bleed', 'Open the print-shop PDF', window.open('', '_blank'));
+    // opened from Resources with ?print: make the PDF straight away
+    if (sp.has('print')) go('tabloid', 'Open the tract PDF', null);
   } catch (e) {
     document.getElementById('wrap').innerHTML = '<p class="err">The tract could not load. Please check your connection and try again.</p>';
   }
