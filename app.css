@@ -173,3 +173,25 @@ html[lang=ja] .txt{line-height:1.72}
 html[lang=ja] .para,html[lang=ja] .caps .cap{line-height:1.8}
 html[lang=ja] .cover h1{line-height:1.22}
 html[lang=ja] .big{line-height:1.3}
+
+/* message form */
+.msgf{position:fixed;inset:0;z-index:30;background:rgba(20,16,30,.62);display:grid;place-items:center;padding:12px;overflow:auto}
+.msgf form{position:relative;width:min(100%,440px);background:var(--paper);color:var(--ink);border-radius:22px;padding:20px 18px 12px;box-shadow:0 18px 50px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:10px;font:500 16px var(--body)}
+.msgf h2{margin:0 36px 2px 0;font:800 22px var(--body)}
+.msgf .x{position:absolute;top:8px;right:8px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(0,0,0,.06);color:inherit;font-size:24px;line-height:1;cursor:pointer}
+.msgf .cats{display:flex;flex-wrap:wrap;gap:6px}
+.msgf .cats input{position:absolute;opacity:0;pointer-events:none}
+.msgf .cats span{display:block;padding:7px 11px;border-radius:99px;border:1.5px solid rgba(0,0,0,.15);font:600 14px var(--body);cursor:pointer}
+.msgf .cats input:checked+span{background:#2F7FD9;border-color:#2F7FD9;color:#fff}
+.msgf .cats input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.msgf textarea,.msgf input:not([type=radio]):not(.hp){width:100%;box-sizing:border-box;border:1.5px solid rgba(0,0,0,.18);border-radius:12px;padding:11px 12px;font:500 16px var(--body);color:var(--ink);background:#fff;resize:vertical}
+.msgf textarea:focus,.msgf input:focus{outline:3px solid rgba(47,127,217,.35);border-color:#2F7FD9}
+.msgf .hp{display:none}
+.msgf .note{margin:0;font-size:12.5px;line-height:1.35;opacity:.7}
+.msgf .send{border:0;border-radius:99px;background:#2F7FD9;color:#fff;font:700 17px var(--body);padding:13px;cursor:pointer}
+.msgf .send[disabled]{opacity:.6}
+.msgf .alt{margin:0;text-align:center;font-size:12.5px;opacity:.6}
+.msgf .alt a,.msgf .err a{color:inherit}
+.msgf .err{margin:0;color:#B3261E;font-size:14px}
+.msgf .done{text-align:center;padding:14px 0 6px;display:flex;flex-direction:column;gap:14px}
+.msgf .done .big{font-size:44px}

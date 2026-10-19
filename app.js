@@ -590,6 +590,8 @@ const ICON = {
   speaker: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>',
   pause: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>'
 };
+// Web3Forms access key: messages typed in the book arrive by email at the address the key was made for. Empty = fall back to the mail app.
+const MSG_KEY = '';
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 1800); }
 function closeMenus() { $('#menu').hidden = true; $('#msgMenu').hidden = true; $('#menuBtn').setAttribute('aria-expanded', 'false'); }
 // count a tap as a visit to a made-up address, so it shows up in the anonymous visitor stats
@@ -716,12 +718,54 @@ function setupControls() {
 
   const m = UI.message, CAT = ['Prayer request', 'Language request', 'Thank you', 'How this book helped'], EMO = ['🙏', '🌍', '💛', '✨'];
   $('#mMsgT').textContent = m.title; $('#mMsgS').textContent = m.sub;
-  $('#msgMenu').innerHTML = m.choices.map((c, i) => {
-    const subj = `The Way Back Home – ${CAT[i]} (${META.name})`, body = `\n\n\n—\n${m.note}\n${META.name} · https://thewaybackhome.net/${L}/`;
-    return `<a role="menuitem" href="mailto:hello@thewaybackhome.net?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}"><span class="emo" aria-hidden="true">${EMO[i]}</span><span>${esc(c)}</span></a>`;
-  }).join('') + `<div class="note">${esc(m.note)}</div>`;
+  $('#msgMenu').innerHTML = m.choices.map((c, i) => `<button role="menuitem" data-i="${i}"><span class="emo" aria-hidden="true">${EMO[i]}</span><span>${esc(c)}</span></button>`).join('') + `<div class="note">${esc(m.note)}</div>`;
   $('#mMsg').onclick = e => { e.stopPropagation(); closeMenus(); $('#msgMenu').hidden = false; };
-  $('#msgMenu').addEventListener('click', e => { if (e.target.closest('a')) { count('message'); setTimeout(closeMenus, 200); } });
+  $('#msgMenu').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { e.stopPropagation(); closeMenus(); msgForm(+b.dataset.i); } });
+
+  /* the message form: typed and sent right here in the book (Web3Forms delivers it by email), so no mail app is needed */
+  function msgForm(ci) {
+    const F = Object.assign({}, EN.ui.message, m), mail = 'hello@thewaybackhome.net';
+    const o = document.createElement('div'); o.className = 'msgf'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
+    o.innerHTML = `<form novalidate><button type="button" class="x" aria-label="${esc(F.close)}">×</button>
+      <h2>${esc(m.title)}</h2>
+      <div class="cats">${m.choices.map((c, i) => `<label><input type="radio" name="cat" value="${i}"${i === ci ? ' checked' : ''}><span>${EMO[i]} ${esc(c)}</span></label>`).join('')}</div>
+      <textarea name="message" rows="5" required placeholder="${esc(F.placeholder)}"></textarea>
+      <input name="name" autocomplete="name" placeholder="${esc(F.name)}">
+      <input name="email" type="email" autocomplete="email" placeholder="${esc(F.email)}">
+      <input name="botcheck" type="checkbox" class="hp" tabindex="-1" aria-hidden="true">
+      <p class="note">${esc(m.note)}</p>
+      <button type="submit" class="send">${esc(F.send)}</button>
+      <p class="alt"><a href="mailto:${mail}">${mail}</a></p></form>`;
+    document.body.appendChild(o);
+    const f = o.querySelector('form'), close = () => o.remove();
+    o.onclick = e => { if (e.target === o) close(); };
+    o.querySelector('.x').onclick = close;
+    addEventListener('keydown', function k(e) { if (e.key === 'Escape') { close(); removeEventListener('keydown', k); } });
+    setTimeout(() => f.message.focus(), 50);
+    f.onsubmit = async e => {
+      e.preventDefault();
+      const text = f.message.value.trim(); if (!text) { f.message.focus(); return; }
+      if (f.email.value && !f.email.checkValidity()) { f.email.focus(); return; }
+      const cat = CAT[+(f.cat.value || 0)], subject = `The Way Back Home – ${cat} (${META.name})`;
+      const body = `${text}\n\n—\n${META.name} · https://thewaybackhome.net/${L}/`;
+      if (!MSG_KEY) { location.href = `mailto:${mail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; count('message'); return; }
+      const btn = f.querySelector('.send'); btn.disabled = true; btn.textContent = F.sending;
+      try {
+        const r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ access_key: MSG_KEY, subject, from_name: 'The Way Back Home', name: f.name.value.trim() || '(no name)', email: f.email.value.trim() || undefined,
+            replyto: f.email.value.trim() || undefined, category: cat, language: META.name, message: body, botcheck: f.botcheck.checked }) });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || j.success === false) throw new Error(j.message || r.status);
+        count('message');
+        f.innerHTML = `<button type="button" class="x" aria-label="${esc(F.close)}">×</button><div class="done"><div class="big" aria-hidden="true">💛</div><h2>${esc(F.sent)}</h2><button type="button" class="send">${esc(F.close)}</button></div>`;
+        f.querySelectorAll('button').forEach(b => b.onclick = close);
+      } catch (err) {
+        btn.disabled = false; btn.textContent = F.send;
+        let p = f.querySelector('.err'); if (!p) { p = document.createElement('p'); p.className = 'err'; btn.before(p); }
+        p.innerHTML = `${esc(F.failed)} <a href="mailto:${mail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}">${mail}</a>`;
+      }
+    };
+  }
 
   // install the book as an app (home-screen icon, opens full screen)
   let installEvt = null; addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; });

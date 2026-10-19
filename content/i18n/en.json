@@ -29,7 +29,15 @@
         "Say thank you",
         "Share how this book helped"
       ],
-      "note": "Parents or guardians, please write on behalf of your child."
+      "note": "Parents or guardians, please write on behalf of your child.",
+      "placeholder": "Write your message here…",
+      "name": "Your name (optional)",
+      "email": "Your email, if you would like a reply (optional)",
+      "send": "Send",
+      "sending": "Sending…",
+      "sent": "Thank you! Your message has been sent.",
+      "failed": "Sorry, it could not be sent. Please try again, or email",
+      "close": "Close"
     },
     "videotip": "The video opens. Tap Share, then “Save Video” (or “Save to Files”).",
     "cards": "Print QR cards",
