@@ -734,8 +734,7 @@ function setupControls() {
       <input name="email" type="email" autocomplete="email" placeholder="${esc(F.email)}">
       <input name="botcheck" type="checkbox" class="hp" tabindex="-1" aria-hidden="true">
       <p class="note">${esc(m.note)}</p>
-      <button type="submit" class="send">${esc(F.send)}</button>
-      <p class="alt"><a href="mailto:${mail}">${mail}</a></p></form>`;
+      <button type="submit" class="send">${esc(F.send)}</button></form>`;
     document.body.appendChild(o);
     const f = o.querySelector('form'), close = () => o.remove();
     o.onclick = e => { if (e.target === o) close(); };
@@ -762,7 +761,7 @@ function setupControls() {
       } catch (err) {
         btn.disabled = false; btn.textContent = F.send;
         let p = f.querySelector('.err'); if (!p) { p = document.createElement('p'); p.className = 'err'; btn.before(p); }
-        p.innerHTML = `${esc(F.failed)} <a href="mailto:${mail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}">${mail}</a>`;
+        p.textContent = F.failed;
       }
     };
   }

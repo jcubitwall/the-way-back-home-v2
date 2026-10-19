@@ -36,7 +36,7 @@
       "send": "Send",
       "sending": "Sending…",
       "sent": "Thank you! Your message has been sent.",
-      "failed": "Sorry, it could not be sent. Please try again, or email",
+      "failed": "Sorry, it could not be sent. Please check your internet connection and try again.",
       "close": "Close"
     },
     "videotip": "The video opens. Tap Share, then “Save Video” (or “Save to Files”).",
