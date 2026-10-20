@@ -110,7 +110,7 @@ b,strong{font-weight:600}
 .opener .verse cite{color:var(--c)}
 
 /* road progress footer */
-.foot{position:absolute;left:var(--m);right:var(--m);bottom:calc(var(--b) + .2in);height:.22in;display:flex;align-items:center;gap:.1in;
+.foot{position:absolute;left:var(--m);right:var(--m);bottom:calc(var(--b) + .36in);height:.22in;display:flex;align-items:center;gap:.1in;
   font-family:'Bricolage Grotesque';font-weight:800;font-size:9pt;color:var(--soft)}
 .foot svg{flex:1;height:.22in}
 .foot .pn{min-width:.24in;text-align:center}
@@ -480,14 +480,14 @@ b,strong{font-weight:600}
     <p>That Someone is <b>Jesus</b>, God’s own Son. He was there in the garden with Adam and Eve, and He is the One God promised.</p>
     <p>God loved the world so much that He sent Jesus to bring us home. Jesus was born as a baby in Bethlehem, just as the prophets said. He grew up and never sinned, not even once. He healed the sick, loved the lonely and taught about God.</p>
     <p>When John the Baptist saw Jesus, he shouted, “Look, the Lamb of God, who takes away the sin of the world!”</p>
-    <p>Jesus said, “I am the door. Whoever comes in through Me will be saved.”</p>
+    <p>Jesus said He is the door: whoever comes in through Him will be saved.</p>
     <div class="refs">John 1:1–3, 29 · Luke 2:1–11 · John 10:9 · John 14:6</div>
   </div>
 </section>
 
 <section class="page onpic" data-c="5" data-stop="5">
   <img class="full" src="art/hd/choice-move.jpg" style="object-position:30% 100%">
-  <div class="card" style="bottom:auto;top:var(--m)">
+  <div class="card">
     <span class="tag"><i>5</i>Paid</span>
     <h2 style="font-size:21pt">In our place</h2>
     <p>Jesus never sinned. But He died on a cross in our place, like the animals that died for Adam and Eve, like the lamb on the long road.</p>
@@ -720,10 +720,32 @@ b,strong{font-weight:600}
       <div class="qr" data-qr style="width:1.05in;height:1.05in;flex:none;border:.05in solid #fff;border-radius:.1in;overflow:hidden"></div>
       <div style="font-size:9.6pt;opacity:.95"><b>Read, listen and watch for free</b><br>thewaybackhome.net</div>
     </div>
-    <div style="position:absolute;left:0;right:0;bottom:0;font-size:7.4pt;line-height:1.4;opacity:.75">
+    <div style="position:absolute;left:0;right:2.3in;bottom:0;font-size:7.4pt;line-height:1.4;opacity:.75">
       Story by Johnny Wall · © 2026 · Ages 5–12<br>
       Scripture quotations are from the Christian Standard Bible®, © 2017 by Holman Bible Publishers. Used by permission.
     </div>
+  </div>
+</section>
+
+<!-- ============ KDP ONLY (booklet.html?kdp): title page + imprint page, used by tools/booklet_pdf.py ============ -->
+<section class="page" data-c="7" data-nofoot data-extra>
+  <div style="position:absolute;inset:var(--m);display:flex;flex-direction:column;text-align:center">
+    <div class="disp" style="font-size:10pt;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-top:.3in">From Eden to the New Earth</div>
+    <h1 style="font-size:46pt;line-height:.92;margin:.14in 0 .12in;letter-spacing:-.03em;color:var(--c7)">The Way<br>Back Home</h1>
+    <div class="disp" style="font-size:14pt">The true story of the biggest rescue ever</div>
+    <img src="art/hd/tomb-end.jpg" style="flex:1;min-height:0;width:100%;object-fit:cover;object-position:50% 55%;border-radius:.24in;margin:.3in 0">
+    <div class="disp" style="font-size:13pt">Story by Johnny Wall</div>
+  </div>
+</section>
+<section class="page" data-c="7" data-nofoot data-extra>
+  <div style="position:absolute;inset:var(--m);display:flex;flex-direction:column;justify-content:flex-end;font-size:9pt;line-height:1.5;color:var(--soft)">
+    <div class="disp" style="font-size:14pt;color:var(--ink)">The Way Back Home</div>
+    <div>From Eden to the New Earth</div>
+    <div style="margin-top:.12in">Story by Johnny Wall</div>
+    <div>Text and pictures © 2026 Johnny Wall. All rights reserved.</div>
+    <div id="isbn"></div>
+    <div style="margin-top:.12in">Scripture quotations marked CSB are from the Christian Standard Bible®, © 2017 by Holman Bible Publishers. Used by permission. Christian Standard Bible® and CSB® are federally registered trademarks of Holman Bible Publishers.</div>
+    <div style="margin-top:.12in">Read, listen and watch the story for free, in many languages: <b style="color:var(--ink)">thewaybackhome.net</b></div>
   </div>
 </section>
 
@@ -732,6 +754,8 @@ b,strong{font-weight:600}
 <script>
 const P = new URLSearchParams(location.search);
 if (P.has('trim')) document.documentElement.classList.add('trim');
+if (!P.has('kdp')) document.querySelectorAll('[data-extra]').forEach(e => e.remove());
+else if (P.get('isbn')) document.getElementById('isbn').textContent = 'ISBN ' + P.get('isbn');
 const SITE = 'https://thewaybackhome.net/';
 const C = ['', '#1e9e5a', '#7b3fe4', '#3d3a8c', '#e0453a', '#f07b1e', '#e8a200', '#1e88e5'];
 const STOPS = [null,
@@ -939,7 +963,49 @@ document.getElementById('backroad').innerHTML = `<div style="display:flex;gap:.0
   `<span class="disp" style="background:${C[i + 1]};border-radius:99px;padding:.04in .12in;font-size:10pt">${i + 1} ${s.w}</span>`).join('')}</div>`;
 
 // signal for the PDF tool
+
+/* ---------- fill empty space at the foot of text pages (Johnny: no big blank areas) ---------- */
+const FILL = {
+  2: ['img', 'tomb-end', '50% 62%'], 3: ['img', 'road-crowd', '50% 30%'],
+  7: ['img', 'garden-a', '50% 40%'], 14: ['grow', '.strip'], 15: ['pic'], 16: ['grow', '.strip'], 38: ['grow', '.strip'],
+  9: ['grow', '.strip'], 18: ['grow', '.strip'], 25: ['grow', '.strip'], 28: ['grow', '.strip'], 35: ['grow', '.strip'],
+  20: ['img', 'road-family', '50% 30%'], 21: ['img', 'road-crowd', '50% 45%'],
+  40: ['img', 'gates-open', '50% 32%'], 42: ['pic'], 43: ['img', 'choice-end', '50% 58%'],
+  44: ['grow', 'img'], 45: ['img', 'new-earth-end', '50% 50%'], 46: ['img', 'road-end', '50% 78%'],
+  48: ['grow', 'div[style*="repeat(4"]'],
+};
+const IN = 96;
+function fillPages() {
+  pages.forEach((pg, i) => {
+    const f = FILL[i + 1]; if (!f) return;
+    const box = pg.querySelector('.sheet') || [...pg.children].find(e => e.tagName === 'DIV' && getComputedStyle(e).position === 'absolute' && !e.classList.contains('foot'));
+    if (!box) return;
+    const vis = [...box.children].filter(e => e.offsetParent !== null);
+    const kids = vis.filter(e => getComputedStyle(e).position !== 'absolute');
+    const bottom = Math.max(...kids.map(e => e.getBoundingClientRect().bottom));
+    const cs = getComputedStyle(box), br = box.getBoundingClientRect();
+    let limit = br.bottom - parseFloat(cs.paddingBottom);
+    vis.filter(e => getComputedStyle(e).position === 'absolute').forEach(e => { const t = e.getBoundingClientRect().top; if (t > bottom) limit = Math.min(limit, t - .1 * IN); });
+    const foot = pg.querySelector('.foot'); if (foot) limit = Math.min(limit, foot.getBoundingClientRect().top - .1 * IN);
+    const gap = limit - bottom - .16 * IN;
+    if (gap < .6 * IN) return;
+    if (f[0] === 'img') {
+      const im = document.createElement('img'); im.src = `art/hd/${f[1]}.jpg`;
+      im.style.cssText = `display:block;width:100%;height:${gap}px;object-fit:cover;object-position:${f[2]};border-radius:.2in;margin-top:.16in`;
+      box.appendChild(im);
+    } else if (f[0] === 'grow') {
+      const el = [...box.querySelectorAll(f[1])].pop(); if (!el) return;
+      el.style.height = el.getBoundingClientRect().height + gap + .16 * IN + 'px';
+    } else if (f[0] === 'pic') {
+      const pic = pg.querySelector('.pic'), sh = pg.querySelector('.sheet');
+      pic.style.height = pic.getBoundingClientRect().height + gap + 'px';
+      sh.style.top = (sh.getBoundingClientRect().top - pg.getBoundingClientRect().top) + gap + 'px';
+    }
+  });
+}
+
 Promise.all([document.fonts.ready, ...[...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; }))])
+  .then(() => { fillPages(); return Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));})
   .then(() => { document.body.dataset.ready = 1; });
 </script>
 </body>
