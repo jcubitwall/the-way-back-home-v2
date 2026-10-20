@@ -163,7 +163,9 @@
       "name": "ગુજરાતી",
       "english": "Gujarati",
       "dir": "ltr",
-      "ready": false
+      "ready": true,
+      "narration": true,
+      "video": false
     },
     "ki": {
       "name": "Gĩkũyũ",
