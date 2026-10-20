@@ -36,10 +36,10 @@ Spec to quote: 6 × 9 in, 48 pages plus cover, full colour both sides, saddle st
 | One file, self-cover (48 pages, all the same paper) | `resources/TWBH-Book-6x9-bleed.pdf` (6.25 × 9.25 in per page) |
 | Thicker cover ("44 pages + 4-page cover") | `resources/TWBH-Book-6x9-cover-bleed.pdf` (p1, p2, p47, p48) and `resources/TWBH-Book-6x9-interior-bleed.pdf` (p3–p46) |
 
-Reading copy (no bleed, for screens and email): `resources/TWBH-Book-6x9.pdf`.
+Reading copy (no bleed, lighter pictures, ~17 MB, for screens and email; not for print): `resources/TWBH-Book-6x9.pdf`.
 
 ## Checks done (20 Oct 2026)
-- Every font embedded. Every picture at least ~180 dpi at printed size, most 290–300 dpi.
+- Every font embedded. Every picture at least 287 dpi at its printed size.
 - All text at least 0.3 in inside the trim.
 - QR codes open https://thewaybackhome.net/.
 - Bible quotes checked word for word against the CSB; paraphrases have no quote marks.

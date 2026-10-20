@@ -87,3 +87,15 @@ cw = PdfWriter(); cw.add_page(cov); cw.write(str(root / 'resources' / 'kdp' / 'T
 (root / 'resources' / 'kdp' / 'all-pages.pdf').unlink()
 print('wrote KDP interior (%d pages, %.3f x %.2f in) and cover (%.4f x %.2f in, spine %.4f in)'
       % (pages_kdp, (W - B) / 72, Hh / 72, CW / 72, Hh / 72, spine / 72))
+
+# ---------- lighter reading copy (screens, email): pictures at ~150 dpi ----------
+from PIL import Image as _I
+rd = PdfReader(str(root / 'resources' / 'TWBH-Book-6x9.pdf')); wr = PdfWriter(clone_from=rd)
+for pg in wr.pages:
+    for im in pg.images:
+        if im.image.width > 1000:
+            p = im.image.convert('RGB'); p.thumbnail((p.width // 2, p.height // 2), _I.LANCZOS)
+            im.replace(p, quality=80)
+wr.compress_identical_objects()
+wr.write(str(root / 'resources' / 'TWBH-Book-6x9.pdf'))
+print('reading copy made lighter')
