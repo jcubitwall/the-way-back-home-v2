@@ -163,8 +163,8 @@ b,strong{font-weight:600}
 <section class="page" data-c="7">
   <div style="position:absolute;inset:var(--m);">
     <div style="background:var(--c7);color:#fff;border-radius:.24in;padding:.22in .26in">
-      <div class="disp" style="font-size:10pt;letter-spacing:.14em;text-transform:uppercase;opacity:.9">This book belongs to</div>
-      <div style="border-bottom:2px solid rgba(255,255,255,.85);height:.42in"></div>
+      <div class="disp" style="font-size:10pt;letter-spacing:.14em;text-transform:uppercase;opacity:.9">A gift for you</div>
+      <div class="disp" style="font-size:15pt;line-height:1.2;margin-top:.06in">Read it, then pass it on, so someone else can find the way home too.</div>
     </div>
     <h2 style="margin-top:.3in;font-size:27pt">Hey, you! Ready for a journey?</h2>
     <p class="big">This road starts in a perfect garden and ends in a brand-new world. In between is the biggest rescue story ever told.</p>
@@ -380,7 +380,7 @@ b,strong{font-weight:600}
   <div class="sheet" style="top:40%">
     <span class="tag"><i>3</i>Guilty</span>
     <h2>Ten good rules</h2>
-    <p>God gave His people ten good rules, called the <b>Ten Commandments</b>. They show us what God is like, and how He made us to live. Try the mirror test. Be honest!</p>
+    <p>God gave His people ten good rules, called the <b>Ten Commandments</b>. They show us what God is like, and how He made us to live. Has anyone ever kept all ten?</p>
     <ul class="check" id="ten"></ul>
     <div class="refs">Exodus 20:1–17 · Matthew 5:21–22, 27–28</div>
   </div>
@@ -644,15 +644,14 @@ b,strong{font-weight:600}
       <li><span class="n">4</span><div><b>Tell a friend</b> the way back home.</div></li>
     </ul>
     <div style="background:color-mix(in srgb,var(--c1) 12%,#fff);border-radius:.2in;padding:.18in .2in">
-      <div class="disp" style="font-size:15pt;color:var(--c1)">I chose to follow Jesus</div>
-      <div style="font-size:9pt;color:var(--soft);margin-top:.08in">My name</div><div class="write"></div>
-      <div style="font-size:9pt;color:var(--soft)">Date</div><div class="write"></div>
+      <div class="disp" style="font-size:15pt;color:var(--c1)">Did you pray to follow Jesus?</div>
+      <p style="margin-top:.06in">Tell someone today: a parent, a pastor or a Christian friend. Jesus said there is joy in heaven over every person who turns back to God!</p>
     </div>
     <div style="display:flex;gap:.16in;align-items:center;margin-top:.2in">
       <div class="qr" data-qr style="width:1in;height:1in;flex:none"></div>
       <div><b>Want to hear it again?</b> Scan to listen to the whole story, read aloud with music and moving pictures. Share it with a friend!</div>
     </div>
-    <div class="refs">Psalm 119:105 · Hebrews 10:24–25 · Matthew 28:19–20</div>
+    <div class="refs">Psalm 119:105 · Luke 15:10 · Hebrews 10:24–25 · Matthew 28:19–20</div>
   </div>
 </section>
 
@@ -660,16 +659,13 @@ b,strong{font-weight:600}
 <section class="page" data-c="5">
   <div style="position:absolute;inset:var(--m) var(--m) calc(var(--m) + .3in)">
     <h2>Pass it on!</h2>
-    <p>The people who know Jesus love to tell others, “Come and see! There is a way back to God!” Who will you tell?</p>
-    <div style="display:grid;gap:.1in;margin:.14in 0 .2in">
-      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">1</span><div class="write" style="flex:1;margin:0"></div></div>
-      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">2</span><div class="write" style="flex:1;margin:0"></div></div>
-      <div style="display:flex;gap:.12in;align-items:flex-end"><span class="pill">3</span><div class="write" style="flex:1;margin:0"></div></div>
-    </div>
-    <div style="border:2.5px dashed var(--c5);border-radius:.2in;height:3.1in;position:relative;padding:.14in">
-      <div class="disp" style="font-size:13pt;color:var(--c5)">Draw it!</div>
-      <div style="font-size:9.6pt;color:var(--soft)">Draw yourself on the road home, with a friend you want to bring along.</div>
-    </div>
+    <p>The people who know Jesus love to tell others, “Come and see! There is a way back to God!” Here are three easy ways to share the way back home:</p>
+    <ul class="check" style="margin:.08in 0 .18in">
+      <li><span class="n">1</span><div><b>Share this book.</b> Read it with a friend, or give it to someone who needs it.</div></li>
+      <li><span class="n">2</span><div><b>Show them the code.</b> Anyone can scan it to hear the story, in many languages.</div></li>
+      <li><span class="n">3</span><div><b>Tell your favourite stop.</b> Which of the 7 stops do you like best? Tell someone why.</div></li>
+    </ul>
+    <img src="art/hd/door-point.jpg" style="width:100%;height:3.1in;object-fit:cover;object-position:50% 40%;border-radius:.2in">
     <div class="refs">John 1:46 · John 4:28–30 · Matthew 28:19–20</div>
   </div>
 </section>
@@ -775,7 +771,7 @@ document.getElementById('days').innerHTML = DAYS.map(([n, t, s], i) =>
 /* ---------- ten commandments ---------- */
 const TEN = ['Love God more than anything','Don’t make anything else your god','Use God’s name with respect','Keep a day to rest and worship God','Honour your father and mother',
   'Don’t murder (even hate in your heart counts!)','Keep your promises in marriage','Don’t steal','Don’t lie','Don’t be jealous of what others have'];
-document.getElementById('ten').innerHTML = TEN.map((t, i) => `<li style="font-size:9.8pt;padding:.03in 0"><span class="n" style="width:.21in;height:.21in;font-size:8pt">${i + 1}</span>${t}<span class="bx"></span></li>`).join('');
+document.getElementById('ten').innerHTML = TEN.map((t, i) => `<li style="font-size:9.8pt;padding:.03in 0"><span class="n" style="width:.21in;height:.21in;font-size:8pt">${i + 1}</span>${t}</li>`).join('');
 
 /* ---------- great swap ---------- */
 document.getElementById('swap').innerHTML = `
@@ -811,8 +807,7 @@ document.getElementById('memory').innerHTML = MEM.map(([s, v, r]) =>
   `<div style="display:flex;gap:.12in;align-items:center;border:2px solid ${C[s]};border-radius:.16in;padding:.08in .12in">
      <div class="disp" style="flex:none;width:.42in;height:.42in;border-radius:50%;background:${C[s]};color:#fff;display:grid;place-items:center;font-size:16pt">${s}</div>
      <div><div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:10.6pt;line-height:1.2">${v}</div>
-     <div style="font-size:8pt;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:${C[s]};margin-top:.03in">${STOPS[s].w} · ${r}</div></div>
-     <span class="bx" style="flex:none;margin-left:auto;width:.2in;height:.2in;border:2px solid ${C[s]};border-radius:.05in"></span></div>`).join('');
+     <div style="font-size:8pt;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:${C[s]};margin-top:.03in">${STOPS[s].w} · ${r}</div></div></div>`).join('');
 
 /* ---------- grown-ups ---------- */
 const QS = ['What was the one rule God gave Adam and Eve? Why do you think He gave it?','Why couldn’t the children scrub their marks away?',
