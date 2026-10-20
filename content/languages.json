@@ -18,6 +18,7 @@
     "pa",
     "ko",
     "ja",
+    "gu",
     "ki",
     "pdt"
   ],
@@ -157,6 +158,12 @@
       "ready": true,
       "narration": true,
       "video": false
+    },
+    "gu": {
+      "name": "ગુજરાતી",
+      "english": "Gujarati",
+      "dir": "ltr",
+      "ready": false
     },
     "ki": {
       "name": "Gĩkũyũ",

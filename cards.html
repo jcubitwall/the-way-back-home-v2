@@ -67,7 +67,7 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
 (async () => {
   // fonts for scripts that Andika/Grandstander don't cover (the same list as app.js)
   const SCRIPT = { ar: 'Noto Naskh Arabic', ur: 'Noto Nastaliq Urdu', he: 'Noto Sans Hebrew', hi: 'Noto Sans Devanagari',
-    bn: 'Noto Sans Bengali', pa: 'Noto Sans Gurmukhi', zh: 'Noto Sans SC', ja: 'Noto Sans JP', ko: 'Noto Sans KR' };
+    bn: 'Noto Sans Bengali', pa: 'Noto Sans Gurmukhi', gu: 'Noto Sans Gujarati', zh: 'Noto Sans SC', ja: 'Noto Sans JP', ko: 'Noto Sans KR' };
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = p => fetch(p, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
   try {

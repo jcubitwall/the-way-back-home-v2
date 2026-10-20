@@ -20,7 +20,7 @@ const NOCLIPS = Q.has('noclips') || (() => { const c = navigator.connection; ret
 // fonts for scripts that Andika/Grandstander don't cover: [Google Fonts family, line height]
 const SCRIPT = {
   ar: ['Noto Naskh Arabic', 1.7], ur: ['Noto Nastaliq Urdu', 2.05], he: ['Noto Sans Hebrew', 1.5],
-  hi: ['Noto Sans Devanagari', 1.6], bn: ['Noto Sans Bengali', 1.6], pa: ['Noto Sans Gurmukhi', 1.6],
+  hi: ['Noto Sans Devanagari', 1.6], bn: ['Noto Sans Bengali', 1.6], pa: ['Noto Sans Gurmukhi', 1.6], gu: ['Noto Sans Gujarati', 1.6],
   zh: ['Noto Sans SC', 1.6], ja: ['Noto Sans JP', 1.6], ko: ['Noto Sans KR', 1.55]
 };
 
