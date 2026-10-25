@@ -724,7 +724,7 @@ function setupControls() {
 
   /* the message form: typed and sent right here in the book (Web3Forms delivers it by email), so no mail app is needed */
   function msgForm(ci) {
-    const F = Object.assign({}, EN.ui.message, m), mail = 'hello@thewaybackhome.net';
+    const F = Object.assign({}, EN.ui.message, m), mail = 'share@thewaybackhome.net';
     const o = document.createElement('div'); o.className = 'msgf'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
     o.innerHTML = `<form novalidate><button type="button" class="x" aria-label="${esc(F.close)}">×</button>
       <h2>${esc(m.title)}</h2>
