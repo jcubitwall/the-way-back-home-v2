@@ -591,7 +591,7 @@ const ICON = {
   pause: '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>'
 };
 // Web3Forms access key: messages typed in the book arrive by email at the address the key was made for. Empty = fall back to the mail app.
-const MSG_KEY = '07d79e32-173e-45d7-9253-56bb05afd008';
+const MSG_KEY = '8c78599d-65b4-4349-8f77-1df18c9ddec0';
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 1800); }
 function closeMenus() { $('#menu').hidden = true; $('#msgMenu').hidden = true; $('#menuBtn').setAttribute('aria-expanded', 'false'); }
 // count a tap as a visit to a made-up address, so it shows up in the anonymous visitor stats
