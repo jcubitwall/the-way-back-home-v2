@@ -164,7 +164,9 @@ html,body{margin:0;background:#e9e7ef;color:var(--ink);font-family:var(--body)}
     document.title = `${cover.title} · Tract`;
     const back = document.getElementById('back'); back.href = `${L}/`; back.textContent = `‹ ${cover.title}`;
 
-    const link = `https://thewaybackhome.net/${L}/`;
+    // the QR code and link open the chosen language's book, even when the tract's words fall back to English
+    const QL = langs.langs[q] ? q : L;
+    const link = `https://thewaybackhome.net/${QL}/` + (langs.langs[QL].ready ? '' : '?preview=1');
     const qr = qrcode(0, 'M'); qr.addData(link); qr.make();
     const n = qr.getModuleCount(), m = 1; let d = '';
     for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.isDark(y, x)) d += `M${x + m} ${y + m}h1v1h-1z`;
