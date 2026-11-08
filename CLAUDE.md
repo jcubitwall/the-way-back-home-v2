@@ -219,8 +219,8 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   downloadable; NO narration text on screen (only phone bubbles/notifications, which are translated per language); CC subtitles optional.
   Timing per language: speed a shot ±15 %, else hold its last frame or trim its start. From Scene 2 on, clips are generated 10 s long
   to leave room for longer languages. English first, other languages as he decides.
-- Status 8 Nov 2026: Scene 1 (of 8) finished in English (33.5 s): shots 1.1 aerial (first 4 s), 1.2 ride, 1.3 lie (+1 s hold),
-  1.4 invite, 1.5 viral, 1.6 crash (cut to 2.3 s + 1 s white). Music = Johnny's Suno track "1. Full Speed" from 6.0 s (its first beat
+- Status 8 Nov 2026: Scene 1 (of 8) finished in English (35.6 s): shots 1.1 aerial (first 4 s), 1.2 ride, 1.3 lie (+1 s hold),
+  1.4 invite, 1.5 viral, 1.6 crash (Johnny: start earlier, faster, sudden: approach 0–4 s at 1.6×, action at 1.3×, screech + horn as the lights hit, boom on the white, 1.5 s white + silence; it must feel like he died). Music = Johnny's Suno track "1. Full Speed" from 6.0 s (its first beat
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
   synthesized placeholders (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
