@@ -205,6 +205,28 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
 - **QR check (4 Nov 2026, Johnny: "double check the qr codes").** Every QR decoded (zxing-cpp) in all 20 languages: book cover (link built from the site's own address), QR cards (10/10 per sheet), tract, picture tract, and every PDF in resources/ (book, KDP files, class packs, Sunday school/youth PDFs). Book PDFs point to thewaybackhome.net/ (opens in the phone's language); class and Sunday school PDFs to /en/. **Fixed:** the worded tract's QR and link always went to the English book when the tract text fell back to English; it now opens the chosen language (`QL` in tract.html; also used by the Print PDF). The tract templates have no QR on purpose (drawn in at print). Unlisted ki/pdt: picture tract falls back to /en/, cards and tract use ?preview=1.
 - **Decided:** the cover, prayer and grown-ups pages keep still pictures (no clips).
 
+## More Videos: "The Replay" (started 8 Nov 2026, HIDDEN)
+
+- Johnny's second project on this site: a ~6 min gospel film for ages 10–16 (Pixar-style 3D, clips made in Grok, stills in ChatGPT),
+  in many languages. Script and shot prompts are in Claude Docs "The Replay — Production Script". Cast: Jace (15), Maya, Eli,
+  Mom (Dana), Grandma Ruth, the Messenger (angel), Jesus, Older Jace.
+- **Hidden until Johnny says so:** `more-videos.html` (list) and `replay.html` (player) are `noindex` and NOT linked from any menu.
+  Test at thewaybackhome.net/more-videos.html. When he says go: add a "More Videos" item to the ⋯ menu (and Resources if wanted),
+  drop the noindex lines. Menu name chosen: "More Videos" (more films will be added there later).
+- Files: `video/replay/replay-<code>.mp4`, `replay-<code>.vtt` (optional CC, off by default), `poster.jpg`, and `videos.json`
+  (list of languages + a `note`; the player hides the language menu while there is only one). sw.js already skips `/video/`.
+- Format (Johnny 8 Nov 2026): one finished MP4 per language (narration + character voices + music + effects + text bubbles baked in),
+  downloadable; NO narration text on screen (only phone bubbles/notifications, which are translated per language); CC subtitles optional.
+  Timing per language: speed a shot ±15 %, else hold its last frame or trim its start. From Scene 2 on, clips are generated 10 s long
+  to leave room for longer languages. English first, other languages as he decides.
+- Status 8 Nov 2026: Scene 1 (of 8) finished in English (33.5 s): shots 1.1 aerial (first 4 s), 1.2 ride, 1.3 lie (+1 s hold),
+  1.4 invite, 1.5 viral, 1.6 crash (cut to 2.3 s + 1 s white). Music = Johnny's Suno track "1. Full Speed" from 6.0 s (its first beat
+  at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
+  synthesized placeholders (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
+  and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
+- Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
+  and point videos.json `file` at full URLs.
+
 ## Resources (17 Oct 2026)
 
 - ⋯ menu → **Resources** (last item) opens `resources.html?lang=xx`, which replaced the separate "Print QR cards" menu item. Three sections:
