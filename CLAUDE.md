@@ -227,10 +227,10 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
   synthesized placeholders except the gulls (Johnny's ElevenLabs "Harbour Gulls At Dusk" from 5 s, +18 dB, over the aerial, faded out by 5.5 s; no waves, Johnny disliked them) (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
-- Scene 2 so far (8 Nov 2026, 25.1 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
-  room tone, fade in from white), then 2.2 as ONE 15 s Grok take (start frame = 2.1's last frame): Jace turns, warm light grows on him
-  from the left (a gold glow overlay fades in 2.4–5 s to strengthen it), the camera slides back and reveals the Messenger who was
-  standing there all along, then the dialogue (Grok's own voices, with a bigger large-hall echo: synthetic 2.8 s IR, wet 1.15).
+- Scene 2 so far (8 Nov 2026, 20.9 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
+  room tone, fade in from white), then 2.2 as ONE 10 s Grok take (+0.8 s hold) (start frame = 2.1's last frame): Jace turns, warm light grows on him
+  from the left (a gold glow overlay fades in 2.0–3.8 s to strengthen it), the camera slides back and reveals the Messenger who was
+  standing there all along, then the dialogue, short version: Jace "Where am I? Where's my phone?", Messenger only "You won't need it, Jace." (Grok's own voices, with a bigger large-hall echo: synthetic 2.8 s IR, wet 1.15).
   The earlier light clip + flash/thump reveal was dropped. The Messenger has NO wings; never use the word "angel" in image prompts.
   No symbolic sin stains anywhere in the film (Johnny 8 Nov: the replay already shows the sins); the script was rewritten to match.
   ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)"; use them for other languages. Johnny dislikes constant
