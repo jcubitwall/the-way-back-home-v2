@@ -225,7 +225,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   NEVER shown (Grok draws one if a prompt says car/headlights/screech, so those sounds are added in editing); screech from off-screen right
   0.33 s before the flash, horn, boom on the white, ring fading to silence; it must feel like he died). Music = Johnny's Suno track "1. Full Speed" from 6.0 s (its first beat
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
-  synthesized placeholders (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
+  synthesized placeholders except the gulls (Johnny's ElevenLabs "Harbour Gulls At Dusk" from 5 s, +18 dB, over the aerial, faded out by 5.5 s; no waves, Johnny disliked them) (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
 - Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
   and point videos.json `file` at full URLs.
