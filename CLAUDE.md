@@ -219,7 +219,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   downloadable; NO narration text on screen (only phone bubbles/notifications, which are translated per language); CC subtitles optional.
   Timing per language: speed a shot ±15 %, else hold its last frame or trim its start. From Scene 2 on, clips are generated 10 s long
   to leave room for longer languages. English first, other languages as he decides.
-- Status 8 Nov 2026: Scene 1 (of 8) finished in English (34.2 s): shots 1.1 aerial (first 4 s), 1.2 ride, 1.3 lie (+1 s hold),
+- Status 8 Nov 2026: Scene 1 (of 8) finished in English (34.2 s): shots 1.1 aerial (2–4 s of the take; the first 2 s cut 8 Nov at Johnny's request, so Scene 1 is now 32.2 s), 1.2 ride, 1.3 lie (+1 s hold),
   1.4 invite (zoomed 10 % so the odd bike-frame logo at the bottom is cut off), 1.5 viral, 1.6 crash (Johnny's 5 s take: ride 0–1.4 s at 1.3×,
   2-frame white flash that hides the phone vanishing, then 0.7 s of his horrified face with a fast push-in, then hard white 2.1 s; the car is
   NEVER shown (Grok draws one if a prompt says car/headlights/screech, so those sounds are added in editing); screech from off-screen right
@@ -227,12 +227,15 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
   synthesized placeholders except the gulls (Johnny's ElevenLabs "Harbour Gulls At Dusk" from 5 s, +18 dB, over the aerial, faded out by 5.5 s; no waves, Johnny disliked them) (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
-- Scene 2 so far (8 Nov 2026, 26.5 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
-  room tone), the light clip (0.8–5 s at 1.6×), then the reveal + conversation clip (reveal 0–3.85 s at 1.5×, white flash + soft thump on the
-  brightest frame, dialogue at normal speed). Johnny chose Grok's own voices for this clip, with a large-hall reverb (synthetic 1.9 s IR,
-  wet 0.8). The Messenger has NO wings (Johnny 8 Nov: biblical, and Grok kept glitching them); never use the word "angel" in image prompts.
-  ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)" (cloned from a Grok take of Jace talking to himself); use them for
-  other languages. Johnny dislikes constant tones/hums under dialogue. Music: Johnny's Suno "2. The Theater" (0–10.8 s quiet opening under 2.1, crossfaded into 64.3 s on so its rise lands on the flash), level 0.38, ducked under the voices. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen.
+- Scene 2 so far (8 Nov 2026, 25.1 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
+  room tone, fade in from white), then 2.2 as ONE 15 s Grok take (start frame = 2.1's last frame): Jace turns, warm light grows on him
+  from the left (a gold glow overlay fades in 2.4–5 s to strengthen it), the camera slides back and reveals the Messenger who was
+  standing there all along, then the dialogue (Grok's own voices, with a bigger large-hall echo: synthetic 2.8 s IR, wet 1.15).
+  The earlier light clip + flash/thump reveal was dropped. The Messenger has NO wings; never use the word "angel" in image prompts.
+  No symbolic sin stains anywhere in the film (Johnny 8 Nov: the replay already shows the sins); the script was rewritten to match.
+  ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)"; use them for other languages. Johnny dislikes constant
+  tones/hums under dialogue. Music: Johnny's Suno "2. The Theater" (0–11.1 s quiet opening, crossfaded into 64.3 s on so its rise
+  lands as Jace's face lights up), level 0.38, ducked under the voices. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen.
 - Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
   and point videos.json `file` at full URLs.
 
