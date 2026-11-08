@@ -1,1 +1,12 @@
-{"title": "The Replay", "note": "Preview: Scenes 1–3 of 8 (voices in Scene 3 to come)", "langs": [{"code": "en", "name": "English", "file": "replay-en.mp4", "cc": "replay-en.vtt"}]}
+{
+  "title": "The Replay",
+  "note": "Preview: Scenes 1–4 of 8 (Scene 4 in progress) (voices in Scene 3 to come)",
+  "langs": [
+    {
+      "code": "en",
+      "name": "English",
+      "file": "replay-en.mp4",
+      "cc": "replay-en.vtt"
+    }
+  ]
+}
