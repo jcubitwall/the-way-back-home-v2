@@ -227,15 +227,15 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
   synthesized placeholders except the gulls (Johnny's ElevenLabs "Harbour Gulls At Dusk" from 5 s, +18 dB, over the aerial, faded out by 5.5 s; no waves, Johnny disliked them) (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
-- Scene 2 so far (8 Nov 2026, 19.7 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
-  room tone, fade in from white), then 2.2 as ONE 10 s Grok take (+2 s hold for the echo). Its start frame is 2.1's frame 183 (7.625 s), found by frame matching, so 2.1 is cut there and the two join with a 4-frame crossfade: no visible seam: Jace turns, warm light grows on him
+- Scene 2 so far (8 Nov 2026, 28.5 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
+  room tone, fade in from white), then 2.2 as ONE 10 s Grok take (+0.8 s hold; its echo rings on into 2.3). Its start frame is 2.1's frame 183 (7.625 s), found by frame matching, so 2.1 is cut there and the two join with a 4-frame crossfade: no visible seam: Jace turns, warm light grows on him
   from the left (a gold glow overlay fades in 2.0–3.8 s to strengthen it), the camera slides back and reveals the Messenger who was
   standing there all along, then the dialogue, short version: Jace "Where am I? Where's my phone?", Messenger only "You won't need it, Jace." (Grok's own voices, with a bigger large-hall echo: synthetic 2.8 s IR, wet 1.15; the Messenger's line gets extra drama: two slap echoes at 220/440 ms plus a 4.2 s hall, wet 1.8).
   The earlier light clip + flash/thump reveal was dropped. The Messenger has NO wings; never use the word "angel" in image prompts.
   No symbolic sin stains anywhere in the film (Johnny 8 Nov: the replay already shows the sins); the script was rewritten to match.
   ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)"; use them for other languages. Johnny dislikes constant
   tones/hums under dialogue. Music: Johnny's Suno "2. The Theater" (0–11.1 s quiet opening, crossfaded into 64.3 s on so its rise
-  lands as Jace's face lights up), level 0.38, ducked under the voices. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen.
+  lands as Jace's face lights up), level 0.38, ducked under the voices. 2.3 throne (10 s Grok take that starts on 2.2's exact last frame, so no seam; the theater opens onto the throne with rainbow and seven lamps, God's face hidden in light; Jace "Wait… am I… is this…", Messenger "Everyone dies once. After that comes judgment." with the same big echo; two soft synthesized thunder rolls on the lightning, placeholders). Remaining Scene 2 shot: 2.4 replay screen.
 - Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
   and point videos.json `file` at full URLs.
 
