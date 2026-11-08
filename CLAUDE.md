@@ -232,7 +232,7 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   brightest frame, dialogue at normal speed). Johnny chose Grok's own voices for this clip, with a large-hall reverb (synthetic 1.9 s IR,
   wet 0.8). The Messenger has NO wings (Johnny 8 Nov: biblical, and Grok kept glitching them); never use the word "angel" in image prompts.
   ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)" (cloned from a Grok take of Jace talking to himself); use them for
-  other languages. Johnny dislikes constant tones/hums under dialogue. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen; music track to come.
+  other languages. Johnny dislikes constant tones/hums under dialogue. Music: Johnny's Suno "2. The Theater" (0–10.8 s quiet opening under 2.1, crossfaded into 64.3 s on so its rise lands on the flash), level 0.38, ducked under the voices. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen.
 - Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
   and point videos.json `file` at full URLs.
 
