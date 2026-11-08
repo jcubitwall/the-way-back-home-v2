@@ -227,6 +227,12 @@ Tip: after `split.py`, check each caption break against the real pauses (`ffmpeg
   at 10.0 s lands when Jace appears), muffled from the viral shot, hard stop at the horn, ducked under narration. Effects are
   synthesized placeholders except the gulls (Johnny's ElevenLabs "Harbour Gulls At Dusk" from 5 s, +18 dB, over the aerial, faded out by 5.5 s; no waves, Johnny disliked them) (buzz, ding, send swoosh, chime, wind, freewheel, horn, screech, boom + ring). The source clips, narration
   and the build commands live with Johnny/the chat, not in this repo (site must stay under 1 GB).
+- Scene 2 so far (8 Nov 2026, 26.5 s, joined after Scene 1's white): 2.1 Jace alone in the theater (Grok take with its own echoing "Hello?",
+  room tone), the light clip (0.8–5 s at 1.6×), then the reveal + conversation clip (reveal 0–3.85 s at 1.5×, white flash + soft thump on the
+  brightest frame, dialogue at normal speed). Johnny chose Grok's own voices for this clip, with a large-hall reverb (synthetic 1.9 s IR,
+  wet 0.8). The Messenger has NO wings (Johnny 8 Nov: biblical, and Grok kept glitching them); never use the word "angel" in image prompts.
+  ElevenLabs voices made: "Messenger" (Voice Design) and "Jace (clone)" (cloned from a Grok take of Jace talking to himself); use them for
+  other languages. Johnny dislikes constant tones/hums under dialogue. Remaining Scene 2 shots: 2.3 throne, 2.4 replay screen; music track to come.
 - Space: the full film is ~120 MB per language at this quality, so before adding many languages move the MP4s to Cloudflare R2
   and point videos.json `file` at full URLs.
 
