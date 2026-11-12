@@ -173,10 +173,13 @@ function build() {
 /* some iPhones (home-screen app, and Safari with its bar tucked away) report a screen height that stops short of the
    bottom edge, which left a coloured strip under the page. The book is stretched to the real bottom of the screen. */
 const STANDALONE = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+// only iPhones/iPads need it: on Android screen.height also counts the status bar and the button bar, so stretching
+// to it pushed the bottom of every page (cover buttons, words) under the phone's buttons
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 function fitBook() {
   book.style.height = '';
   const h = book.offsetHeight, port = innerHeight >= innerWidth;
-  const scr = STANDALONE ? (port ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height)) : 0;
+  const scr = STANDALONE && IOS ? (port ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height)) : 0;
   const want = Math.max(h, innerHeight, document.documentElement.clientHeight, scr);
   if (want > h + 1) book.style.height = want + 'px';
 }
